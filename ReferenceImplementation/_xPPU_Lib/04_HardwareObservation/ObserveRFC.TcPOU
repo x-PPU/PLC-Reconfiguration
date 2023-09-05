@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ObserveRFC" Id="{85dfa15b-5c65-44ae-9fb8-42ee370da835}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ObserveRFC
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	m_ptrRFC: POINTER TO RefeedingConveyor;
+	m_ptrRFCWP1: POINTER TO xPPUProduct;
+	m_ptrRFCWP2: POINTER TO xPPUProduct;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{6c906916-5fbb-4b22-b108-ee566cb7c087}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	i_ptrRFC: POINTER TO RefeedingConveyor;
+	i_ptrWP1: POINTER TO IProduct;
+	i_ptrWP2: POINTER TO IProduct;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrRFC := i_ptrRFC;
+IF NOT __QUERYPOINTER(i_ptrWP1^, m_ptrRFCWP1) THEN
+	FB_init := FALSE;
+END_IF
+IF NOT __QUERYPOINTER(i_ptrWP2^, m_ptrRFCWP2) THEN
+	FB_init := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetDefinition" Id="{aa5548ed-b25a-4440-b7eb-7fd945ed4c59}">
+      <Declaration><![CDATA[METHOD ResetDefinition : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateProcessObservation" Id="{91cfe819-f731-4f4d-ba44-d84ab5a486c8}">
+      <Declaration><![CDATA[(* Update an instance of ProcessState with the part of the process that can be observed by this Hardware Interface. *)
+METHOD UpdateProcessObservation : BOOL
+VAR_IN_OUT
+	io_processState: ProcessState;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[io_processState.UpdateState_Binary(EProcessVariables.RFC_WPAtStart, m_ptrRFC^.WPAtStart, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.RFC_WPAtEnd, m_ptrRFC^.WPAtEnd, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.RFC_SwitchExtended, m_ptrRFC^.m_Switch.Extended, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.RFC_SwitchRetracted, m_ptrRFC^.m_Switch.Retracted, TRUE);
+
+io_processState.UpdateState_Defined(EProcessVariables.RFC_WPAtStart, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.RFC_WPAtEnd, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.RFC_SwitchExtended, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.RFC_SwitchRetracted, TRUE);
+
+
+// update WP info (if there are sensors available), then update the process variables list
+
+io_processState.UpdateState_Numeric(EProcessVariables.RFC_ProductType_1, UINT_TO_LREAL(m_ptrRFCWP1^.Material), TRUE);
+io_processState.UpdateState_Numeric(EProcessVariables.RFC_ProductType_2, UINT_TO_LREAL(m_ptrRFCWP2^.Material), TRUE);
+
+io_processState.UpdateState_Defined(EProcessVariables.RFC_ProductType_1, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.RFC_ProductType_2, TRUE);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ObserveRFC">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveRFC.FB_init">
+      <LineId Id="7" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="29" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveRFC.ResetDefinition">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveRFC.UpdateProcessObservation">
+      <LineId Id="28" Count="2" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="38" Count="2" />
+      <LineId Id="47" Count="3" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="54" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

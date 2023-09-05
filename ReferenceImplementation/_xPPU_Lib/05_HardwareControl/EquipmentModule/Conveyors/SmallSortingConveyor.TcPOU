@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="SmallSortingConveyor" Id="{3714cf9c-d595-4df3-b202-737827676521}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SmallSortingConveyor EXTENDS Conveyor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//Sensors
+	m_PresencesensorStart : PresenceSensor;
+	m_PresencesensorEnd : PresenceSensor;
+	m_Opticalsensor : OpticalSensor;
+	m_Inductivesensor : InductiveSensor;
+	
+	//Ramps
+	m_Ramp : Ramp;
+	
+	//Pusher
+	m_Switch : Switch;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{f24fd5c1-477f-40e5-b1d2-5905ffa33485}" />
+    <Folder Name="Properties" Id="{8679b29f-ab4d-421f-96ec-3eaabb4bb3fe}" />
+    <Property Name="LightWPAtMid" Id="{2237b367-9b7e-431e-834e-93e0d5ba7ecb}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY LightWPAtMid : BOOL]]></Declaration>
+      <Get Name="Get" Id="{1767380a-69e5-41cf-aa15-8e7ff8460a60}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LightWPAtMid := m_Opticalsensor.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="MetalWPAtMid" Id="{5e56331b-00dd-4845-8d03-e2e236ba54f6}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY MetalWPAtMid : BOOL]]></Declaration>
+      <Get Name="Get" Id="{75551164-3756-46ad-b077-08017d91948f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MetalWPAtMid := m_Inductivesensor.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="METH_Switch_Extend" Id="{9b7390ad-8e73-4fa1-99f2-ba73faca2a81}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Switch_Extend : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_Switch.METH_Extend();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_Switch_Retract" Id="{bbd0f736-fce1-418f-9af3-4a30e5e1b131}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Switch_Retract : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_Switch.METH_Retract();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="WPAtEnd" Id="{1f6208e9-1151-414e-b259-e1b5ebcb9d58}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtEnd : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c922685e-6228-46ff-8499-ecc54fe65e99}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtEnd := m_PresencesensorEnd.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="WPAtRampEnd" Id="{8d168ced-2bc9-4b6c-97b5-6c52d31b49f2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtRampEnd : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7ccb546a-5e86-4bca-8d46-ab3fe066bc38}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtRampEnd := m_Ramp.m_presenceSensorRampFull.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="WPAtStart" Id="{75340cc2-2a98-4d7a-a7ed-611102ffbd2c}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtStart : BOOL]]></Declaration>
+      <Get Name="Get" Id="{4d6ab26d-9774-4d9d-9a5c-75ea669f7a89}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtStart := m_PresencesensorStart.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="SmallSortingConveyor">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="SmallSortingConveyor.LightWPAtMid.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="SmallSortingConveyor.MetalWPAtMid.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="SmallSortingConveyor.METH_Switch_Extend">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SmallSortingConveyor.METH_Switch_Retract">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SmallSortingConveyor.WPAtEnd.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="SmallSortingConveyor.WPAtRampEnd.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="SmallSortingConveyor.WPAtStart.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

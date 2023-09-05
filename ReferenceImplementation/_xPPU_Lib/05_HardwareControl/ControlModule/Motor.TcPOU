@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="Motor" Id="{ee44e2ee-d826-40c4-ac13-843b90c8794b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Motor
+VAR_INPUT
+	//Software
+	Stopped : BOOL;
+	TurningClockwise : BOOL;
+	TurningCounterclockwise : BOOL;
+END_VAR
+VAR_OUTPUT	
+	AI_Position AT %I*: UINT;
+	AI_Speed AT %I*: UDINT;
+END_VAR
+VAR	
+	//Hardware
+	DO_TurnClockwise AT %Q* : BOOL;
+	DO_TurnCounterclockwise AT %Q* : BOOL;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Action Name="ACT_Stop" Id="{df50afe2-ff71-425b-b230-addf35d47a00}">
+      <Implementation>
+        <ST><![CDATA[DO_TurnClockwise := FALSE;
+DO_TurnCounterclockwise := FALSE;
+
+Stopped := TRUE;
+TurningClockwise := FALSE;
+TurningCounterclockwise := FALSE;]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="ACT_TurnClockwise" Id="{e9d7b57d-e1ec-4de7-b569-680da77cb241}">
+      <Implementation>
+        <ST><![CDATA[DO_TurnClockwise := TRUE;
+DO_TurnCounterclockwise := FALSE;
+
+Stopped := FALSE;
+TurningClockwise := TRUE;
+TurningCounterclockwise := FALSE;]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="ACT_TurnCounterclockwise" Id="{ab24c744-b90e-4f1d-a0c6-609a85a904c3}">
+      <Implementation>
+        <ST><![CDATA[DO_TurnClockwise := FALSE;
+DO_TurnCounterclockwise := TRUE;
+
+Stopped := FALSE;
+TurningClockwise := FALSE;
+TurningCounterclockwise := TRUE;]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="Motor">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.ACT_Stop">
+      <LineId Id="2" Count="4" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.ACT_TurnClockwise">
+      <LineId Id="2" Count="4" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.ACT_TurnCounterclockwise">
+      <LineId Id="2" Count="4" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

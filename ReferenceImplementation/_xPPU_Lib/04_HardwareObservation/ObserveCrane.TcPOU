@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ObserveCrane" Id="{4954d856-72f9-465f-a8a6-2f8aa4b61f6c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ObserveCrane EXTENDS HardwareObservationBase
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	m_ptrCrane: POINTER TO Crane;
+	m_ptrCraneWP: POINTER TO xPPUProduct;
+	
+	m_rtAtStack: R_TRIG;
+	m_rtAtLSC: R_TRIG;
+	m_rtAtStamp: R_TRIG;
+	
+	m_resetCranePos: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{70e3b3ab-124c-45c5-a113-c1f4961d83e3}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+
+	i_ptrCrane: POINTER TO Crane;
+	i_ptrWP: POINTER TO IProduct;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrCrane := i_ptrCrane;
+IF NOT __QUERYPOINTER(i_ptrWP^, m_ptrCraneWP) THEN
+	FB_init := FALSE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetDefinition" Id="{1b1f8bfe-8e46-475f-9b81-d1e60cd83af8}">
+      <Declaration><![CDATA[METHOD  ResetDefinition : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_resetCranePos := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateProcessObservation" Id="{e8ee6704-ca71-439d-9fa8-f0ee43b90df7}">
+      <Declaration><![CDATA[(* Update an instance of ProcessState with the part of the process that can be observed by this Hardware Interface. *)
+METHOD UpdateProcessObservation : BOOL
+VAR_IN_OUT
+	io_processState: ProcessState;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[io_processState.UpdateState_Binary(EProcessVariables.Crane_AtStack, m_ptrCrane^.AtStack, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Crane_AtStamp, m_ptrCrane^.AtStamp, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Crane_AtLSC, m_ptrCrane^.AtConveyor, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Crane_HoldingWorkpiece, m_ptrCrane^.o_VacuumGripper.WPTaken, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Crane_CylinderExtended, m_ptrCrane^.o_MonostableCylinder.Extended, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Crane_CylinderRetracted, m_ptrCrane^.o_MonostableCylinder.Retracted, i_force := TRUE);
+io_processState.UpdateState_Numeric(EProcessVariables.Crane_Angle, INT_TO_LREAL(m_ptrCrane^.o_Angle), i_force := TRUE);
+
+m_rtAtStack(CLK := m_ptrCrane^.AtStack);
+m_rtAtStamp(CLK := m_ptrCrane^.AtStamp);
+m_rtAtLSC(CLK := m_ptrCrane^.AtConveyor);
+
+IF m_rtAtStack.Q OR m_rtAtStamp.Q OR m_rtAtLSC.Q THEN
+	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtStack, TRUE);
+	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtStamp, TRUE);
+	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtLSC, TRUE);
+	io_processState.UpdateState_Defined(EProcessVariables.Crane_Angle, TRUE);	
+END_IF
+IF m_resetCranePos THEN
+	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtStack, FALSE);
+	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtStamp, FALSE);
+	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtLSC, FALSE);
+	io_processState.UpdateState_Defined(EProcessVariables.Crane_Angle, FALSE);
+	
+	m_resetCranePos := FALSE;
+END_IF
+
+io_processState.UpdateState_Defined(EProcessVariables.Crane_HoldingWorkpiece, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Crane_CylinderExtended, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Crane_CylinderRetracted, TRUE);
+
+
+
+// update WP info (if there are sensors available), then update the process variables list
+io_processState.UpdateState_Numeric(EProcessVariables.Crane_ProductType, UINT_TO_LREAL(m_ptrCraneWP^.Material), TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Crane_ProductType, TRUE);
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ObserveCrane">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveCrane.FB_init">
+      <LineId Id="29" Count="0" />
+      <LineId Id="25" Count="3" />
+    </LineIds>
+    <LineIds Name="ObserveCrane.ResetDefinition">
+      <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveCrane.UpdateProcessObservation">
+      <LineId Id="17" Count="4" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="106" Count="1" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="113" Count="3" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="121" Count="3" />
+      <LineId Id="117" Count="1" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="37" Count="2" />
+      <LineId Id="87" Count="4" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="40" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

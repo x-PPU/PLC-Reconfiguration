@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="SRuntimeCondition" Id="{b21379ef-23d1-4d5d-9d9c-b16e580e4da5}">
+    <Declaration><![CDATA[TYPE SRuntimeCondition :
+STRUCT
+	IsActive: BOOL;
+	PrimitiveId: UINT;
+	// if it's not a precondition, it's a postcondition
+	IsPre: BOOL;
+	ExpressionType: EExpressionType;
+	ExpressionIdx: UINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

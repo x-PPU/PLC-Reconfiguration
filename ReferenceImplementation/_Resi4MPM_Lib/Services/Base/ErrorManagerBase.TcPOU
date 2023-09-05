@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="ErrorManagerBase" Id="{1c21bca8-5546-47f5-85ed-9be3b2000491}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT ErrorManagerBase IMPLEMENTS IService
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AddMessage" Id="{dbea8029-fd7b-46e4-99ce-63c5985aac65}">
+      <Declaration><![CDATA[METHOD ABSTRACT AddMessage : BOOL
+VAR_INPUT
+	i_alarmId: UINT;
+	i_active: BOOL;
+	//i_acknowledged: BOOL;
+	//i_confirmed: BOOL;
+	i_severity: ESeverity;
+	//i_retain: BOOL;
+	i_instanceName: STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ErrorManagerBase">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ErrorManagerBase.AddMessage">
+      <LineId Id="11" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

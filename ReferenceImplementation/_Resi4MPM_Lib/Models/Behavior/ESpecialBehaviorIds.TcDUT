@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="ESpecialBehaviorIds" Id="{f9f333eb-3a57-4449-a504-d3d0b70dfadd}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE ESpecialBehaviorIds :
+(
+	empty := 0,
+	max_id := ResiConst.BEHAVIORS_ARR_MAX
+) UINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

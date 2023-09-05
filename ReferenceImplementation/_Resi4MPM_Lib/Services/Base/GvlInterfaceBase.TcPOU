@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="GvlInterfaceBase" Id="{4fbfcbd4-f108-4c88-832a-b9405bfbd17a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT GvlInterfaceBase IMPLEMENTS IService
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="In_PtrBoolExprSpecs" Id="{4e70c52b-8031-4ca4-a5f7-09d3163252fa}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT In_PtrBoolExprSpecs : POINTER TO SBoolExpressionSpec]]></Declaration>
+      <Get Name="Get" Id="{a2d072e5-6bf2-44a9-b27a-d5fac333f31f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="In_PtrCompensations" Id="{15347f9b-8117-4ea0-b70c-cb74ae7b50d5}">
+      <Declaration><![CDATA[// POINTER to first element of an ARRAY [ResiConst.ARR_MIN..ResiConst.ARR_MAX] OF SCompensation.
+PROPERTY ABSTRACT In_PtrCompensations : POINTER TO SCompensation]]></Declaration>
+      <Get Name="Get" Id="{5ff49782-ce2a-4449-88bd-26f244435ea1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="In_PtrCompExpressions" Id="{d9b171c5-831a-446c-8549-afdec272e81e}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT In_PtrCompExpressions : POINTER TO ComparisonExpression]]></Declaration>
+      <Get Name="Get" Id="{e377ed1b-f02f-4220-b4f5-2508bc044c7c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="In_PtrRuntimeConditions" Id="{16399c38-e580-4fbd-908c-f9097f29fc19}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT In_PtrRuntimeConditions : POINTER TO SRuntimeCondition]]></Declaration>
+      <Get Name="Get" Id="{8cedb4c7-b7d6-4480-ae7f-0f87885c4055}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="In_PtrValueExpressions" Id="{850ab1de-2ec2-4f7b-aa15-c5fc98248151}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT In_PtrValueExpressions : POINTER TO ValueExpression]]></Declaration>
+      <Get Name="Get" Id="{d1c9f941-971a-4567-917a-b681f7be2610}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="In_Recovery" Id="{2e0dcac8-88ed-4670-b22a-bd0c3e6618bc}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT In_Recovery : SRecovery]]></Declaration>
+      <Get Name="Get" Id="{ab4f9ade-3c6d-4bb7-84fd-2a9844ff13cc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="In_RecoveryAvailable" Id="{72f14802-0a69-4078-a09d-20ee328dd9be}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT In_RecoveryAvailable : BOOL]]></Declaration>
+      <Get Name="Get" Id="{bf6c1c50-d77a-4455-95a2-56d1e7e4d3e8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Out_PtrProcessState" Id="{2d10fc1b-e00e-4da6-b91c-eff09b447e2e}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT Out_PtrProcessState : POINTER TO ProcessState]]></Declaration>
+      <Set Name="Set" Id="{df365e61-ee50-4cb2-9b8b-702fb213d9c5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Out_RecoveryRequestedState" Id="{34ebb9a5-13b0-43c0-8636-4f29003c5cff}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT Out_RecoveryRequestedState : STRING]]></Declaration>
+      <Get Name="Get" Id="{4797aff8-50d5-431a-b3eb-b50e4ca9ba16}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{6601a9c8-a925-4d46-9b22-42256bef652a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="ResetRecovery" Id="{3be89510-4702-4b3c-b369-ecadc1b7ae05}">
+      <Declaration><![CDATA[METHOD ABSTRACT ResetRecovery : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetCompensationActive" Id="{73d9d986-5778-4481-af67-64046aae793b}">
+      <Declaration><![CDATA[METHOD ABSTRACT SetCompensationActive : BOOL
+VAR_INPUT
+	i_idx: UINT;
+	i_setValue: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="GvlInterfaceBase">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.In_PtrBoolExprSpecs.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.In_PtrCompensations.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.In_PtrCompExpressions.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.In_PtrRuntimeConditions.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.In_PtrValueExpressions.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.In_Recovery.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.In_RecoveryAvailable.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.Out_PtrProcessState.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.Out_RecoveryRequestedState.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.Out_RecoveryRequestedState.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.ResetRecovery">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="GvlInterfaceBase.SetCompensationActive">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

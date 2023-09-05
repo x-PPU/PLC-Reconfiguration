@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="WeightSensor" Id="{a5cdfec8-362e-441f-b9b1-ba6103586d0f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK WeightSensor IMPLEMENTS ITF_AnalogSensor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	AI_WPWeight AT %I* : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Value" Id="{5b504a1f-3cfe-4daa-b35c-2c2a13a0655b}">
+      <Declaration><![CDATA[PROPERTY Value : INT]]></Declaration>
+      <Get Name="Get" Id="{6887616e-82f1-47e0-a49c-207d10de3c31}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Value := AI_WPWeight;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="WeightSensor">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="WeightSensor.Value.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

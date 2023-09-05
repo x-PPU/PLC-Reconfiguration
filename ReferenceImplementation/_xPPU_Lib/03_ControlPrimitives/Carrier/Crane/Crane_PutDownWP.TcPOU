@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="Crane_PutDownWP" Id="{08d6824a-634f-45ca-bf0e-75765036c64f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Crane_PutDownWP EXTENDS ControlPrimitiveBase
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	m_ptrCrane: POINTER TO Crane;
+	
+	m_step: INT := 0;
+	m_timer: TON;
+
+	// (EProcessVariables.Crane_HoldingWorkpiece = TRUE) AND (EProcessVariables.Crane_CylinderRetracted = TRUE)
+	m_compExpr65: ComparisonExpression(EProcessVariables.Crane_HoldingWorkpiece, EComparisonType.equals, EDataType.binary, TRUE, 0, '', TRUE);
+	m_compExpr67: ComparisonExpression(EProcessVariables.Crane_CylinderRetracted, EComparisonType.equals, EDataType.binary, TRUE, 0, '', TRUE);
+	m_precondition: BoolExpression(m_compExpr65, EBoolOperation.and_op, m_compExpr67);
+	
+	// (EProcessVariables.Crane_HoldingWorkpiece = FALSE) AND (EProcessVariables.Crane_CylinderRetracted = TRUE)
+	m_compExpr70: ComparisonExpression(EProcessVariables.Crane_HoldingWorkpiece, EComparisonType.equals, EDataType.binary, FALSE, 0, '', TRUE);
+	m_compExpr72: ComparisonExpression(EProcessVariables.Crane_CylinderRetracted, EComparisonType.equals, EDataType.binary, TRUE, 0, '', TRUE);
+	m_postcondition: BoolExpression(m_compExpr70, EBoolOperation.and_op, m_compExpr72);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Method Name="Abort" Id="{f695ef8d-8272-498a-afe5-9371de2a2d4a}">
+      <Declaration><![CDATA[METHOD Abort : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrCrane^.o_MonostableCylinder.METH_Retract();
+IF m_ptrCrane^.o_VacuumGripper.WPTaken THEN
+	m_ptrCrane^.o_VacuumGripper.METH_Intake();
+ELSE
+	m_ptrCrane^.o_VacuumGripper.METH_Release();
+END_IF
+Abort := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ExecuteInternal" Id="{2937023c-09e5-4535-bb21-a12822c8bd56}">
+      <Declaration><![CDATA[(* Execution logic of this Control Primitive. *)
+METHOD PROTECTED  ExecuteInternal : BOOL
+VAR_INPUT
+	i_params: ParameterSet;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE m_step OF
+
+	0:	// extend
+		m_ptrCrane^.o_MonostableCylinder.METH_Extend();
+		IF m_ptrCrane^.o_MonostableCylinder.Extended THEN
+			m_step := 1;
+		END_IF
+	
+	1:	// grip
+		m_ptrCrane^.o_VacuumGripper.METH_Release();
+		m_timer(IN := TRUE, PT := T#100MS);
+		IF m_timer.Q THEN
+			m_timer(IN := FALSE);
+			m_step := 2;
+		END_IF
+
+	
+	2:	// retract
+		m_ptrCrane^.o_MonostableCylinder.METH_Retract();
+		IF m_ptrCrane^.o_MonostableCylinder.Retracted THEN
+			m_step := 0;
+			ExecuteInternal := TRUE;
+		END_IF	
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{f44ea7f6-0fff-4111-a789-5a8c5602a98f}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	i_ptrCrane: POINTER TO Crane;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrCrane := i_ptrCrane;
+
+m_id := EPrimitives.Crane_PutDownWP;
+m_timeout := T#20S;
+
+Precondition := m_precondition;
+Postcondition := m_postcondition;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Crane_PutDownWP">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_PutDownWP.Abort">
+      <LineId Id="6" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_PutDownWP.ExecuteInternal">
+      <LineId Id="8" Count="8" />
+      <LineId Id="30" Count="3" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="22" Count="7" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_PutDownWP.FB_init">
+      <LineId Id="11" Count="5" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

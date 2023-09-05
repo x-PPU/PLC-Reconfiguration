@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="IExpression" Id="{c727e5ae-f079-4e5b-b922-afaa62c9fe0e}">
+    <Declaration><![CDATA[INTERFACE IExpression EXTENDS __System.IQueryInterface
+]]></Declaration>
+    <Method Name="IsTrue" Id="{d55e8b23-d898-426b-80c6-7c0f54d09339}">
+      <Declaration><![CDATA[METHOD IsTrue : BOOL
+VAR_INPUT
+	i_ptrProcessState: POINTER TO ProcessState;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="ToString" Id="{5ecdd8c1-0284-443e-8771-8bd768be6ce6}">
+      <Declaration><![CDATA[METHOD ToString : STRING(256)
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

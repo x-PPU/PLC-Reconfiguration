@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="ERecoveryState" Id="{d1ae1386-23cb-4dc9-b81b-a300d50aeddc}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE ERecoveryState :
+(
+	none := 0,
+	requested := 1,
+	awaiting := 2,
+	running := 3,
+	completed := 4,
+	failed := 5
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

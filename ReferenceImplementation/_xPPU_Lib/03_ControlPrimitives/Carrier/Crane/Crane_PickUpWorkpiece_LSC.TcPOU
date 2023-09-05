@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="Crane_PickUpWorkpiece_LSC" Id="{7bc1add5-c496-4886-8350-50e2d98ec448}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Crane_PickUpWorkpiece_LSC EXTENDS Crane_MoveWorkpiece_Base
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	m_precondition: ValueExpression(EDataType.binary, TRUE, 0, '');
+	m_postcondition: ValueExpression(EDataType.binary, TRUE, 0, '');
+	
+	m_timer: TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Method Name="AtTarget" Id="{e02a2e25-5955-4a44-9bd0-ecc0798a8651}">
+      <Declaration><![CDATA[METHOD PROTECTED AtTarget : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AtTarget := m_ptrCrane^.o_Angle = m_targetAngle;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{9cc85646-5d60-402b-87bd-94fa2b4dbafd}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	i_ptrCrane: POINTER TO Crane;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrCrane := i_ptrCrane;
+
+m_id := EPrimitives.Crane_PickUpWorkpiece_LSC;
+m_timeout := T#200S;
+
+m_pre := m_precondition;
+m_post := m_postcondition;
+m_targetAngle := 90;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SwitchGripper" Id="{e0859efb-ccde-4e39-9aab-5f963eb7fd50}">
+      <Declaration><![CDATA[METHOD PROTECTED SwitchGripper : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SwitchGripper := FALSE;
+m_ptrCrane^.o_VacuumGripper.METH_Intake();
+m_timer(IN := TRUE, PT := T#100MS);
+IF m_timer.Q THEN
+	m_timer(IN := FALSE);
+	SwitchGripper := TRUE;
+	
+	m_st^.ShiftProduct(EProducts.LSC_product, EProducts.crane_product);
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Crane_PickUpWorkpiece_LSC">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_PickUpWorkpiece_LSC.AtTarget">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_PickUpWorkpiece_LSC.FB_init">
+      <LineId Id="19" Count="5" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="40" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_PickUpWorkpiece_LSC.SwitchGripper">
+      <LineId Id="10" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="2" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

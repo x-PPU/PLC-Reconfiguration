@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="RampConfiguration" Id="{2c40481a-f509-4d6e-9515-b4252783051a}">
+    <Declaration><![CDATA[TYPE RampConfiguration EXTENDS BaseConfiguration:
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

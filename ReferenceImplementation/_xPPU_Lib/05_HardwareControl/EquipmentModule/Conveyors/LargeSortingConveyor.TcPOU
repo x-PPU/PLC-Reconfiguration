@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="LargeSortingConveyor" Id="{98c8a6c0-62a5-45da-9881-5971e7ae3c1a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK LargeSortingConveyor EXTENDS Conveyor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	m_rampPusherStart : MonostableCylinder;
+	m_rampPusherMid : MonostableCylinder;
+	m_Switch : Switch;
+	
+	m_presenceSensorStart : PresenceSensor;
+	m_opticalSensorStart : OpticalSensor;
+	m_opticalSensorMid : OpticalSensor;
+	m_opticalSensorEnd : OpticalSensor;
+	m_inductiveSensorStart : InductiveSensor;
+	m_inductiveSensorMid : InductiveSensor;
+	
+	m_rampStart : Ramp;
+	m_rampMiddle : Ramp;
+	m_rampEnd : Ramp;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{8ff7c17f-a5be-4131-85e0-cba796ee2f03}" />
+    <Folder Name="Properties" Id="{e064af6c-3a9d-4627-9c8b-8ce1c74285e0}" />
+    <Property Name="LightWPAtEnd" Id="{cbaaad75-a50b-4b75-a2ff-fb1ae4661bb2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY LightWPAtEnd : BOOL]]></Declaration>
+      <Get Name="Get" Id="{789630a6-5abe-4f13-aa23-24a039dbdb39}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LightWPAtEnd := m_opticalSensorEnd.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="LightWPAtMid" Id="{c0691c77-34d2-4967-8f46-59f09c92b70f}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY LightWPAtMid : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f69fdf35-c4f0-469e-b359-271887fe662f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LightWPAtMid := m_opticalSensorMid.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="LightWPAtStart" Id="{02423b6b-5a6d-44c0-9127-6a1044dfca19}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY LightWPAtStart : BOOL]]></Declaration>
+      <Get Name="Get" Id="{47fea6c9-28f5-4489-bbd4-19a34fdb0e90}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LightWPAtStart := m_opticalSensorStart.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="MetalWPAtMid" Id="{08c93616-276a-4a9b-b348-c79ee62f39e2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY MetalWPAtMid : BOOL]]></Declaration>
+      <Get Name="Get" Id="{06880b0f-ee17-4071-8e67-d014fff530de}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MetalWPAtMid := m_inductiveSensorMid.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="MetalWPAtStart" Id="{e1aff909-30a2-4e4a-9ef9-73515ae9b1d2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY MetalWPAtStart : BOOL]]></Declaration>
+      <Get Name="Get" Id="{48d05e8a-cdb2-4a1f-9865-6d8e1a5e089b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MetalWPAtStart := m_inductiveSensorStart.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="METH_Ramp1Pusher_Extend" Id="{db7aa33f-f817-42d9-b049-c5d7e89872a1}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Ramp1Pusher_Extend : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_rampPusherStart.METH_Extend();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_Ramp1Pusher_Retract" Id="{c93f0b37-9b41-472a-b2c4-919b8b97d70b}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Ramp1Pusher_Retract : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_rampPusherStart.METH_Retract();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_Ramp2Pusher_Extend" Id="{df550365-0219-49f9-a5e0-0d1ae07e1214}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Ramp2Pusher_Extend : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_rampPusherMid.METH_Extend();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_Ramp2Pusher_Retract" Id="{1e9a7802-1fbd-4d97-b3d8-c1d68e075485}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Ramp2Pusher_Retract : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_rampPusherMid.METH_Retract();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_Switch_Extend" Id="{888745d1-31ee-4883-a19a-52870fa1d2f8}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Switch_Extend : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_Switch.METH_Extend();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_Switch_Retract" Id="{0f674d0f-f954-4aea-8ce3-8203b48f6fbf}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Switch_Retract : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_Switch.METH_Retract();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="WPAtRampEnd" Id="{72a736d8-8702-43de-bb34-0f294d57dfc1}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtRampEnd : BOOL]]></Declaration>
+      <Get Name="Get" Id="{6460b0d0-d378-4057-b1e0-1d22fb0c7f9b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtRampEnd := m_rampEnd.m_presenceSensorRampFull.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="WPAtRampMiddle" Id="{eccfe64b-6438-4d2d-9171-848fed8750eb}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtRampMiddle : BOOL]]></Declaration>
+      <Get Name="Get" Id="{44cef745-a3c0-4a76-b161-64da40a9d405}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtRampMiddle := m_rampMiddle.m_presenceSensorRampFull.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="WPAtRampStart" Id="{bf2003e6-aa99-498f-a066-ac1cd0c836c1}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtRampStart : BOOL]]></Declaration>
+      <Get Name="Get" Id="{b86e42f8-f188-4e5d-9d15-696f18c9fdc3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtRampStart := m_rampStart.m_presenceSensorRampFull.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="WPAtStart" Id="{012c0511-df99-49a9-9f7e-84c3f72bc727}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtStart : BOOL]]></Declaration>
+      <Get Name="Get" Id="{355c7cca-f0d7-4aff-9909-5062632b7688}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtStart := m_presenceSensorStart.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="LargeSortingConveyor">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.LightWPAtEnd.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.LightWPAtMid.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.LightWPAtStart.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.MetalWPAtMid.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.MetalWPAtStart.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.METH_Ramp1Pusher_Extend">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.METH_Ramp1Pusher_Retract">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.METH_Ramp2Pusher_Extend">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.METH_Ramp2Pusher_Retract">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.METH_Switch_Extend">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.METH_Switch_Retract">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.WPAtRampEnd.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.WPAtRampMiddle.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.WPAtRampStart.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LargeSortingConveyor.WPAtStart.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

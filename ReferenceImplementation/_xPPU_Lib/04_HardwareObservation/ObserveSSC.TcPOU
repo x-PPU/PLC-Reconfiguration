@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ObserveSSC" Id="{66efb86e-0f55-4957-be87-625d71a455b3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ObserveSSC EXTENDS HardwareObservationBase
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	m_ptrSSC: POINTER TO SmallSortingConveyor;
+	m_ptrSSCWP1: POINTER TO xPPUProduct;
+	m_ptrSSCWP2: POINTER TO xPPUProduct;
+	
+	m_rtWpAtRamp: R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{b7cec3e1-cf3b-4b8f-99ec-0f0dfde818b5}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	i_ptrSSC: POINTER TO SmallSortingConveyor;
+	i_ptrWP1: POINTER TO IProduct;
+	i_ptrWP2: POINTER TO IProduct;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrSSC := i_ptrSSC;
+IF NOT __QUERYPOINTER(i_ptrWP1^, m_ptrSSCWP1) THEN
+	FB_init := FALSE;
+END_IF
+IF NOT __QUERYPOINTER(i_ptrWP2^, m_ptrSSCWP2) THEN
+	FB_init := FALSE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetDefinition" Id="{454d5de4-3775-456f-8448-2f51238c8a30}">
+      <Declaration><![CDATA[METHOD  ResetDefinition : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateProcessObservation" Id="{a96c4790-5b4e-41ac-814c-9aa10148e31c}">
+      <Declaration><![CDATA[(* Update an instance of ProcessState with the part of the process that can be observed by this Hardware Interface. *)
+METHOD UpdateProcessObservation : BOOL
+VAR_IN_OUT
+	io_processState: ProcessState;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_rtWpAtRamp(CLK := m_ptrSSC^.WPAtRampEnd);
+
+io_processState.UpdateState_Binary(EProcessVariables.SSC_WPAtStart, m_ptrSSC^.WPAtStart, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.SSC_WPAtEnd, m_ptrSSC^.WPAtEnd, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.SSC_WPLightAtMiddle, m_ptrSSC^.LightWPAtMid, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.SSC_WPMetalAtMiddle, m_ptrSSC^.MetalWPAtMid, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.SSC_WPAtRampEnd, m_ptrSSC^.WPAtRampEnd, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.SSC_SwitchExtended, m_ptrSSC^.m_Switch.Extended, TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.SSC_SwitchRetracted, m_ptrSSC^.m_Switch.Retracted, TRUE);
+
+IF m_rtWpAtRamp.Q THEN
+	io_processState.UpdateState_NumericIncrement(EProcessVariables.SSC_RampWPCount, TRUE);
+END_IF
+
+
+io_processState.UpdateState_Defined(EProcessVariables.SSC_WPAtStart, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.SSC_WPAtEnd, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.SSC_WPLightAtMiddle, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.SSC_WPMetalAtMiddle, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.SSC_WPAtRampEnd, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.SSC_SwitchExtended, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.SSC_SwitchRetracted, TRUE);
+// TODO - the following is technically not defined but how can we avoid that?
+io_processState.UpdateState_Defined(EProcessVariables.SSC_RampWPCount, TRUE);
+
+
+// update WP info (if there are sensors available), then update the process variables list
+
+io_processState.UpdateState_Numeric(EProcessVariables.SSC_ProductType_1, UINT_TO_LREAL(m_ptrSSCWP1^.Material), TRUE);
+io_processState.UpdateState_Numeric(EProcessVariables.SSC_ProductType_2, UINT_TO_LREAL(m_ptrSSCWP2^.Material), TRUE);
+
+io_processState.UpdateState_Defined(EprocessVariables.SSC_ProductType_1, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.SSC_ProductType_2, TRUE);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ObserveSSC">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveSSC.FB_init">
+      <LineId Id="7" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="34" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveSSC.ResetDefinition">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveSSC.UpdateProcessObservation">
+      <LineId Id="84" Count="1" />
+      <LineId Id="40" Count="1" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="91" Count="1" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="58" Count="4" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="72" Count="1" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

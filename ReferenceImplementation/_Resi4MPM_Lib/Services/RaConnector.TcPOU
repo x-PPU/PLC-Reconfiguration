@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RaConnector" Id="{7e7193e1-8358-4bce-ad37-62ecd9b52c8e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RaConnector IMPLEMENTS IService
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR CONSTANT
+	TIMEOUT: TIME := T#10S;
+END_VAR
+VAR
+	m_ptrGvlInterface: POINTER TO GvlInterfaceBase;
+	m_ptrProcessManager: POINTER TO ProcessManager;
+	m_ptrStateTracker: POINTER TO StateTracker;
+	m_ptrErrorMgr: POINTER TO ErrorManager;
+	
+	m_cannotRecover: BOOL;
+	m_recoveryRequester: STRING;
+
+	m_recoveryState: ERecoveryState;
+	m_conditionToRecover: IExpression;
+	m_tonStrategyReceivedTimeout: TON;
+	
+	m_params : ParameterSet;
+	m_alarmId: UINT := 0;
+	
+	// a store of BoolExpressions that can be assigned at runtime	
+	m_boolExpressions: ARRAY [ResiConst.ARR_MIN..ResiConst.COMPENSATIONS_ARR_MAX] OF BoolExpression(0, EBoolOperation.none, 0);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="CannotRecover" Id="{b5dfec31-9fe6-44ee-9dd9-90068c7c7b60}">
+      <Declaration><![CDATA[// Specifies that the CPA cannot provide a viable Recovery Strategy.
+PROPERTY CannotRecover : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ea84626a-02f7-4273-a28f-2c62e7a856c9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CannotRecover := m_cannotRecover;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CyclicRaCommunication" Id="{044b793f-c721-4bee-826e-85cf5fc55473}">
+      <Declaration><![CDATA[METHOD CyclicRaCommunication : BOOL
+VAR
+	i: UINT;	
+	m_ptrCompensation: POINTER TO SCompensation;
+	m_ptrRuntimeCond: POINTER TO SRuntimeCondition;
+	m_recoveryRes: EOperationResult;
+	
+	m_count: UINT;
+	m_vars: STRING;
+	
+	m_tmpExpr: IExpression;
+	m_valExpr: IValExp;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// OBSERVATION
+THIS^.m_ptrGvlInterface^.Out_PtrProcessState := THIS^.m_ptrStateTracker^.PtrProcessState;
+
+// COMPENSATION
+m_ptrCompensation := THIS^.m_ptrGvlInterface^.In_PtrCompensations;
+
+FOR i := ResiConst.ARR_MIN TO ResiConst.COMPENSATIONS_ARR_MAX DO
+	IF m_ptrCompensation^.IsActive THEN
+		CONTINUE;
+	END_IF
+	
+	THIS^.m_ptrGvlInterface^.SetCompensationActive(i, 
+		THIS^.m_ptrProcessManager^.Compensate(m_ptrCompensation));
+	
+	m_ptrCompensation := m_ptrCompensation + SIZEOF(SCompensation);
+END_FOR
+
+// RECOVERY
+CASE m_recoveryState OF
+	ERecoveryState.requested:
+		m_cannotRecover := FALSE;
+		m_tonStrategyReceivedTimeout(IN := FALSE);
+		
+		IF m_alarmId = 0 THEN
+			// if the requested state is a ValueExpression, it's a request for definition
+			IF __QUERYINTERFACE(m_conditionToRecover, m_valExpr) THEN
+				m_alarmId := ESpecialAlarmIds.definition_request;
+			ELSE
+				m_alarmId := ESpecialAlarmIds.recovery_request;
+			END_IF
+			
+			m_ptrErrorMgr^.AddMessage(
+				i_alarmId := m_alarmId,
+				i_active := TRUE,
+				i_severity := ESeverity.warning,
+				i_instanceName := m_recoveryRequester);
+		END_IF
+
+		// finish all running primitives safely before recovery
+		IF m_ptrProcessManager^.FinishPrimitives(i_abortRecoveries := FALSE) THEN
+			THIS^.m_ptrGvlInterface^.Out_RecoveryRequestedState := m_conditionToRecover.ToString();
+			m_recoveryState := ERecoveryState.awaiting;
+			m_alarmId := 0;
+		END_IF
+		
+	ERecoveryState.awaiting:
+		m_tonStrategyReceivedTimeout(IN := TRUE, PT := TIMEOUT);
+		IF m_tonStrategyReceivedTimeout.Q THEN
+			m_recoveryState := ERecoveryState.failed; 
+		ELSIF THIS^.m_ptrGvlInterface^.In_RecoveryAvailable THEN
+			m_recoveryState := ERecoveryState.running;
+		END_IF
+		
+	// the state is only "failed" if the CPA cannot deliver any viable strategy
+	ERecoveryState.failed:
+		m_cannotRecover := TRUE;
+		m_recoveryState := ERecoveryState.none;
+		THIS^.m_ptrGvlInterface^.Out_RecoveryRequestedState := '';
+		
+	ERecoveryState.running:
+		m_recoveryRes := THIS^.m_ptrProcessManager^.ExecuteRecovery(i_strategy := THIS^.m_ptrGvlInterface^.In_Recovery);
+		
+		// if unsuccessful, the respective primitive has already requested a new recovery
+		IF m_recoveryRes = EOperationResult.success THEN
+			m_recoveryState := ERecoveryState.completed;
+		END_IF
+		
+	ERecoveryState.completed:
+		m_cannotRecover := FALSE;
+		m_recoveryState := ERecoveryState.none;
+		m_ptrGvlInterface^.ResetRecovery();
+END_CASE
+
+// EDITABLE CONDITIONS
+m_ptrRuntimeCond := THIS^.m_ptrGvlInterface^.In_PtrRuntimeConditions;
+FOR i := ResiConst.ARR_MIN TO ResiConst.COMPENSATIONS_ARR_MAX DO
+	IF m_ptrRuntimeCond^.IsActive OR m_ptrRuntimeCond^.PrimitiveId = ESpecialBehaviorIds.empty THEN
+		m_ptrRuntimeCond := m_ptrRuntimeCond + SIZEOF(SRuntimeCondition);
+		CONTINUE;
+	END_IF
+	
+	m_tmpExpr := GetExpression(m_ptrRuntimeCond^.ExpressionType, m_ptrRuntimeCond^.ExpressionIdx);
+	m_ptrProcessManager^.SetPrimitiveCondition(
+		m_ptrRuntimeCond^.PrimitiveId, 
+		m_ptrRuntimeCond^.IsPre,
+		m_tmpExpr);
+		
+	m_ptrRuntimeCond^.IsActive := TRUE;
+	m_ptrRuntimeCond := m_ptrRuntimeCond + SIZEOF(SRuntimeCondition);
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetExpression" Id="{dc273b51-6231-4bac-b35d-98f32c342612}">
+      <Declaration><![CDATA[METHOD PRIVATE GetExpression : IExpression
+VAR_INPUT
+	i_type: EExpressionType;
+	i_idx: UINT;
+END_VAR
+VAR
+	m_ptrBoolSpec: POINTER TO SBoolExpressionSpec;
+	m_ptrCompExpr: POINTER TO ComparisonExpression;
+	m_ptrValExpr: POINTER TO ValueExpression;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE i_type OF
+	EExpressionType.boolean:
+		m_ptrBoolSpec := m_ptrGvlInterface^.In_PtrBoolExprSpecs;
+		m_ptrBoolSpec := m_ptrBoolSpec + i_idx * SIZEOF(SBoolExpressionSpec);
+		THIS^.m_boolExpressions[i_idx].FB_init(
+			FALSE, FALSE,
+			i_left := THIS^.GetExpression(m_ptrBoolSpec^.LeftType, m_ptrBoolSpec^.LeftIdx),
+			i_sign := m_ptrBoolSpec^.Operator,
+			i_right := THIS^.GetExpression(m_ptrBoolSpec^.RightType, m_ptrBoolSpec^.RightIdx));
+		GetExpression := THIS^.m_boolExpressions[i_idx];
+	
+	EExpressionType.comparison:
+		m_ptrCompExpr := m_ptrGvlInterface^.In_PtrCompExpressions + i_idx * SIZEOF(ComparisonExpression);
+		GetExpression := m_ptrCompExpr^;
+	
+	EExpressionType.value:
+		m_ptrValExpr := m_ptrGvlInterface^.In_PtrValueExpressions + i_idx * SIZEOF(ValueExpression);
+		GetExpression := m_ptrValExpr^;
+	
+	ELSE
+		GetExpression := 0;
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ProvideServices" Id="{0dbc4ec7-0bf8-4a7e-a7b7-98ea2eefb342}">
+      <Declaration><![CDATA[METHOD ProvideServices : BOOL
+VAR_INPUT
+	i_ptrGvlInterface: POINTER TO GvlInterfaceBase;
+	i_ptrProcessManager: POINTER TO ProcessManager;
+	i_ptrStateTracker: POINTER TO StateTracker;
+	i_ptrErrorMgr: POINTER TO ErrorManager;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.m_ptrGvlInterface := i_ptrGvlInterface;
+THIS^.m_ptrProcessManager := i_ptrProcessManager;
+THIS^.m_ptrStateTracker := i_ptrStateTracker; 
+THIS^.m_ptrErrorMgr := i_ptrErrorMgr;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="RecoveryMode" Id="{eae8ec6d-4a3d-4d3a-a01f-0da6d6f8348c}">
+      <Declaration><![CDATA[PROPERTY RecoveryMode : BOOL]]></Declaration>
+      <Get Name="Get" Id="{2e97f02f-44c5-4182-95c8-1c31aa2fb382}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RecoveryMode := m_recoveryState = ERecoveryState.requested
+	OR m_recoveryState = ERecoveryState.awaiting
+	OR m_recoveryState = ERecoveryState.running
+	OR m_recoveryState = ERecoveryState.failed;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="RequestRecovery" Id="{811befea-5cad-42ce-b233-09231cb46c78}">
+      <Declaration><![CDATA[METHOD RequestRecovery : BOOL
+VAR_INPUT
+	i_desiredState: IExpression;
+	i_senderName: STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// "recursive" recoveries are not supported
+IF m_recoveryState <> ERecoveryState.none THEN
+	RETURN;
+END_IF
+
+m_recoveryState := ERecoveryState.requested;
+m_conditionToRecover := i_desiredState;
+m_recoveryRequester := i_senderName;
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="RaConnector">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="RaConnector.CannotRecover.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="RaConnector.CyclicRaCommunication">
+      <LineId Id="261" Count="10" />
+      <LineId Id="342" Count="0" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="314" Count="1" />
+      <LineId Id="274" Count="4" />
+      <LineId Id="401" Count="0" />
+      <LineId Id="404" Count="0" />
+      <LineId Id="463" Count="1" />
+      <LineId Id="468" Count="11" />
+      <LineId Id="466" Count="0" />
+      <LineId Id="282" Count="2" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="333" Count="0" />
+      <LineId Id="481" Count="0" />
+      <LineId Id="287" Count="2" />
+      <LineId Id="291" Count="22" />
+      <LineId Id="352" Count="0" />
+      <LineId Id="403" Count="0" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="366" Count="0" />
+      <LineId Id="365" Count="0" />
+      <LineId Id="371" Count="0" />
+      <LineId Id="367" Count="1" />
+      <LineId Id="495" Count="0" />
+      <LineId Id="374" Count="2" />
+      <LineId Id="379" Count="0" />
+      <LineId Id="382" Count="4" />
+      <LineId Id="373" Count="0" />
+      <LineId Id="372" Count="0" />
+      <LineId Id="369" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="RaConnector.GetExpression">
+      <LineId Id="88" Count="11" />
+      <LineId Id="118" Count="1" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="103" Count="4" />
+      <LineId Id="76" Count="0" />
+    </LineIds>
+    <LineIds Name="RaConnector.ProvideServices">
+      <LineId Id="7" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="RaConnector.RecoveryMode.Get">
+      <LineId Id="9" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="RaConnector.RequestRecovery">
+      <LineId Id="38" Count="0" />
+      <LineId Id="40" Count="2" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

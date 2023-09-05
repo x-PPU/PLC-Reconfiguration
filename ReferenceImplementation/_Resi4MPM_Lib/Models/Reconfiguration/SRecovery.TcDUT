@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="SRecovery" Id="{bfd3ce9b-24e8-40e3-b325-2c73c55d7a38}">
+    <Declaration><![CDATA[TYPE SRecovery :
+STRUCT
+	(* The sequence of Control Primitives to execute for recovery or defining.*)
+	RecoveryStrategy: ARRAY [ResiConst.ARR_MIN..ResiConst.MODULE_SEQ_ARR_MAX] OF UINT;
+	
+	(* The parameters needed by the strategy's primitives. *)
+	RecoveryParameters: ParameterSet;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

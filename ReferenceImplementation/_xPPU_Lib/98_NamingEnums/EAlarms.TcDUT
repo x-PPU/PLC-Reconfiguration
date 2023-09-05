@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="EAlarms" Id="{f52de266-419f-45ec-a467-a19be2a48fb2}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE EAlarms :
+(
+	none := 0,
+	not_initialized := 1,
+	did_execute := 2,
+	sequence_failed := 3,
+	did_shutdown := 5
+) UINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

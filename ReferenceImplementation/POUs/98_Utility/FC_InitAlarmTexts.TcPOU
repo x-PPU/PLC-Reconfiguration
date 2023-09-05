@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FC_InitAlarmTexts" Id="{1b864caa-f61e-468a-b82d-180583ccea99}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION FC_InitAlarmTexts : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[HMI_Texts.AlarmTexts[EAlarms.none] := 'unspecified';
+HMI_Texts.AlarmTexts[EAlarms.not_initialized] := 'the component is not initialized yet';
+HMI_Texts.AlarmTexts[EAlarms.did_execute] := 'the component executed';
+HMI_Texts.AlarmTexts[EAlarms.did_shutdown] := 'the system shut down';
+
+HMI_Texts.AlarmTexts[ESpecialAlarmIds.recovery_request] := 'a recovery was requested';
+HMI_Texts.AlarmTexts[ESpecialAlarmIds.definition_request] := 'a definition was requested';
+]]></ST>
+    </Implementation>
+    <LineIds Name="FC_InitAlarmTexts">
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

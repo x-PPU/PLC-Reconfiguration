@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="Crane" Id="{89659484-f4b6-4d4e-9769-13bb54647fd5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Crane EXTENDS BaseCarrier
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	o_VacuumGripper: VacuumGripper;
+	o_MonostableCylinder: MonostableCylinder;
+	// the angle with limited knowledge, e.g., -1 before stack, +1 after stack, +89 before LSC, +91 after LSC etc.
+	o_Angle: INT := 45;
+END_VAR
+VAR
+	// Turning table
+	m_PresenceSensorAtStack : PresenceSensor;
+	m_PresenceSensorAtConveyor : PresenceSensor;
+	m_PresenceSensorAtStamp : PresenceSensor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="AtConveyor" Id="{98be1ca6-aaeb-4be7-a201-775c3d705d7f}">
+      <Declaration><![CDATA[PROPERTY AtConveyor : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ff456294-e1f9-4269-81bc-c634ad5bfbfe}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AtConveyor := m_PresenceSensorAtConveyor.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="AtStack" Id="{d9e921f5-807a-447c-beb6-2f92290dbb0e}">
+      <Declaration><![CDATA[PROPERTY AtStack : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a2fd4aed-6330-4971-9d5e-16807bd877e9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AtStack := m_PresenceSensorAtStack.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="AtStamp" Id="{eb404776-4140-4f3b-817a-19497c2dc678}">
+      <Declaration><![CDATA[PROPERTY AtStamp : BOOL]]></Declaration>
+      <Get Name="Get" Id="{6e2f2f60-cdde-4232-b548-15b0f34b2c67}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AtStamp := m_PresenceSensorAtStamp.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="METH_CarrierStop" Id="{af880bad-164b-4f34-8563-ba6d325f7c14}">
+      <Declaration><![CDATA[METHOD METH_CarrierStop : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Motor.ACT_Stop();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_CarrierTurnClockwise" Id="{63741894-1719-4a74-9bdd-7facdefa00ba}">
+      <Declaration><![CDATA[METHOD METH_CarrierTurnClockwise : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Motor.ACT_TurnClockwise();
+
+IF AtStack THEN
+	o_angle := 0;
+ELSIF AtConveyor THEN
+	o_angle := 90;
+ELSIF AtStamp THEN
+	o_angle := 180;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_CarrierTurnCounterclockwise" Id="{9d762642-289c-4e3d-803b-b09ea30dd23f}">
+      <Declaration><![CDATA[METHOD METH_CarrierTurnCounterclockwise : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Motor.ACT_TurnCounterclockwise();
+
+IF AtStack THEN
+	o_angle := 0;
+ELSIF AtConveyor THEN
+	o_angle := 90;
+ELSIF AtStamp THEN
+	o_angle := 180;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Crane">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane.AtConveyor.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane.AtStack.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane.AtStamp.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane.METH_CarrierStop">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane.METH_CarrierTurnClockwise">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane.METH_CarrierTurnCounterclockwise">
+      <LineId Id="9" Count="7" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

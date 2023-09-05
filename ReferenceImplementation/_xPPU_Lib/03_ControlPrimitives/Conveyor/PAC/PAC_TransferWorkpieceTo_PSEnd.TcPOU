@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="PAC_TransferWorkpieceTo_PSEnd" Id="{5881cadb-406a-481c-9bdf-bcc7ca85113e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PAC_TransferWorkpieceTo_PSEnd EXTENDS PAC_MoveWorkpiece_Base
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	// (EProcessVariables.PicAlpha_CylinderRetracted = TRUE) AND (EProcessVariables.PAC_WPAtEnd = FALSE)
+	m_compExpr116: ComparisonExpression(EProcessVariables.PicAlpha_CylinderRetracted, EComparisonType.equals, EDataType.binary, TRUE, 0, '', TRUE);
+	m_compExpr118: ComparisonExpression(EProcessVariables.PAC_WPAtEnd, EComparisonType.equals, EDataType.binary, FALSE, 0, '', TRUE);
+	m_precondition: BoolExpression(m_compExpr116, EBoolOperation.and_op, m_compExpr118);
+	
+	// EProcessVariables.PAC_WPAtEnd = TRUE
+	m_postcondition: ComparisonExpression(EProcessVariables.PAC_WPAtEnd, EComparisonType.equals, EDataType.binary, TRUE, 0, '', TRUE);
+	
+	m_switchExtended: BOOL;
+	m_timer: TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Method Name="AtTarget" Id="{714ebb76-abfd-4ba3-8af5-412ea4fb8a01}">
+      <Declaration><![CDATA[METHOD PROTECTED  AtTarget : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AtTarget := FALSE;
+
+IF NOT m_switchExtended THEN
+	m_ptrPAC^.METH_Switch_Extend();
+	m_switchExtended := TRUE;
+ELSE
+	m_timer(IN := TRUE, PT := T#500MS);
+	IF m_timer.Q THEN
+		m_ptrPAC^.METH_Switch_Retract();
+	END_IF
+END_IF
+
+IF m_ptrPAC^.WPAtEnd THEN
+	m_timer(IN := FALSE);
+	AtTarget := TRUE;
+	m_switchExtended := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="EjectOperation" Id="{7466a2bc-7397-401a-8dd4-f5f40da7e1dd}">
+      <Declaration><![CDATA[METHOD PROTECTED EjectOperation : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[EjectOperation := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{f38fc04c-ef42-43ea-94f8-7d0b4c9e9afd}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	i_ptrPAC: POINTER TO PicAlphaConveyor;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrPAC := i_ptrPAC;
+
+m_id := EPrimitives.PAC_TransferWorkpieceTo_PSEnd;
+m_timeout := T#200S;
+
+Precondition := m_precondition;
+Postcondition := m_postcondition;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="PAC_TransferWorkpieceTo_PSEnd">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="PAC_TransferWorkpieceTo_PSEnd.AtTarget">
+      <LineId Id="5" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="53" Count="2" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="39" Count="0" />
+    </LineIds>
+    <LineIds Name="PAC_TransferWorkpieceTo_PSEnd.EjectOperation">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PAC_TransferWorkpieceTo_PSEnd.FB_init">
+      <LineId Id="10" Count="6" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

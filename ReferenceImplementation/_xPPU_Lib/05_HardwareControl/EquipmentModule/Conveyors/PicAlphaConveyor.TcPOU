@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="PicAlphaConveyor" Id="{cea08a11-9072-40cf-8c71-d3ffb2c3937e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PicAlphaConveyor EXTENDS Conveyor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//Sensors
+	m_PresencesensorStart : PresenceSensor;
+	m_PresencesensorEnd : PresenceSensor;
+	
+	m_Switch: Switch;
+	m_WPNumberAtPAC : INT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{811870d3-1281-40d0-8fc6-7777c9f96f7c}" />
+    <Folder Name="Properties" Id="{4ba22d9b-1c41-456f-8334-222367e2eeec}" />
+    <Method Name="METH_IncreaseWPNumberAtPAC" Id="{26953721-4236-43e4-b905-c9dc77def065}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_IncreaseWPNumberAtPAC : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_WPNumberAtPAC := m_WPNumberAtPAC + 1;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_ReduceWPNumberAtPAC" Id="{082ee46b-07b0-4ae8-a435-44092005eae7}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_ReduceWPNumberAtPAC : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_WPNumberAtPAC := m_WPNumberAtPAC - 1;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_ResetWPNumberAtPAC" Id="{49e9debb-a129-42fd-bfd5-b7dbf5659fe5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_ResetWPNumberAtPAC : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_WPNumberAtPAC := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_Switch_Extend" Id="{496e97ee-3f35-4150-af7b-eaf515d671dd}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Switch_Extend : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_Switch.METH_Extend();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="METH_Switch_Retract" Id="{f3db989f-bd85-4804-99dc-94b1262fb4dc}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD METH_Switch_Retract : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_Switch.METH_Retract();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="WPAtEnd" Id="{448a1621-c9b5-486e-8184-c44ffb3180e1}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtEnd : BOOL]]></Declaration>
+      <Get Name="Get" Id="{db859e52-7d65-4c1e-b378-bca47f887dd8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtEnd := m_presenceSensorEnd.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="WPAtStart" Id="{bd6d6823-e1a4-4d52-91ba-854cc8e25785}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY WPAtStart : BOOL]]></Declaration>
+      <Get Name="Get" Id="{87ecb807-99ea-42f3-a388-9d3cd6d576e2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WPAtStart := m_presenceSensorStart.Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="PicAlphaConveyor">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="PicAlphaConveyor.METH_IncreaseWPNumberAtPAC">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PicAlphaConveyor.METH_ReduceWPNumberAtPAC">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PicAlphaConveyor.METH_ResetWPNumberAtPAC">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PicAlphaConveyor.METH_Switch_Extend">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PicAlphaConveyor.METH_Switch_Retract">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PicAlphaConveyor.WPAtEnd.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="PicAlphaConveyor.WPAtStart.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

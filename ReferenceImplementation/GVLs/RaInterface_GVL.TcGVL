@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <GVL Name="RaInterface_GVL" Id="{1f62a318-2992-4d20-a186-e2da272f50bd}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	ALARM_ARR_MAX: UINT := 9;
+END_VAR
+
+VAR_GLOBAL
+	// #################### OUTPUT TO RA ####################
+	// alarms detected at field-level or process-level (irregularly pushed to RA)
+	{attribute 'OPC.UA.DA' := '1'}
+	Out_Alarms: ARRAY [ResiConst.ARR_MIN..RaInterface_GVL.ALARM_ARR_MAX] OF SAlarm;
+	
+	// the complete set of observed process variables (explicitly checked by RA)
+	{attribute 'OPC.UA.DA' := '1'}
+	Out_NamedProcessState: ARRAY [ResiConst.ARR_MIN..ResiConst.STATE_ARR_MAX] OF SNamedValue;
+	
+	// the process state that needs to be restored (irregularly pushed to RA)
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.StructuredType' := '1'}
+	Out_RecoveryRequest: SRecoveryRequestOutput;
+	
+	
+	// ################### INPUT FROM RA ####################
+	// CPA-computed specifications of compensation strategies
+	{attribute 'OPC.UA.DA' := '1'}
+	In_Compensations: ARRAY [ResiConst.ARR_MIN..ResiConst.COMPENSATIONS_ARR_MAX] OF SCompensation;
+	
+	// CPA-computed specification of a recovery strategy
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.StructuredType' := '1'}
+	In_Recovery: SRecovery;
+	
+	// specifies whether a recovery is ready for execution
+	{attribute 'OPC.UA.DA' := '1'}
+	In_RecoveryAvailable: BOOL;
+	
+	// a custom sequence to execute (not the automatic mode)
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.StructuredType' := '1'}
+	In_CustomSequence: LinearSequence;
+	
+	// signal the PLC that a custom sequence (not the automatic mode) should be executed
+	{attribute 'OPC.UA.DA' := '1'}
+	In_RunCustomSequence: BOOL;
+	
+	// signal the PLC that the custom sequence should be looped infinitely
+	{attribute 'OPC.UA.DA' := '1'}
+	In_LoopCustomSequence: BOOL;
+	
+	
+	// ################### EDITABLE CONDITIONS ####################
+	// Expressions that can be edited by the CPA at runtime
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.StructuredType' := '1'}
+	In_CompExpressions: ARRAY [ResiConst.ARR_MIN..ResiConst.COMPENSATIONS_ARR_MAX] OF ComparisonExpression(0, EComparisonType.none, EDataType.none, FALSE, 0, '', FALSE);
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.StructuredType' := '1'}
+	In_ValueExpressions: ARRAY [ResiConst.ARR_MIN..ResiConst.COMPENSATIONS_ARR_MAX] OF ValueExpression(EDataType.none, FALSE, 0, '', FALSE);
+	
+	// BoolExpressions are described by a "spec" and then actually constructed on the PLC
+	// (because otherwise working with the IExpressions left and right is impossible)
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.StructuredType' := '1'}
+	In_BoolExprSpecs: ARRAY [ResiConst.ARR_MIN..ResiConst.COMPENSATIONS_ARR_MAX] OF SBoolExpressionSpec;
+	
+	// Specified assignement of specified expressions to primitives (array index = primitive ID)
+	// (must be actually assigned on the PLC) 
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.StructuredType' := '1'}
+	In_RuntimeConditions: ARRAY [ResiConst.ARR_MIN..ResiConst.COMPENSATIONS_ARR_MAX] OF SRuntimeCondition;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

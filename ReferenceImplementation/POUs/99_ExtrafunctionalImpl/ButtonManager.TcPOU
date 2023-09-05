@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ButtonManager" Id="{84af5a22-f6c3-40e7-b04e-7fad7f555d5d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ButtonManager
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	DI_StartButton_Terminal1 AT%I*: BOOL;
+	DI_StartButton_Terminal2 AT%I*: BOOL;	
+	DI_StartButton_Terminal3 AT%I*: BOOL;	
+	DI_StartButton_Door AT%I*: BOOL;	
+	DI_StartButton_LightBarrier AT%I*: BOOL;	
+	
+	DI_StopButton_Door AT%I*: BOOL;	
+	DI_StopButton_LightBarrier AT%I*: BOOL;	
+	
+	DI_EStopButton_Terminal1 AT%I*: BOOL;
+	DI_EStopButton_Terminal2 AT%I*: BOOL;	
+	DI_EStopButton_Terminal3 AT%I*: BOOL;	
+	//DI_EStopButton_Door AT%I*: BOOL;     //currently not connected to PLC
+	DI_EStopButton_LightBarrier AT%I*: BOOL;
+	
+	DI_ResetButton_Door AT%I*: BOOL;
+	DI_ResetButton_LightBarrier AT%I*: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//manages the Start-, Stop-, Reset- and EStop-Buttons]]></ST>
+    </Implementation>
+    <Property Name="EStop" Id="{f2e58e39-487e-465d-ad45-ba0a8a086814}">
+      <Declaration><![CDATA[PROPERTY EStop : BOOL]]></Declaration>
+      <Get Name="Get" Id="{2a69571f-d77c-4030-b740-f787e7a2f46e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// EStops physically implemented as Failsafe, they return True, when not pressed.
+//for better handling this is reversed here
+EStop := NOT DI_EStopButton_LightBarrier OR NOT DI_EStopButton_Terminal1 OR NOT DI_EStopButton_Terminal2 OR NOT DI_EStopButton_Terminal3;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Reset" Id="{50140a7c-29e4-41f4-8ea5-a56af778457c}">
+      <Declaration><![CDATA[PROPERTY Reset : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7d9203e3-d9ce-420a-b885-d6567b56d269}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Reset := DI_ResetButton_Door OR DI_ResetButton_LightBarrier;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Start" Id="{14840054-998c-46d6-a4df-8b4cf544a550}">
+      <Declaration><![CDATA[PROPERTY Start : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9f159ac2-3de3-4abc-a995-447a12ca6251}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Start := DI_StartButton_Door OR DI_StartButton_LightBarrier OR DI_StartButton_Terminal1 OR DI_StartButton_Terminal2 OR DI_StartButton_Terminal3;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Stop" Id="{1d979780-ca09-4cb7-bd2b-dc7ff7cb8d77}">
+      <Declaration><![CDATA[PROPERTY Stop : BOOL]]></Declaration>
+      <Get Name="Get" Id="{97c4fa01-0e19-4f4e-b309-812d451e5911}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// EStops physically implemented as Failsafe, they return True, when not pressed.
+//for better handling this is reversed here
+Stop := NOT DI_StopButton_Door OR NOT DI_StopButton_LightBarrier;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="ButtonManager">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ButtonManager.EStop.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="ButtonManager.Reset.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ButtonManager.Start.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ButtonManager.Stop.Get">
+      <LineId Id="5" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

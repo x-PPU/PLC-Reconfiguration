@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <Itf Name="ITF_AnalogSensor" Id="{046937c7-7fca-4c6d-ba98-77d1fe003aff}">
+    <Declaration><![CDATA[INTERFACE ITF_AnalogSensor
+]]></Declaration>
+    <Property Name="Value" Id="{31234351-ee15-4997-8056-e8bb4163cc3b}">
+      <Declaration><![CDATA[PROPERTY Value : INT]]></Declaration>
+      <Get Name="Get" Id="{4b526d69-f2e7-4548-ab5c-d9240b4ab5dc}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

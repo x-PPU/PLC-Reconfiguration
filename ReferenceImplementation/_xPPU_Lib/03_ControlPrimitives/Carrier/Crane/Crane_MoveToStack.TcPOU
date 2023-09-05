@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="Crane_MoveToStack" Id="{9e845fad-c032-40ba-b3b1-9f06418d4b9b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Crane_MoveToStack EXTENDS Crane_MoveBase
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	// (EProcessVariables.Crane_CylinderRetracted = TRUE) AND ((EProcessVariables.Crane_HoldingWorkpiece = FALSE) OR ((EProcessVariables.LSC_ProductType = 0) AND ((EProcessVariables.RFC_ProductType_1 = 0) AND ((EProcessVariables.RFC_ProductType_2 = 0) AND (EProcessVariables.Stack_WorkpieceAvailable = FALSE)))))
+	m_compExpr17: ComparisonExpression(EProcessVariables.Crane_CylinderRetracted, EComparisonType.equals, EDataType.binary, TRUE, 0, '', TRUE);
+	m_compExpr19: ComparisonExpression(EProcessVariables.Crane_HoldingWorkpiece, EComparisonType.equals, EDataType.binary, FALSE, 0, '', TRUE);
+	m_compExpr21: ComparisonExpression(EProcessVariables.LSC_ProductType, EComparisonType.equals, EDataType.numeric, FALSE, 0, '', TRUE);
+	m_compExpr23: ComparisonExpression(EProcessVariables.RFC_ProductType_1, EComparisonType.equals, EDataType.numeric, FALSE, 0, '', TRUE);
+	m_compExpr25: ComparisonExpression(EProcessVariables.RFC_ProductType_2, EComparisonType.equals, EDataType.numeric, FALSE, 0, '', TRUE);
+	m_compExpr27: ComparisonExpression(EProcessVariables.Stack_WorkpieceAvailable, EComparisonType.equals, EDataType.binary, FALSE, 0, '', TRUE);
+	m_boolExpr28: BoolExpression(m_compExpr25, EBoolOperation.and_op, m_compExpr27);
+	m_boolExpr29: BoolExpression(m_compExpr23, EBoolOperation.and_op, m_boolExpr28);
+	m_boolExpr30: BoolExpression(m_compExpr21, EBoolOperation.and_op, m_boolExpr29);
+	m_boolExpr31: BoolExpression(m_compExpr19, EBoolOperation.or_op, m_boolExpr30);
+	m_precondition: BoolExpression(m_compExpr17, EBoolOperation.and_op, m_boolExpr31);
+	
+	// EProcessVariables.Crane_AtStack = TRUE
+	m_postcondition: ComparisonExpression(EProcessVariables.Crane_AtStack, EComparisonType.equals, EDataType.binary, TRUE, 0, '', TRUE);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Method Name="AtTarget" Id="{196fcb2f-b1d0-4dbc-847e-769ee5d665f6}">
+      <Declaration><![CDATA[METHOD AtTarget : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AtTarget := m_ptrCrane^.AtStack;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{9144eace-f42f-4a1a-b2a0-6b59e542b331}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+		
+	i_ptrCrane: POINTER TO Crane;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrCrane := i_ptrCrane;
+
+m_id := EPrimitives.Crane_MoveToStack;
+m_timeout := T#30S;
+
+Precondition := m_precondition;
+Postcondition := m_postcondition;
+
+m_initDirection := TRUE; //TRUE: Clockwise
+m_targetTimeout := T#10S;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Crane_MoveToStack">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_MoveToStack.AtTarget">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_MoveToStack.FB_init">
+      <LineId Id="10" Count="5" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <Itf Name="ITF_Cylinder" Id="{f3eec949-cf7d-44c7-9c06-b0fc72cd5bb7}">
+    <Declaration><![CDATA[INTERFACE ITF_Cylinder
+]]></Declaration>
+    <Property Name="Extended" Id="{a2f7ed3a-ad8c-4747-9f03-3c51fb317254}">
+      <Declaration><![CDATA[PROPERTY Extended : BOOL]]></Declaration>
+      <Get Name="Get" Id="{b17eec14-88c8-41f4-976d-500ec6e391e1}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="METH_Extend" Id="{48f05d27-20f3-451a-ae9c-3e2e4560cefb}">
+      <Declaration><![CDATA[METHOD METH_Extend : BOOL
+]]></Declaration>
+    </Method>
+    <Method Name="METH_Retract" Id="{6f500cef-80ad-4e14-90f2-f7d5cf15f451}">
+      <Declaration><![CDATA[METHOD METH_Retract : BOOL
+]]></Declaration>
+    </Method>
+    <Property Name="Retracted" Id="{39384c84-2d84-48d9-b081-21cc415525b7}">
+      <Declaration><![CDATA[PROPERTY Retracted : BOOL]]></Declaration>
+      <Get Name="Get" Id="{553650ce-3272-45b1-a729-454d63b8e3ec}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

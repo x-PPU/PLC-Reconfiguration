@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ObserveStamp" Id="{3f45a784-ed69-49e4-a69b-928097cd3494}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ObserveStamp EXTENDS HardwareObservationBase
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	m_ptrStamp: POINTER TO Stamp;
+	m_ptrStampWP: POINTER TO xPPUProduct;
+	m_detectionStep: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{9bb03e07-4f20-46c5-a8ad-3aabbe141cd1}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+
+	i_ptrStamp: POINTER TO Stamp;
+	i_ptrWP: POINTER TO IProduct;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_ptrStamp := i_ptrStamp;
+IF NOT __QUERYPOINTER(i_ptrWP^, m_ptrStampWP) THEN
+	FB_init := FALSE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetDefinition" Id="{5a0fb072-35b3-4ecf-be09-009ab35c91d0}">
+      <Declaration><![CDATA[METHOD  ResetDefinition : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateProcessObservation" Id="{7ce154e6-b642-4ab2-8d0c-db3d8db69185}">
+      <Declaration><![CDATA[(* Update an instance of ProcessState with the part of the process that can be observed by this Hardware Interface. *)
+METHOD UpdateProcessObservation : BOOL
+VAR_IN_OUT
+	io_processState: ProcessState;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// NOTE: this only works if this method is executed every cycle (or at least very frequently...)
+io_processState.UpdateState_Binary(EProcessVariables.Stamp_WPAtStamp, m_ptrStamp^.WPAtStart, i_force := TRUE);
+
+CASE m_detectionStep OF
+	0: // initial, empty state
+	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.none, i_force := TRUE);
+	IF m_ptrStamp^.WPAtStart THEN
+		m_ptrStampWP^.IsPresent := TRUE;
+		m_detectionStep := 1;
+	END_IF
+	
+	1: // WP received
+	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.unpressed, i_force := TRUE);
+	IF m_ptrStamp^.m_slidingCylinder.Retracted THEN
+		m_detectionStep := 2;
+	ELSIF NOT m_ptrStamp^.WPAtStart THEN
+		// WP removed without stamping
+		m_ptrStampWP^.IsPresent := FALSE;
+		m_detectionStep := 0;
+	END_IF
+	
+	2: // still received ...
+	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.unpressed, i_force := TRUE);
+	IF m_ptrStamp^.m_slidingCylinder.Extended THEN
+		m_detectionStep := 3;
+	END_IF
+	
+	3: // finished processing
+	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.pressed, i_force := TRUE);
+	IF NOT m_ptrStamp^.WPAtStart THEN
+		m_detectionStep := 0;
+	END_IF
+	
+END_CASE
+
+io_processState.UpdateState_Defined(EProcessVariables.Stamp_WPAtStamp, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Stamp_WorkpieceState, TRUE);
+
+io_processState.UpdateState_Numeric(EProcessVariables.Stamp_ProductType, UINT_TO_LREAL(m_ptrStampWP^.Material), TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Stamp_ProductType, TRUE);
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ObserveStamp">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveStamp.FB_init">
+      <LineId Id="25" Count="3" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveStamp.ResetDefinition">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ObserveStamp.UpdateProcessObservation">
+      <LineId Id="52" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="53" Count="3" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="57" Count="6" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="64" Count="11" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="97" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="IValExp" Id="{e141454d-c68e-40e9-a30d-1af90c8c8770}">
+    <Declaration><![CDATA[// this interface is only necessary to allow type-checking for Value Expressions
+INTERFACE IValExp EXTENDS __System.IQueryInterface
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

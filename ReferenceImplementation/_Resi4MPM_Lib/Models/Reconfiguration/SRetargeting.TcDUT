@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="SRetargeting" Id="{f5bbd9ab-7b70-4b92-8217-c3f0343251c3}">
+    <Declaration><![CDATA[TYPE SRetargeting :
+STRUCT
+	RetargetType: ERetargetType;
+	TargetId: UINT;
+	// parameters that are set or overwritten before the primitive is executed
+	OverwriteParams: ParameterSet;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

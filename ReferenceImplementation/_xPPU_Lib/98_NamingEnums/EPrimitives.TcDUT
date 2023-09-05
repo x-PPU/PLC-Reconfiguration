@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <DUT Name="EPrimitives" Id="{036389c5-0b53-4252-ad75-b231dac943aa}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE EPrimitives :
+(
+	empty := 0,
+	
+	Crane_MoveToStack := 01,
+	Crane_MoveToLSC := 02,
+	Crane_MoveToStamp := 03,
+	Crane_PickUpWP := 04,
+	Crane_PutDownWP := 05,
+	
+	Stamp_StampWorkpiece := 10,
+	
+	Stack_ProvideWorkpiece := 20,
+	
+	LSC_TransferWorkpieceTo_RampStart := 30,
+	LSC_TransferWorkpieceTo_RampMid := 31,
+	LSC_TransferWorkpieceTo_RampEnd := 32,
+	LSC_TransferWorkpieceTo_PAC := 33,
+	LSC_SearchWorkpiece := 35,
+	
+	PAC_TransferWorkpieceTo_PSStart := 40,
+	PAC_TransferWorkpieceTo_PSEnd := 41,
+	PAC_TransferWorkpieceTo_SSC := 42,
+	
+	PicAlpha_MoveToPos1 := 50,
+	PicAlpha_MoveToPos2 := 51,
+	PicAlpha_MoveToPos3 := 52,
+	PicAlpha_MoveToPos4 := 53,
+	PicAlpha_PickUpWP := 54,
+	PicAlpha_PutDownWp := 55,
+	
+	SSC_TransferWorkpieceTo_PSStart := 60,
+	SSC_TransferWorkpieceTo_RampEnd := 61,
+	SSC_TransferWorkpieceTo_RFC := 62,
+	
+	RFC_TransferWorkpieceTo_PSEnd := 70,
+	RFC_TransferWorkpieceTo_LSC := 71
+	
+) UINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

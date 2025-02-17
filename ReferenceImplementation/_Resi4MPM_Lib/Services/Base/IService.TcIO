@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
-  <Itf Name="IService" Id="{9a5b4cff-e949-4333-be56-a124fb73f4cc}">
-    <Declaration><![CDATA[INTERFACE IService
-]]></Declaration>
-  </Itf>
-</TcPlcObject>

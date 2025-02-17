@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.44">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.11" TcVersionFixed="true">
 	<DataTypes>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000001}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..0] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-002000000001}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..0] OF BIT</Name>
 			<BitSize>1</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
@@ -11,7 +11,7 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000006}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..5] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-002000000006}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..5] OF BIT</Name>
 			<BitSize>6</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
@@ -20,7 +20,7 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000005}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..4] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-002000000005}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..4] OF BIT</Name>
 			<BitSize>5</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
@@ -29,7 +29,7 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000002}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-002000000002}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BIT</Name>
 			<BitSize>2</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
@@ -38,7 +38,7 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000004}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..3] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-002000000004}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..3] OF BIT</Name>
 			<BitSize>4</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
@@ -47,7 +47,7 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000003}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..2] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-002000000003}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..2] OF BIT</Name>
 			<BitSize>3</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
@@ -138,7 +138,7 @@
 		<ImageData Id="1007">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000000000ff00ffff00ffff00ff000000ff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ffff00ff000000ff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ffff00ff000000ff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ff000000ff00ff000000ff00ff000000ff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff000000000000ff00ff000000000000ff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ffff00ff000000ff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1008">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ff000000000000ff00ffff00ffff00ff808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ff000000ff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ffff00ffff00ffff00ffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff000000ff00ffff00ff000000ff00ffff00ffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ff000000000000ff00ffff00ffff00ffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{8BDF9125-1551-4443-8BCE-1742BDEBEE53}" TargetNetId="5.34.12.243.1.1" ShowHideConfigurations="#x6">
+	<Project ProjectGUID="{8BDF9125-1551-4443-8BCE-1742BDEBEE53}" TargetNetId="192.168.82.13.1.1" ShowHideConfigurations="#x6">
 		<System>
 			<Settings MaxCpus="4">
 				<Cpu RtLimit="40"/>
@@ -148,8 +148,8 @@
 					<ManualSelect>{081AC839-28D0-49CA-9792-72680E1F3249}</ManualSelect>
 					<ManualSelect>{92583661-35AE-45CE-BD4F-C35BFE16F07E}</ManualSelect>
 					<ManualSelect>{BDCC0070-42D5-49AE-ABF1-1D4434813D60}</ManualSelect>
-					<ManualSelect>{3EBB9639-5FF3-42B6-8847-35C70DC013C8}</ManualSelect>
 					<ManualSelect>{FB6D691D-478A-4C62-9D57-8A3A1727A76B}</ManualSelect>
+					<ManualSelect>{3EBB9639-5FF3-42B6-8847-35C70DC013C8}</ManualSelect>
 				</Target>
 			</Licenses>
 			<Tasks>
@@ -160,9 +160,138 @@
 		</System>
 		<Plc>
 			<Project GUID="{A68E175D-2803-4B3E-97DE-543FF7CDE64A}" Name="ReferenceImplementation" PrjFilePath="ReferenceImplementation\ReferenceImplementation.plcProj" TmcFilePath="ReferenceImplementation\ReferenceImplementation.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" CopyTmcToTarget="true" CopyTpyToTarget="false">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="ReferenceImplementation\ReferenceImplementation.tmc" TmcHash="{2E4608E5-E372-073C-8D71-DE81913CEADF}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{5B6EDA59-EA1E-6D84-0025-663B79D2EA3F}" TmcPath="ReferenceImplementation\ReferenceImplementation.tmc">
 					<Name>ReferenceImplementation Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="2" AreaNo="1">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.m_container.m_crane.Motor.DO_TurnClockwise</Name>
+							<Comment><![CDATA[Hardware]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_crane.Motor.DO_TurnCounterclockwise</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_crane.o_VacuumGripper.DO_VacuumOn</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_crane.o_VacuumGripper.VacuumHit</Name>
+							<Comment><![CDATA[ Only used by PickAlpha]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_crane.o_MonostableCylinder.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_stack.o_slidingCylinder.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_stamp.m_stampingCylinder.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_stamp.m_slidingCylinder.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_stamp.m_slidingCylinder.DO_Retract</Name>
+							<Comment><![CDATA[Hardware]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_stamp.m_pressureValve.AO_SetPressure</Name>
+							<Comment><![CDATA[Hardware]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_LSC.Motor.DO_TurnClockwise</Name>
+							<Comment><![CDATA[Hardware]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_LSC.Motor.DO_TurnCounterclockwise</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_LSC.m_rampPusherStart.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_LSC.m_rampPusherMid.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_LSC.m_Switch.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_PAC.Motor.DO_TurnClockwise</Name>
+							<Comment><![CDATA[Hardware]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_PAC.Motor.DO_TurnCounterclockwise</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_PAC.m_Switch.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_PicAlpha.Motor.DO_TurnClockwise</Name>
+							<Comment><![CDATA[Hardware]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_PicAlpha.Motor.DO_TurnCounterclockwise</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_PicAlpha.o_VacuumGripper.DO_VacuumOn</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_PicAlpha.o_VacuumGripper.VacuumHit</Name>
+							<Comment><![CDATA[ Only used by PickAlpha]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_PicAlpha.o_MonostableCylinder.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_SSC.Motor.DO_TurnClockwise</Name>
+							<Comment><![CDATA[Hardware]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_SSC.Motor.DO_TurnCounterclockwise</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_SSC.m_Switch.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_RFC.Motor.DO_TurnClockwise</Name>
+							<Comment><![CDATA[Hardware]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_RFC.Motor.DO_TurnCounterclockwise</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_container.m_RFC.m_Switch.DO_Extend</Name>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
@@ -191,6 +320,26 @@
 						</Var>
 						<Var>
 							<Name>MAIN.m_buttonManager.DI_StopButton_LightBarrier</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_buttonManager.DI_AutomaticSwitch_StackTerminal</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_buttonManager.DI_AutomaticSwitch_StampTerminal</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_buttonManager.DI_AutomaticSwitch_LSCTerminal</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_buttonManager.DI_AutomaticSwitch_DoorTerminal</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.m_buttonManager.DI_AutomaticSwitch_LightGridTerminal</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -309,14 +458,12 @@
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_stack.m_Opticalsensor.DI_WPLight</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_stack.m_Inductivesensor.DI_WPMetallic</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -480,32 +627,27 @@
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_LSC.m_opticalSensorStart.DI_WPLight</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_LSC.m_opticalSensorMid.DI_WPLight</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_LSC.m_opticalSensorEnd.DI_WPLight</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_LSC.m_inductiveSensorStart.DI_WPMetallic</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_LSC.m_inductiveSensorMid.DI_WPMetallic</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -627,14 +769,12 @@
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_SSC.m_Opticalsensor.DI_WPLight</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.m_container.m_SSC.m_Inductivesensor.DI_WPMetallic</Name>
-							<Comment><![CDATA[Hardware
-{attribute 'OPC.UA.DA' := '1'}]]></Comment>
+							<Comment><![CDATA[Hardware]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -683,135 +823,6 @@
 						<Var>
 							<Name>MAIN.m_container.m_RFC.m_Switch.DI_BoundaryPressure</Name>
 							<Comment><![CDATA[NOT USED BUT USABLE]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="2" AreaNo="1">
-						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>MAIN.m_container.m_crane.Motor.DO_TurnClockwise</Name>
-							<Comment><![CDATA[Hardware]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_crane.Motor.DO_TurnCounterclockwise</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_crane.o_VacuumGripper.DO_VacuumOn</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_crane.o_VacuumGripper.VacuumHit</Name>
-							<Comment><![CDATA[ Only used by PickAlpha]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_crane.o_MonostableCylinder.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_stack.o_slidingCylinder.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_stamp.m_stampingCylinder.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_stamp.m_slidingCylinder.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_stamp.m_slidingCylinder.DO_Retract</Name>
-							<Comment><![CDATA[Hardware]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_stamp.m_pressureValve.AO_SetPressure</Name>
-							<Comment><![CDATA[Hardware]]></Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_LSC.Motor.DO_TurnClockwise</Name>
-							<Comment><![CDATA[Hardware]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_LSC.Motor.DO_TurnCounterclockwise</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_LSC.m_rampPusherStart.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_LSC.m_rampPusherMid.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_LSC.m_Switch.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_PAC.Motor.DO_TurnClockwise</Name>
-							<Comment><![CDATA[Hardware]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_PAC.Motor.DO_TurnCounterclockwise</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_PAC.m_Switch.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_PicAlpha.Motor.DO_TurnClockwise</Name>
-							<Comment><![CDATA[Hardware]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_PicAlpha.Motor.DO_TurnCounterclockwise</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_PicAlpha.o_VacuumGripper.DO_VacuumOn</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_PicAlpha.o_VacuumGripper.VacuumHit</Name>
-							<Comment><![CDATA[ Only used by PickAlpha]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_PicAlpha.o_MonostableCylinder.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_SSC.Motor.DO_TurnClockwise</Name>
-							<Comment><![CDATA[Hardware]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_SSC.Motor.DO_TurnCounterclockwise</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_SSC.m_Switch.DO_Extend</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_RFC.Motor.DO_TurnClockwise</Name>
-							<Comment><![CDATA[Hardware]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_RFC.Motor.DO_TurnCounterclockwise</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.m_container.m_RFC.m_Switch.DO_Extend</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
@@ -1506,7 +1517,7 @@
 					</UnrestoredVarLinks>
 					<Contexts>
 						<Context>
-							<Id NeedCalleeCall="true">0</Id>
+							<Id>0</Id>
 							<Name>PlcTask</Name>
 							<ManualConfig>
 								<OTCID>#x02010040</OTCID>
@@ -1520,6 +1531,30 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
+			<Project GUID="{41C8CFC6-DCF6-45D5-8BB8-2E3900E72FC5}" Name="Resi4MPM_Lib" PrjFilePath="Resi_Lib\Resi4MPM_Lib\Resi4MPM_Lib.plcproj" TmcFilePath="Resi_Lib\Resi4MPM_Lib\Resi4MPM_Lib.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{ACB5F4AF-DD1A-9D86-B09B-090EBEBCFBB0}" TmcPath="Resi_Lib\Resi4MPM_Lib\Resi4MPM_Lib.tmc">
+					<Name>Resi4MPM_Lib Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
+				</Instance>
+			</Project>
+			<Project GUID="{92D12A21-79A5-42CB-8589-AA54337B8F7A}" Name="xPPU_Lib" PrjFilePath="xPPU_Lib\xPPU_Lib\xPPU_Lib.plcproj" TmcFilePath="xPPU_Lib\xPPU_Lib\xPPU_Lib.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{8D5E3B15-6E30-DC5E-7C63-D6A9D03528C3}" TmcPath="xPPU_Lib\xPPU_Lib\xPPU_Lib.tmc">
+					<Name>xPPU_Lib Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
+				</Instance>
+			</Project>
 		</Plc>
 		<Io>
 			<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="192.168.5.90.2.1" RemoteName="Device 1 (EtherCAT)" InfoImageId="2">
@@ -1530,8 +1565,31 @@
 						<Offset>131072</Offset>
 						<Size>8192</Size>
 						<BaseAddr>0</BaseAddr>
-						<BusNo>65535</BusNo>
+						<BusNo>4</BusNo>
 						<SlotNo>0</SlotNo>
+						<VendorId>5612</VendorId>
+						<DeviceId>20480</DeviceId>
+						<Dma>
+							<Address>0</Address>
+							<Offset>4096</Offset>
+							<Size>12288</Size>
+							<BaseAddr>2</BaseAddr>
+							<RxChn>0</RxChn>
+							<TxChn>1</TxChn>
+						</Dma>
+						<TimeSize>128</TimeSize>
+						<TimeOffs>1024</TimeOffs>
+						<GpioSize>32</GpioSize>
+						<GpioOffs>768</GpioOffs>
+						<EepromSize>32</EepromSize>
+						<EepromOffs>512</EepromOffs>
+						<IntCtrlSize>16</IntCtrlSize>
+						<IntCtrlOffs>640</IntCtrlOffs>
+						<Identification>
+							<Value>1795167326</Value>
+							<Version>1</Version>
+							<Size>256</Size>
+						</Identification>
 					</Ccat>
 				</AddressInfo>
 				<Image Id="1" AddrType="9" ImageType="3">
@@ -1855,7 +1913,7 @@
 				<Box Id="14" BoxType="9099">
 					<Name>BK2&amp;3 (EK1100)</Name>
 					<ImageId>1002</ImageId>
-					<EtherCAT SlaveType="1" PdiType="#x0d00" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x044c2c52" RevisionNo="#x00110000" PortPhys="305" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EK1100 EtherCAT Coupler (2A E-Bus)" Desc="EK1100" PortABoxInfo="#x02000003"/>
+					<EtherCAT SlaveType="1" PdiType="#x0d00" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x044c2c52" RevisionNo="#x00120000" PortPhys="305" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EK1100 EtherCAT Coupler (2A E-Bus)" Desc="EK1100" PortABoxInfo="#x02000003"/>
 					<Box Id="15" BoxType="9099">
 						<Name>2&amp;3.2 (EL1004)</Name>
 						<ImageId>7</ImageId>
@@ -2843,7 +2901,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<BootStrapData>0010f400f410f400</BootStrapData>
 							<DcMode>53796e6368726f6e00000000000000004672656552756e2f534d2d53796e6368726f6e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</DcMode>
 							<DcMode>4443000000000000000000000000000044432d53796e6368726f6e0000000000000000000000000000000000000000000000000000000000a8610000000000070100000000000000000000000000000000000000000000000000000000000000</DcMode>
-							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e7075742062617365642900000000000000000000006079feffa8610000000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
+							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e7075742062617365000000000000000000000000006079feffa8610000000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
 							<Pdo Name="AI Standard Channel 1" Index="#x1a00" Flags="#x0010" SyncMan="3">
 								<ExcludePdo>#x1a01</ExcludePdo>
 								<Entry Name="Status__Underrange" Index="#x6000" Sub="#x01">
@@ -3255,8 +3313,8 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<CoeProfile ProfileNo="19665801"/>
 						</EtherCAT>
 					</Box>
-					<Box Id="39" BoxType="9099">
-						<Name>4.12(EL3058)</Name>
+					<Box Id="208" BoxType="9099" BoxFlags="#x00000020">
+						<Name>Term 208 (EL3058)</Name>
 						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x0bf23052" RevisionNo="#x00130000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3058 8Ch. Ana. Input 4-20mA" Desc="EL3058" PortABoxInfo="#x01000026">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
@@ -3663,7 +3721,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 					<Box Id="40" BoxType="9099">
 						<Name>4.13 (EL2004)</Name>
 						<ImageId>1003</ImageId>
-						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d43052" RevisionNo="#x00110000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2004 4Ch. Dig. Output 24V, 0.5A" Desc="EL2004" PortABoxInfo="#x01000027">
+						<EtherCAT SlaveType="1" PdiType="#x0104" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x07d43052" RevisionNo="#x00110000" RepeatSupport="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2004 4Ch. Dig. Output 24V, 0.5A" Desc="EL2004" PortABoxInfo="#x010000d0">
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
@@ -3788,7 +3846,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<BootStrapData>0010f400f410f400</BootStrapData>
 							<DcMode>53796e6368726f6e00000000000000004672656552756e2f534d2d53796e6368726f6e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</DcMode>
 							<DcMode>4443000000000000000000000000000044432d53796e6368726f6e0000000000000000000000000000000000000000000000000000000000a0860100000000070100000000000000000000000000000000000000000000000000000000000000</DcMode>
-							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e70757420626173656429000000000000000000000000000000a0860100000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
+							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e70757420626173650000000000000000000000000000000000a0860100000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
 							<Pdo Name="ENC Status Channel 1" Index="#x1a00" Flags="#x0010">
 								<ExcludePdo>#x1a01</ExcludePdo>
 								<Entry Name="Status__">
@@ -30977,7 +31035,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<BootStrapData>0010f400f410f400</BootStrapData>
 							<DcMode>53796e6368726f6e00000000000000004672656552756e2f534d2d53796e6368726f6e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</DcMode>
 							<DcMode>4443000000000000000000000000000044432d53796e6368726f6e0000000000000000000000000000000000000000000000000000000000a0860100000000070100000000000000000000000000000000000000000000000000000000000000</DcMode>
-							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e70757420626173656429000000000000000000000000000000a0860100000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
+							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e70757420626173650000000000000000000000000000000000a0860100000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
 							<Pdo Name="ENC Status Channel 1" Index="#x1a00" Flags="#x0010">
 								<ExcludePdo>#x1a01</ExcludePdo>
 								<Entry Name="Status__">
@@ -31327,7 +31385,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<BootStrapData>0010f400f410f400</BootStrapData>
 							<DcMode>53796e6368726f6e00000000000000004672656552756e2f534d2d53796e6368726f6e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</DcMode>
 							<DcMode>4443000000000000000000000000000044432d53796e6368726f6e0000000000000000000000000000000000000000000000000000000000a0860100000000070100000000000000000000000000000000000000000000000000000000000000</DcMode>
-							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e70757420626173656429000000000000000000000000000000a0860100000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
+							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e70757420626173650000000000000000000000000000000000a0860100000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
 							<Pdo Name="ENC Status Channel 1" Index="#x1a00" Flags="#x0010">
 								<ExcludePdo>#x1a01</ExcludePdo>
 								<Entry Name="Status__">
@@ -31918,6 +31976,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^MAIN.m_container.m_crane.Motor.DO_TurnCounterclockwise" VarB="Channel 3^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^BK1 (EK1100)^1.2 (EL1004)">
+				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_AutomaticSwitch_StackTerminal" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_EStopButton_Terminal1" VarB="Channel 1^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_StartButton_Terminal1" VarB="Channel 2^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_crane.o_VacuumGripper.DI_TakenIn" VarB="Channel 4^Input"/>
@@ -31973,6 +32032,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^MAIN.m_container.m_stamp.m_pressureValve.AO_SetPressure" VarB="Channel 2^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^BK2&amp;3 (EK1100)^2&amp;3.2 (EL1004)">
+				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_AutomaticSwitch_StampTerminal" VarB="Channel 1^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_stamp.m_slidingCylinder.DI_Extended" VarB="Channel 2^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_stamp.m_slidingCylinder.DI_Retracted" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_stamp.m_stampingCylinder.DI_Retracted" VarB="Channel 4^Input"/>
@@ -31984,6 +32044,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_stamp.m_stampingCylinder.DI_Extended" VarB="Channel 1^Input"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^BK2&amp;3 (EK1100)^2&amp;3.4 (EL1004)">
+				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_AutomaticSwitch_LSCTerminal" VarB="Channel 1^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_LSC.m_inductiveSensorStart.DI_WPMetallic" VarB="Channel 4^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_LSC.m_presenceSensorStart.DI_WPDetected" VarB="Channel 3^Input"/>
 			</OwnerB>
@@ -32002,14 +32063,6 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^BK2&amp;3 (EK1100)^2&amp;3.7 (EL1004)">
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_EStopButton_Terminal2" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_StartButton_Terminal2" VarB="Channel 4^Input"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^BK4 (EK1100)^4.12(EL3058)">
-				<Link VarA="PlcTask Inputs^MAIN.m_container.m_LSC.m_rampPusherMid.AI_PositionTransmitter" VarB="AI Standard Channel 5^Status"/>
-				<Link VarA="PlcTask Inputs^MAIN.m_container.m_LSC.m_rampPusherStart.AI_PositionTransmitter" VarB="AI Standard Channel 6^Status"/>
-				<Link VarA="PlcTask Inputs^MAIN.m_container.m_crane.o_MonostableCylinder.AI_PositionTransmitter" VarB="AI Standard Channel 1^Value"/>
-				<Link VarA="PlcTask Inputs^MAIN.m_container.m_stack.o_slidingCylinder.AI_PositionTransmitter" VarB="AI Standard Channel 2^Value"/>
-				<Link VarA="PlcTask Inputs^MAIN.m_container.m_stamp.m_slidingCylinder.AI_PositionTransmitter" VarB="AI Standard Channel 3^Value"/>
-				<Link VarA="PlcTask Inputs^MAIN.m_container.m_stamp.m_stampingCylinder.AI_PositionTransmitter" VarB="AI Standard Channel 4^Value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^BK4 (EK1100)^4.2 (EL1808)">
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_LSC.m_rampEnd.m_presenceSensorRampFull.DI_WPDetected" VarB="Channel 8^Input"/>
@@ -32035,6 +32088,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_stamp.m_pressureSensor.AI_CurrentPressure" VarB="AI Standard Channel 2^Value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^BK5 (EK1100)^5.2 (EL1008)">
+				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_AutomaticSwitch_DoorTerminal" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_ResetButton_Door" VarB="Channel 4^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_StartButton_Door" VarB="Channel 1^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_StopButton_Door" VarB="Channel 2^Input"/>
@@ -32065,6 +32119,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^MAIN.m_container.m_PicAlpha.o_VacuumGripper.DI_TakenIn" VarB="Channel 1^Input"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^BK8 (EK1100)^8.3 (EL1004)">
+				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_AutomaticSwitch_LightGridTerminal" VarB="Channel 3^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_ResetButton_LightBarrier" VarB="Channel 4^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_StartButton_LightBarrier" VarB="Channel 1^Input"/>
 				<Link VarA="PlcTask Inputs^MAIN.m_buttonManager.DI_StopButton_LightBarrier" VarB="Channel 2^Input"/>

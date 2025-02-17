@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="FC_InitAlarmTexts" Id="{1b864caa-f61e-468a-b82d-180583ccea99}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION FC_InitAlarmTexts : BOOL
 VAR_INPUT
@@ -9,9 +9,9 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[HMI_Texts.AlarmTexts[EAlarms.none] := 'unspecified';
-HMI_Texts.AlarmTexts[EAlarms.not_initialized] := 'the component is not initialized yet';
+HMI_Texts.AlarmTexts[EAlarms.initialized] := 'the component is not initialized yet';
 HMI_Texts.AlarmTexts[EAlarms.did_execute] := 'the component executed';
-HMI_Texts.AlarmTexts[EAlarms.did_shutdown] := 'the system shut down';
+HMI_Texts.AlarmTexts[EAlarms.stopped] := 'the system shut down';
 
 HMI_Texts.AlarmTexts[ESpecialAlarmIds.recovery_request] := 'a recovery was requested';
 HMI_Texts.AlarmTexts[ESpecialAlarmIds.definition_request] := 'a definition was requested';

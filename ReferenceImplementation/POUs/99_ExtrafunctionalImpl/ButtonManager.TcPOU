@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="ButtonManager" Id="{84af5a22-f6c3-40e7-b04e-7fad7f555d5d}" SpecialFunc="None">
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ButtonManager" Id="{83b34db5-42ce-47b2-8d3e-51a49539dc37}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ButtonManager
 VAR_INPUT
 END_VAR
@@ -16,6 +16,12 @@ VAR
 	DI_StopButton_Door AT%I*: BOOL;	
 	DI_StopButton_LightBarrier AT%I*: BOOL;	
 	
+	DI_AutomaticSwitch_StackTerminal AT%I*: BOOL;
+	DI_AutomaticSwitch_StampTerminal AT%I*: BOOL;
+	DI_AutomaticSwitch_LSCTerminal AT%I*: BOOL;
+	DI_AutomaticSwitch_DoorTerminal AT%I*: BOOL;
+	DI_AutomaticSwitch_LightGridTerminal AT%I*: BOOL;
+	
 	DI_EStopButton_Terminal1 AT%I*: BOOL;
 	DI_EStopButton_Terminal2 AT%I*: BOOL;	
 	DI_EStopButton_Terminal3 AT%I*: BOOL;	
@@ -29,9 +35,9 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//manages the Start-, Stop-, Reset- and EStop-Buttons]]></ST>
     </Implementation>
-    <Property Name="EStop" Id="{f2e58e39-487e-465d-ad45-ba0a8a086814}">
+    <Property Name="EStop" Id="{b851bfe0-6d8b-48a1-ad46-db08066f2b79}">
       <Declaration><![CDATA[PROPERTY EStop : BOOL]]></Declaration>
-      <Get Name="Get" Id="{2a69571f-d77c-4030-b740-f787e7a2f46e}">
+      <Get Name="Get" Id="{990dd466-672d-428f-80d8-17ec53e4bd5b}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -42,9 +48,27 @@ EStop := NOT DI_EStopButton_LightBarrier OR NOT DI_EStopButton_Terminal1 OR NOT 
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Reset" Id="{50140a7c-29e4-41f4-8ea5-a56af778457c}">
+    <Property Name="Mode" Id="{a0cdcdfd-f1c4-4986-8db5-be95fed260e7}">
+      <Declaration><![CDATA[PROPERTY Mode : EOperatingModes]]></Declaration>
+      <Get Name="Get" Id="{107ab86f-4742-4693-85ec-edb1c3eb936f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF DI_AutomaticSwitch_StackTerminal AND DI_AutomaticSwitch_StampTerminal AND DI_AutomaticSwitch_LSCTerminal AND DI_AutomaticSwitch_DoorTerminal AND DI_AutomaticSwitch_LightGridTerminal THEN
+	Mode := EOperatingModes.automatic;
+ELSIF NOT (DI_AutomaticSwitch_StackTerminal OR DI_AutomaticSwitch_StampTerminal OR DI_AutomaticSwitch_LSCTerminal OR DI_AutomaticSwitch_DoorTerminal OR DI_AutomaticSwitch_LightGridTerminal) THEN
+	Mode := EOperatingModes.manual;
+ELSE
+	Mode := EOperatingModes.none;
+END_IF
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Reset" Id="{a587bd60-f0eb-48cd-9d1b-e1ebb72a9ded}">
       <Declaration><![CDATA[PROPERTY Reset : BOOL]]></Declaration>
-      <Get Name="Get" Id="{7d9203e3-d9ce-420a-b885-d6567b56d269}">
+      <Get Name="Get" Id="{77ac5220-0077-474b-ae29-cf82996fad63}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -53,9 +77,9 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Start" Id="{14840054-998c-46d6-a4df-8b4cf544a550}">
+    <Property Name="Start" Id="{7a0efba5-2ca8-4295-879d-e46e8a546bad}">
       <Declaration><![CDATA[PROPERTY Start : BOOL]]></Declaration>
-      <Get Name="Get" Id="{9f159ac2-3de3-4abc-a995-447a12ca6251}">
+      <Get Name="Get" Id="{ee96a133-b6f7-4727-99e8-b5c73355abb8}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -64,9 +88,9 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Stop" Id="{1d979780-ca09-4cb7-bd2b-dc7ff7cb8d77}">
+    <Property Name="Stop" Id="{ee9127b0-0ef4-4cce-a80b-fcaae9e73b8f}">
       <Declaration><![CDATA[PROPERTY Stop : BOOL]]></Declaration>
-      <Get Name="Get" Id="{97c4fa01-0e19-4f4e-b309-812d451e5911}">
+      <Get Name="Get" Id="{1b3f43ae-f213-4bde-a683-053eb61b7354}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -78,22 +102,22 @@ Stop := NOT DI_StopButton_Door OR NOT DI_StopButton_LightBarrier;]]></ST>
       </Get>
     </Property>
     <LineIds Name="ButtonManager">
-      <LineId Id="9" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="ButtonManager.EStop.Get">
-      <LineId Id="2" Count="0" />
-      <LineId Id="5" Count="1" />
+      <LineId Id="1" Count="2" />
+    </LineIds>
+    <LineIds Name="ButtonManager.Mode.Get">
+      <LineId Id="1" Count="7" />
     </LineIds>
     <LineIds Name="ButtonManager.Reset.Get">
-      <LineId Id="2" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="ButtonManager.Start.Get">
-      <LineId Id="2" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="ButtonManager.Stop.Get">
-      <LineId Id="5" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="6" Count="0" />
+      <LineId Id="1" Count="2" />
     </LineIds>
   </POU>
 </TcPlcObject>

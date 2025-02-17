@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="xPPU_Crane" Id="{78161606-71b4-4291-9ac3-095c552c2798}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK xPPU_Crane
 VAR_INPUT
@@ -1928,7 +1928,7 @@ END_VAR
                   <v n="Id">{1c5c6e05-2bb7-4258-bcee-fd16a540c63c}</v>
                   <v n="Identifier">"Specific"</v>
                   <v n="Parent">{00000000-0000-0000-0000-000000000000}</v>
-                  <v n="Description">"Für die Elementart spezifische Eigenschaften"</v>
+                  <v n="Description">"Element type specific properties"</v>
                 </o>
                 <v>20f0fc67-978d-438b-979f-eef294f34ee4</v>
                 <o>
@@ -1936,7 +1936,7 @@ END_VAR
                   <v n="Id">{20f0fc67-978d-438b-979f-eef294f34ee4}</v>
                   <v n="Identifier">"Actions"</v>
                   <v n="Parent">{1c5c6e05-2bb7-4258-bcee-fd16a540c63c}</v>
-                  <v n="Description">"Aktionsdefinitionen"</v>
+                  <v n="Description">"Action definitions"</v>
                 </o>
                 <v>6f37ae05-4d8f-4ddc-9e69-c0e6bd6962c2</v>
                 <o>
@@ -1944,7 +1944,7 @@ END_VAR
                   <v n="Id">{6f37ae05-4d8f-4ddc-9e69-c0e6bd6962c2}</v>
                   <v n="Identifier">"Common"</v>
                   <v n="Parent">{00000000-0000-0000-0000-000000000000}</v>
-                  <v n="Description">"Allgemeine Einstellungen"</v>
+                  <v n="Description">"Common properties"</v>
                 </o>
                 <v>d336ba06-8a67-4e6b-9697-50f83ba6bdde</v>
                 <o>
@@ -1952,7 +1952,7 @@ END_VAR
                   <v n="Id">{d336ba06-8a67-4e6b-9697-50f83ba6bdde}</v>
                   <v n="Identifier">"Times"</v>
                   <v n="Parent">{1c5c6e05-2bb7-4258-bcee-fd16a540c63c}</v>
-                  <v n="Description">"Zeitdefinitionen"</v>
+                  <v n="Description">"Time definitions"</v>
                 </o>
               </d2>
               <d2 n="Attributes" ckt="Guid" cvt="SFCAttributeDescription">
@@ -1966,7 +1966,7 @@ END_VAR
                   <v n="Id">{01580b27-6378-448b-8ecb-0e4b795b58d6}</v>
                   <v n="Identifier">"Exclude"</v>
                   <v n="Parent">{6f37ae05-4d8f-4ddc-9e69-c0e6bd6962c2}</v>
-                  <v n="Description">"Schließt das Element vom Übersetzen aus"</v>
+                  <v n="Description">"Exclude this element from build"</v>
                 </o>
                 <v>23bdaa98-72ec-41f7-817b-9dede5697086</v>
                 <o>
@@ -1978,7 +1978,7 @@ END_VAR
                   <v n="Id">{23bdaa98-72ec-41f7-817b-9dede5697086}</v>
                   <v n="Identifier">"Parallel"</v>
                   <v n="Parent">{1c5c6e05-2bb7-4258-bcee-fd16a540c63c}</v>
-                  <v n="Description">"Schaltet die Verzweigung auf parallel"</v>
+                  <v n="Description">"Sets the branch to parallel mode"</v>
                 </o>
                 <v>38391c6d-6d4a-42f8-8ee7-9f45e5adafa8</v>
                 <o>
@@ -1990,7 +1990,7 @@ END_VAR
                   <v n="Id">{38391c6d-6d4a-42f8-8ee7-9f45e5adafa8}</v>
                   <v n="Identifier">"Name"</v>
                   <v n="Parent">{6f37ae05-4d8f-4ddc-9e69-c0e6bd6962c2}</v>
-                  <v n="Description">"Name des Elements"</v>
+                  <v n="Description">"Name of the element"</v>
                 </o>
                 <v>62e1754b-7629-4e63-9cec-10ae0c536f1f</v>
                 <o>
@@ -2002,7 +2002,7 @@ END_VAR
                   <v n="Id">{62e1754b-7629-4e63-9cec-10ae0c536f1f}</v>
                   <v n="Identifier">"Duplication"</v>
                   <v n="Parent">{1c5c6e05-2bb7-4258-bcee-fd16a540c63c}</v>
-                  <v n="Description">"Kopiert die Implementierung von Schrittaktionen oder Transitionen mit dem Element. Andernfalls wird die Referenz auf eine bestehende Implementierung kopiert."</v>
+                  <v n="Description">"Copies the implementation of step actions or transitions with the element. Otherwise, copies the reference to an existing implementation."</v>
                 </o>
                 <v>6844a48e-46c2-4cc8-a185-a478f3b99cc0</v>
                 <o>
@@ -2014,7 +2014,7 @@ END_VAR
                   <v n="Id">{6844a48e-46c2-4cc8-a185-a478f3b99cc0}</v>
                   <v n="Identifier">"InitStep"</v>
                   <v n="Parent">{1c5c6e05-2bb7-4258-bcee-fd16a540c63c}</v>
-                  <v n="Description">"Setzt den Schritt als Initialschritt"</v>
+                  <v n="Description">"Sets the step as the initial step"</v>
                 </o>
                 <v>700a583f-b4d4-43e4-8c14-629c7cd3bec8</v>
                 <o>
@@ -2026,7 +2026,7 @@ END_VAR
                   <v n="Id">{700a583f-b4d4-43e4-8c14-629c7cd3bec8}</v>
                   <v n="Identifier">"MainAction"</v>
                   <v n="Parent">{20f0fc67-978d-438b-979f-eef294f34ee4}</v>
-                  <v n="Description">"Name der Aktion, welche aufgerufen wird, wenn der Schritt aktiv ist"</v>
+                  <v n="Description">"Name of the action to be called if the step is active"</v>
                 </o>
                 <v>7d894980-aeea-405c-a0f6-e2b26429c58f</v>
                 <o>
@@ -2038,7 +2038,7 @@ END_VAR
                   <v n="Id">{7d894980-aeea-405c-a0f6-e2b26429c58f}</v>
                   <v n="Identifier">"Comment"</v>
                   <v n="Parent">{6f37ae05-4d8f-4ddc-9e69-c0e6bd6962c2}</v>
-                  <v n="Description">"Kommentar des Elements"</v>
+                  <v n="Description">"Comment of the element"</v>
                 </o>
                 <v>8294df19-5962-4dee-a874-1051dabb0e3e</v>
                 <o>
@@ -2050,7 +2050,7 @@ END_VAR
                   <v n="Id">{8294df19-5962-4dee-a874-1051dabb0e3e}</v>
                   <v n="Identifier">"Monitoring"</v>
                   <v n="Parent">{1c5c6e05-2bb7-4258-bcee-fd16a540c63c}</v>
-                  <v n="Description">"Zeigt die Einstellung des Transitionsmonitorings an"</v>
+                  <v n="Description">"Indicates transition monitoring setting."</v>
                 </o>
                 <v>a2621e18-7de3-4ea6-ae6d-89e9e0b7befd</v>
                 <o>
@@ -2062,7 +2062,7 @@ END_VAR
                   <v n="Id">{a2621e18-7de3-4ea6-ae6d-89e9e0b7befd}</v>
                   <v n="Identifier">"ExitAction"</v>
                   <v n="Parent">{20f0fc67-978d-438b-979f-eef294f34ee4}</v>
-                  <v n="Description">"Name der Aktion, welche aufgerufen wird, wenn der Schritt deaktiviert wird"</v>
+                  <v n="Description">"Name of the action to be called if the step is deactivated"</v>
                 </o>
                 <v>a6b08bd8-b696-47e3-9cbf-7408b61c9ff8</v>
                 <o>
@@ -2074,7 +2074,7 @@ END_VAR
                   <v n="Id">{a6b08bd8-b696-47e3-9cbf-7408b61c9ff8}</v>
                   <v n="Identifier">"EntryAction"</v>
                   <v n="Parent">{20f0fc67-978d-438b-979f-eef294f34ee4}</v>
-                  <v n="Description">"Name der Aktion, welche aufgerufen wird, wenn der Schritt aktiviert wird"</v>
+                  <v n="Description">"Name of the action to be called if the step is activated"</v>
                 </o>
                 <v>b693554c-1b01-4a8d-afde-9e3a46f7465d</v>
                 <o>
@@ -2086,7 +2086,7 @@ END_VAR
                   <v n="Id">{b693554c-1b01-4a8d-afde-9e3a46f7465d}</v>
                   <v n="Identifier">"MaxTime"</v>
                   <v n="Parent">{d336ba06-8a67-4e6b-9697-50f83ba6bdde}</v>
-                  <v n="Description">"Definiert die Maximalzeit des Schritts"</v>
+                  <v n="Description">"Defines the maximal active time for the step"</v>
                 </o>
                 <v>bc882c11-1e91-4dd8-a6b8-2075724ed18b</v>
                 <o>
@@ -2098,7 +2098,7 @@ END_VAR
                   <v n="Id">{bc882c11-1e91-4dd8-a6b8-2075724ed18b}</v>
                   <v n="Identifier">"Symbol"</v>
                   <v n="Parent">{6f37ae05-4d8f-4ddc-9e69-c0e6bd6962c2}</v>
-                  <v n="Description">"Symbolkonfigurationseinstellung des Elements"</v>
+                  <v n="Description">"Symbol configuration setting of the element"</v>
                 </o>
                 <v>cacf1a68-236e-47c2-b7b1-1cf9199718cb</v>
                 <o>
@@ -2110,7 +2110,7 @@ END_VAR
                   <v n="Id">{cacf1a68-236e-47c2-b7b1-1cf9199718cb}</v>
                   <v n="Identifier">"MinTime"</v>
                   <v n="Parent">{d336ba06-8a67-4e6b-9697-50f83ba6bdde}</v>
-                  <v n="Description">"Definiert die Minimalzeit des Schritts"</v>
+                  <v n="Description">"Defines the minimal active time for the step"</v>
                 </o>
                 <v>e174fc0d-80b0-4a9e-a530-ca239c249a50</v>
                 <o>
@@ -2122,7 +2122,7 @@ END_VAR
                   <v n="Id">{e174fc0d-80b0-4a9e-a530-ca239c249a50}</v>
                   <v n="Identifier">"Qualifier"</v>
                   <v n="Parent">{1c5c6e05-2bb7-4258-bcee-fd16a540c63c}</v>
-                  <v n="Description">"Qualifizierer der Aktionsassoziation"</v>
+                  <v n="Description">"Qualifier of the action association"</v>
                 </o>
               </d2>
               <d2 n="EnumTemplates" ckt="Guid" cvt="EnumValueTemplate">
@@ -2181,6 +2181,7 @@ END_VAR
                   <v n="BaseType">"INT"</v>
                 </o>
               </d2>
+              <v n="ImplId">237L</v>
             </o>
           </Data>
           <TypeList>
@@ -2242,13 +2243,13 @@ END_VAR
     </Action>
     <Action Name="PickUpWPStack_exit" Id="{1b736f68-d7a0-4bc6-af85-9b732ac83761}">
       <Implementation>
-        <ST><![CDATA[i_state^.ShiftProduct(EProducts.stack_product, EProducts.crane_product);
+        <ST><![CDATA[//i_state^.ShiftProduct(EProducts.stack_product, EProducts.crane_product);
 ]]></ST>
       </Implementation>
     </Action>
     <Action Name="PickUpWPStamp_exit" Id="{6d99610e-69d1-409d-88f0-202e27f184fb}">
       <Implementation>
-        <ST><![CDATA[i_state^.ShiftProduct(EProducts.stamp_product, EProducts.crane_product);
+        <ST><![CDATA[//i_state^.ShiftProduct(EProducts.stamp_product, EProducts.crane_product);
 ]]></ST>
       </Implementation>
     </Action>
@@ -2262,13 +2263,13 @@ END_VAR
     </Action>
     <Action Name="PutDownWPLSC_exit" Id="{f398bd84-d715-4628-8579-139e0657ea82}">
       <Implementation>
-        <ST><![CDATA[i_state^.ShiftProduct(EProducts.crane_product, EProducts.LSC_product);
+        <ST><![CDATA[//i_state^.ShiftProduct(EProducts.crane_product, EProducts.LSC_product);
 ]]></ST>
       </Implementation>
     </Action>
     <Action Name="PutDownWPStamp_exit" Id="{39d022ad-1212-45a5-b9d2-c0ff009b69d4}">
       <Implementation>
-        <ST><![CDATA[i_state^.ShiftProduct(EProducts.crane_product, EProducts.stamp_product);
+        <ST><![CDATA[//i_state^.ShiftProduct(EProducts.crane_product, EProducts.stamp_product);
 ]]></ST>
       </Implementation>
     </Action>
@@ -2278,6 +2279,8 @@ END_VAR
           <o xml:space="preserve" t="SFCProperty">
             <n n="SFCErrorAnalyzation" />
             <n n="SFCErrorAnalyzationTable" />
+            <n n="SFCCurrentSteps" />
+            <n n="SFCMetaSteps" />
             <v n="Title">"IecSfc"</v>
             <v n="Company">"System"</v>
             <v n="Version">"3.4.2.0"</v>

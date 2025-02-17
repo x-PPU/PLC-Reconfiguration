@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="HardwareContainer" Id="{da1cd6c3-75a3-4573-bc73-51d08569938e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK HardwareContainer
+VAR
+	// hardware control POUs
+	m_crane: Crane;
+	m_indic: ActivityIndicator(i_signalProcVar := EProcessVariables.Test_CraneFree);
+	
+	// products
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.Access' := '1'}
+	m_craneWP: xPPUProduct(EProcessVariables.Crane_ProductType);
+	
+	// hardware observation (if not included in hardware control)
+	m_observeCrane: ObserveCrane(ADR(m_crane), ADR(m_craneWP));
+	
+	// control primitives
+	m_craneMoveToStack: Crane_MoveToStack(ADR(m_crane));
+	m_craneMoveToStamp: Crane_MoveToStamp(ADR(m_crane));
+	m_craneMoveToLSC: Crane_MoveToLSC(ADR(m_crane));
+	m_cranePickUpWP: Crane_PickUpWP(ADR(m_crane));
+	m_cranePutDownWP: Crane_PutDownWP(ADR(m_crane));
+	
+	m_delay: Delay;
+	m_indicCP_Crane: IndicateActivity(i_id := EPrimitives.Gen_IndicateActive_Crane, i_ptrIndicator := ADR(m_indic));
+	m_forceVal_Crane: ForceProcessVariable(i_id := EPrimitives.Gen_ForceVariable_Crane);
+	
+	// module sequences
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{881a13a6-430f-4401-99e3-0a4ba74cb410}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+
+	i_ptrStateTracker: POINTER TO StateTracker;
+	i_ptrProcessManager: POINTER TO ProcessManager;
+	
+	i_ptrErrorManager: POINTER TO ErrorManagerBase;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[m_craneMoveToStack.ProvideServices(i_ptrProcessManager, i_ptrStateTracker);
+m_craneMoveToStamp.ProvideServices(i_ptrProcessManager, i_ptrStateTracker);
+m_craneMoveToLSC.ProvideServices(i_ptrProcessManager, i_ptrStateTracker);
+m_cranePickUpWP.ProvideServices(i_ptrProcessManager, i_ptrStateTracker);
+m_cranePutDownWP.ProvideServices(i_ptrProcessManager, i_ptrStateTracker);
+
+m_delay.ProvideServices(i_ptrProcessManager, i_ptrStateTracker);
+m_indicCP_Crane.ProvideServices(i_ptrProcessManager, i_ptrStateTracker);
+m_forceVal_Crane.ProvideServices(i_ptrProcessManager, i_ptrStateTracker);
+
+// provide Behaviors to the Process Manager
+i_ptrProcessManager^.AddPrimitive(ADR(m_craneMoveToStack));
+i_ptrProcessManager^.AddPrimitive(ADR(m_craneMoveToStamp));
+i_ptrProcessManager^.AddPrimitive(ADR(m_craneMoveToLSC));
+i_ptrProcessManager^.AddPrimitive(ADR(m_cranePickUpWP));
+i_ptrProcessManager^.AddPrimitive(ADR(m_cranePutDownWP));
+
+i_ptrProcessManager^.AddPrimitive(ADR(m_delay));
+i_ptrProcessManager^.AddPrimitive(ADR(m_indicCP_Crane));
+i_ptrProcessManager^.AddPrimitive(ADR(m_forceVal_Crane));
+
+// provide observations to the Process Manager
+i_ptrStateTracker^.AddObservation(ADR(m_observeCrane));
+i_ptrStateTracker^.AddObservation(ADR(m_indic));
+
+// provide workpieces to the Process Manager
+i_ptrStateTracker^.RegisterLocalProduct(EProducts.crane_product, ADR(m_craneWP));]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="HardwareContainer">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="HardwareContainer.FB_init">
+      <LineId Id="117" Count="4" />
+      <LineId Id="150" Count="1" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="152" Count="6" />
+      <LineId Id="187" Count="1" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

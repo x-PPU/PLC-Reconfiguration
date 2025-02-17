@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MAIN" Id="{ad76362a-e804-416c-bf92-d47dfd914831}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR CONSTANT
+	IGNORE_DEFINITION: BOOL := TRUE;
+END_VAR
+VAR
+	m_errorManager: ErrorManager;
+	m_services: ServiceContainer(ADR(m_errorManager));
+	
+	m_panelMgr: PanelManager(
+		m_services.PtrStateTracker,
+		EProcessVariables.Pnl_Stamp_Start,
+		0,
+		EProcessVariables.Pnl_Stamp_Mode,
+		EProcessVariables.Pnl_Stamp_EStop,
+		0);
+	
+	// instantiate machine behavior model
+	m_container: HardwareContainer(
+		m_services.PtrStateTracker, 
+		m_services.PtrProcessManager, 
+		ADR(m_errorManager));
+	
+	m_modes: MachineModes(ADR(m_services), ADR(m_panelMgr),'C:\TwinCAT\TestStamp.csv');
+	
+	m_appObservation: ARRAY[EProcessVariables.OpMode_Stamp..EProcessVariables.OpMode_Stamp] OF SValue;
+testLog:	FB_TimeLoG;
+	// TESTING
+// 	m_lscConnected: BOOL;
+// 	m_craneConnected: BOOL;
+// 	m_stackConnected: BOOL;
+// 	m_stampConnected: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// process state observation
+m_appObservation[EProcessVariables.OpMode_Stamp].DataType := EDataType.string_t;
+m_appObservation[EProcessVariables.OpMode_Stamp].Value.String_t := m_modes.SFCCurrentStep;
+m_appObservation[EProcessVariables.OpMode_Stamp].Defined := TRUE;
+
+// cylic service updates
+m_services.PtrStateTracker^.CyclicUpdateStatus(IGNORE_DEFINITION, m_appObservation);
+testLog(bEnable := TRUE,bMeasureCode := TRUE, sFileName := 'C:\TwinCAT\TestStamp.csv');
+m_services.PtrProcessManager^.CyclicManageBehavior();
+//ENDE_MESSUNG2
+testLog(bEnable := TRUE,bMeasureCode := FALSE, sFileName := 'C:\TwinCAT\TestStamp.csv',);
+
+// main state machine
+m_modes();
+
+// TESTING
+// IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_LSC) <> '' THEN
+// 	m_lscConnected := TRUE;
+// END_IF
+// IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_Stack) <> '' THEN
+// 	m_stackConnected := TRUE;
+// END_IF
+// IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_Stamp) <> '' THEN
+// 	m_stampConnected := TRUE;
+// END_IF
+// IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_Crane) <> '' THEN
+// 	m_craneConnected := TRUE;
+// END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="3" Count="2" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="6" Count="2" />
+      <LineId Id="28" Count="2" />
+      <LineId Id="9" Count="2" />
+      <LineId Id="13" Count="13" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

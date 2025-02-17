@@ -7,8 +7,10 @@ TYPE EProcessVariables :
 (
 	none := 0,
 	
-	operating_mode := 1,
-
+	OpMode_Stack := 1,
+	OpMode_Crane := 2,
+	OpMode_Stamp := 3,
+	OpMode_LSC := 4,
 	
 	Stack_WorkpieceAvailable := 10,
 	Stack_ProductType := 11,

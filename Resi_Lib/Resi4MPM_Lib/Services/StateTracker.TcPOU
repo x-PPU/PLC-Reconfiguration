@@ -13,7 +13,8 @@ VAR
 	raIn_stateSyncTargets: 	ARRAY [ResiConst.ARR_MIN..ResiConst.STATE_ARR_MAX] OF SAdsSymbol;
 	// *************************
 	
-	m_ptrProcessManager: POINTER TO ProcessManager;
+	m_ptrProcessMgr: POINTER TO ProcessManager;
+	m_ptrErrorMgr: POINTER TO ErrorManagerBase;
 	m_completeState: ProcessState;
 	
 	// POUs capable of observing part of the process state
@@ -96,7 +97,7 @@ FOR ui := ResiConst.ARR_MIN TO ResiConst.OBSERVERS_ARR_MAX DO
 	END_IF
 END_FOR
 
-FOR ui := ResiConst.ARR_MIN TO (ResiConst.DEFAULT_ARR_MAX)DO
+FOR ui := ResiConst.ARR_MIN TO ResiConst.DEFAULT_ARR_MAX DO
 	m_productPtrs[ui]^.UpdateProcessObservation(THIS^.m_completeState);
 END_FOR
 
@@ -109,9 +110,10 @@ END_IF
 // check interlocks
 FOR ui := ResiConst.ARR_MIN TO ResiConst.COMPENSATIONS_ARR_MAX DO
 	IF m_interlocks[ui] <> 0 THEN
-		IF m_interlocks[ui].IsTrue(ADR(m_completeState)) <> m_expectedVals[ui] AND NOT m_ptrProcessManager^.AbortActive THEN
+		IF m_interlocks[ui].IsTrue(ADR(m_completeState)) <> m_expectedVals[ui] AND NOT m_ptrProcessMgr^.AbortActive THEN
 			// interlock violated -> abort all
-			m_ptrProcessManager^.RequestAbort();
+			m_ptrProcessMgr^.RequestAbort();
+			m_ptrErrorMgr^.AddMessage(ESpecialAlarmIds.interlock_violated, TRUE, ESeverity.error, 'StateTracker', m_interlocks[ui].ToString());
 			RETURN;
 		END_IF
 	END_IF
@@ -248,12 +250,14 @@ GetString := m_value.Value.String_t;
     <Method Name="ProvideServices" Id="{f2d9a730-68d1-4ba0-a751-ef353137d6a2}">
       <Declaration><![CDATA[METHOD ProvideServices : BOOL
 VAR_INPUT
-	i_ptrProcessManager: POINTER TO ProcessManager;
+	i_ptrProcessMgr: POINTER TO ProcessManager;
+	i_ptrErrorMgr: POINTER TO ErrorManagerBase;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.m_ptrProcessManager := i_ptrProcessManager;
-m_completeState.ProvideServices(i_ptrProcessManager);
+        <ST><![CDATA[THIS^.m_ptrProcessMgr := i_ptrProcessMgr;
+THIS^.m_ptrErrorMgr := i_ptrErrorMgr;
+m_completeState.ProvideServices(i_ptrProcessMgr);
 ]]></ST>
       </Implementation>
     </Method>
@@ -372,7 +376,9 @@ END_IF
       <LineId Id="247" Count="0" />
       <LineId Id="249" Count="1" />
       <LineId Id="248" Count="0" />
-      <LineId Id="12" Count="10" />
+      <LineId Id="12" Count="6" />
+      <LineId Id="255" Count="0" />
+      <LineId Id="19" Count="3" />
       <LineId Id="35" Count="0" />
       <LineId Id="126" Count="0" />
       <LineId Id="36" Count="0" />
@@ -391,28 +397,47 @@ END_IF
       <LineId Id="1" Count="3" />
     </LineIds>
     <LineIds Name="StateTracker.GetBinary">
-      <LineId Id="1" Count="2" />
+      <LineId Id="5" Count="2" />
     </LineIds>
     <LineIds Name="StateTracker.GetDefined">
-      <LineId Id="1" Count="2" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="4" Count="0" />
     </LineIds>
     <LineIds Name="StateTracker.GetNumeric">
-      <LineId Id="1" Count="2" />
+      <LineId Id="4" Count="2" />
     </LineIds>
     <LineIds Name="StateTracker.GetString">
-      <LineId Id="1" Count="2" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="10" Count="0" />
     </LineIds>
     <LineIds Name="StateTracker.ProvideServices">
-      <LineId Id="1" Count="2" />
+      <LineId Id="5" Count="2" />
+      <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="StateTracker.PtrProcessState.Get">
       <LineId Id="1" Count="1" />
     </LineIds>
     <LineIds Name="StateTracker.RegisterLocalProduct">
-      <LineId Id="1" Count="4" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="StateTracker.ResetConfiguration">
-      <LineId Id="1" Count="13" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="15" Count="0" />
     </LineIds>
     <LineIds Name="StateTracker.ResetDefinitions">
       <LineId Id="1" Count="4" />
@@ -421,7 +446,10 @@ END_IF
       <LineId Id="1" Count="1" />
     </LineIds>
     <LineIds Name="StateTracker.ShiftProduct">
-      <LineId Id="1" Count="6" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="1" Count="1" />
+      <LineId Id="4" Count="1" />
+      <LineId Id="3" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

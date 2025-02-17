@@ -3,196 +3,32 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{41c8cfc6-dcf6-45d5-8bb8-2e3900e72fc5}</ProjectGuid>
+    <ProjectGuid>{8e7f2d85-a95e-4754-a852-b31fd4dfd90f}</ProjectGuid>
     <SubObjectsSortedByName>true</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Resi4MPM_Lib</Name>
+    <Name>LargeSortingConveyor</Name>
     <ProgramVersion>3.1.4026.11</ProgramVersion>
-    <Application>{00988b3d-10df-458a-bfb8-24cdbee375c0}</Application>
-    <TypeSystem>{87ca493b-2315-49f4-927b-3957708df0c5}</TypeSystem>
-    <Implicit_Task_Info>{c04ceeff-cd23-4e1d-8745-87e7ea2703e3}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{48648fc4-5fb4-4880-9f3d-923f1de253c3}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{5dcdb53b-c7b8-41c0-8ec2-fd559186d84c}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{7c4c7878-eb4f-4194-95d6-d0ebb982824f}</LibraryReferences>
+    <Application>{c309f3ff-bd42-40f9-ae74-37fac7d81ed9}</Application>
+    <TypeSystem>{92705a8a-da01-49d1-9c19-0c2d470655c8}</TypeSystem>
+    <Implicit_Task_Info>{81d07115-a704-4198-8567-b666f041ff63}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{1a55c552-1418-4964-bc07-6073702b0c2f}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{e25d1962-dc7b-48ea-80ed-ba09c1d66afd}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{52cb279e-3923-46db-bec6-b700ef328f50}</LibraryReferences>
     <Released>false</Released>
     <AllowChecksForLibrary>false</AllowChecksForLibrary>
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
-    <VirtualLibrary>true</VirtualLibrary>
-    <Company>Jan Wilch</Company>
-    <Title>Resi4MPM</Title>
-    <ProjectVersion>1.0.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Resi4MPM_Lib.tmc">
-      <SubType>Content</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models" />
-    <Folder Include="Models\Behavior" />
-    <Folder Include="Models\Behavior\Strategy" />
-    <Folder Include="Models\ProcessState" />
-    <Folder Include="Models\ProcessState\AdsStateSynch" />
-    <Folder Include="Models\ProcessState\ProcessCondition" />
-    <Folder Include="Models\Reconfiguration" />
-    <Folder Include="Services" />
-    <Folder Include="Services\Base" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Behavior\BehaviorBase.TcPOU">
+    <Compile Include="HardwareContainer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Behavior\ControlPrimitiveBase.TcPOU">
+    <Compile Include="MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Behavior\EBehaviorType.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\EOperationResult.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\ESpecialBehaviorIds.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\LinearSequence.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\ModuleSequenceBase.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\Strategy\ESpecialStepIds.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\Strategy\EStrategyStates.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\Strategy\SStep.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\Strategy\SStrategy.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Behavior\Strategy\STransition.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\AdsStateSynch\SAdsSymbol.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\EDataType.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\HardwareObservationBase.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ParameterSet.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\BoolExpression.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\ComparisonExpression.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\EBoolOperation.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\EComparisonType.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\EExpressionType.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\IExpression.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\IValExp.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\SPrimitiveCondition.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\SBoolExpressionSpec.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\SInterlock.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\SConditionSpec.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessCondition\ValueExpression.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProcessState.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\ProductBase.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\SNamedValue.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\SValue.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\ProcessState\UValues.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\EAbortState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\ECompSeqState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\ERecoveryState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\ERetargetType.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\SCompensation.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\SRecovery.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\SRecoveryRequestOutput.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\SRetargeting.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Reconfiguration\STriggeredOutput.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ResiConst.TcGVL">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\Base\ErrorManagerBase.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\Base\ESeverity.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\Base\ESpecialAlarmIds.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\Base\IService.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\Base\SAlarm.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\ProcessManager.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\ServiceContainer.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\StateTracker.TcPOU">
+    <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -208,7 +44,21 @@
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
+      <SystemLibrary>true</SystemLibrary>
     </PlaceholderReference>
+    <PlaceholderReference Include="[Resi4MPM]">
+      <DefaultResolution>[Resi4MPM], * (Jan Wilch)</DefaultResolution>
+      <Namespace>Resi4MPM</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="[xPPU]">
+      <DefaultResolution>[xPPU], * (Jan Wilch)</DefaultResolution>
+      <Namespace>xPPU</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LargeSortingConveyor.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderResolution Include="Tc2_Standard">

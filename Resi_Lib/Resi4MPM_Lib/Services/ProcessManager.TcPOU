@@ -2,9 +2,8 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ProcessManager" Id="{88424745-934b-4596-b9b2-a80ce6e6de1c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ProcessManager IMPLEMENTS IService
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
+VAR CONSTANT
+	RECOV_TIMEOUT: TIME := T#10S;
 END_VAR
 VAR
 	// ***** INPUT FROM RA *****
@@ -84,6 +83,7 @@ VAR
 					ARRAY [ResiConst.ARR_MIN..ResiConst.STRAT_LEN_MAX] OF EOperationResult;
 	m_busyState:	EOperationResult := EOperationResult.busy;
 	m_anyBusy: 		BOOL;
+	m_recovTimer:	TON;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -523,6 +523,13 @@ CASE raIn_customStrategy.State OF
 	EStrategyStates.halting:
 		IF NOT m_anyBusy THEN
 			raIn_customStrategy.State := EStrategyStates.halted;
+		END_IF
+		RETURN;
+	
+	EStrategyStates.halted:
+		m_recovTimer(IN := TRUE, PT := RECOV_TIMEOUT);
+		IF m_recovTimer.Q THEN
+			ExecuteCustomStrategy := EOperationResult.failed;
 		END_IF
 		RETURN;
 		
@@ -1046,6 +1053,7 @@ END_IF
       <LineId Id="1122" Count="3" />
       <LineId Id="1339" Count="0" />
       <LineId Id="1126" Count="9" />
+      <LineId Id="1341" Count="6" />
       <LineId Id="1327" Count="3" />
       <LineId Id="1136" Count="9" />
       <LineId Id="1332" Count="0" />

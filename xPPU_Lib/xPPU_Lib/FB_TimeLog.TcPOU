@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_TimeLog" Id="{6aa73553-d636-4693-9cbd-fb950aa08327}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_TimeLog
+VAR_INPUT
+    bEnable       : BOOL;       // Enable logging process
+    bMeasureCode  : BOOL;       // If TRUE, start measuring until it goes FALSE
+    sFileName     : T_MaxString := 'C:\TwinCAT\example.csv'; // File path on IPC
+END_VAR
+
+VAR_OUTPUT
+    bBusy   : BOOL; // TRUE while busy with file operations
+    bError  : BOOL; // TRUE if error occurred
+    iErrorId: UDINT;
+	bDone : Bool;
+END_VAR
+
+VAR
+   	fbFileOpen  	: FB_FileOpen;                 // File open function block
+    fbFileWrite		: FB_FileWrite;                // File write function block
+    fbFileClose 	: FB_FileClose;                // File close function block
+	profiler 		: PROFILER;
+	eFileState    	: (Messure, OpenFile, WriteFile, CloseFile, Error,Done);
+	MessurementArr 	: ARRAY[0..MESSURMENTS, 0..1] OF LINT; // Example array
+	hFile       	: UINT;                        // File handle
+	bWasMeasuring 	: BOOL := FALSE;
+	sDataLine    	: STRING(255);
+    nIndex      	: INT;    
+END_VAR
+
+VAR CONSTANT
+	MESSURMENTS:INT :=2000;
+    NEWLINE      : STRING :='$R$N'; // Newline characters (CRLF)
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bEnable THEN
+
+	CASE eFileState OF
+    Messure:
+		profiler(start:=bMeasureCode);
+
+		IF (NOT bWasMeasuring) AND bMeasureCode THEN
+			bWasMeasuring := TRUE;
+		ELSIF bWasMeasuring AND (NOT bMeasureCode) THEN
+			bWasMeasuring := FALSE;
+			IF nIndex < MESSURMENTS THEN
+				nIndex := nIndex + 1;
+				MessurementArr[nIndex,0] :=TwinCAT_SystemInfoVarList._TaskInfo[GETCURTASKINDEXEX()].LastExecTime;
+				MessurementArr[nIndex,1] :=profiler.DATA.LastExecTime;
+			ELSE
+				nIndex:=0;
+				eFileState := OpenFile;     // Trigger to write the buffered data to file
+			END_IF
+			
+		END_IF
+
+    // Start open operation
+    OpenFile:
+        fbFileOpen(
+            sNetId := '',
+            sPathName := sFileName,
+            nMode := FOPEN_MODEWRITE, // create if not exists, open for write
+            hFile => hFile,
+            bExecute := TRUE
+        );
+		
+		IF NOT fbFileOpen.bBusy THEN
+				IF fbFileOpen.bError THEN
+					eFileState := Error;
+				ELSE
+					// Successfully opened the file
+					 fbFileOpen(bExecute := FALSE); // Keep calling FB until completion
+					eFileState := WriteFile;
+				END_IF
+		END_IF
+    WriteFile: 
+			IF(nIndex=0)THEN
+				sDataLine:= CONCAT(CONCAT(CONCAT('Cycle_Time',','),'Measured_Time_1)'),NEWLINE);
+			ELSE	
+				sDataLine:= CONCAT(CONCAT(CONCAT(LINT_TO_STRING(MessurementArr[nIndex-1,0]),','),LINT_TO_STRING(MessurementArr[nIndex-1,1])),NEWLINE);
+			END_IF
+			
+			fbFileWrite(
+				sNetId := '',
+				hFile := hFile,
+				pWriteBuff := ADR(sDataLine),
+				cbWriteLen := LEN(sDataLine)+1,   // Include null terminator if needed
+				bExecute := TRUE );
+		   IF NOT fbFileWrite.bBusy THEN
+				IF fbFileWrite.bError THEN
+					eFileState := Error;
+				ELSE
+					// Successfully wrote data
+					fbFileWrite(bExecute := FALSE);
+					nIndex:=nIndex+1;
+				END_IF
+			END_IF
+		//END_WHILE
+		IF( nIndex = (MESSURMENTS+1))THEN
+		eFileState := CloseFile;
+		nIndex:=0;
+		END_IF
+    // Start close operation
+    CloseFile:
+        fbFileClose(
+            sNetId := '',
+            hFile := hFile,
+            bExecute := TRUE
+        );
+		IF NOT fbFileClose.bBusy THEN
+            IF fbFileClose.bError THEN
+                bError := TRUE;
+                eFileState := Error;
+            ELSE
+                // Successfully closed file
+				eFileState := Done;
+				fbFileClose(bExecute := FALSE);
+            END_IF
+        END_IF
+	Done:
+		bDone:=TRUE;
+
+    Error:
+		bError:=TRUE;
+        eFileState := Messure; 
+
+END_CASE
+	
+    
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_TimeLog">
+      <LineId Id="291" Count="40" />
+      <LineId Id="334" Count="23" />
+      <LineId Id="384" Count="0" />
+      <LineId Id="358" Count="17" />
+      <LineId Id="385" Count="1" />
+      <LineId Id="376" Count="7" />
+      <LineId Id="189" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

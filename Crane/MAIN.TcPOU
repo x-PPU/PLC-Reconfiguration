@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MAIN" Id="{454d58e6-9942-4c8c-8d75-9cd44d4a59e8}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR CONSTANT
+	IGNORE_DEFINITION: BOOL := TRUE;
+	
+END_VAR
+VAR
+	m_errorManager: ErrorManager;
+	m_services: ServiceContainer(ADR(m_errorManager));
+	
+	// the Safety Door is assigned to the Crane
+	m_panelMgr: PanelManager(
+		m_services.PtrStateTracker,
+		EProcessVariables.Pnl_Door_Start, 
+		EProcessVariables.Pnl_Door_Stop, 
+		EProcessVariables.Pnl_Door_Mode, 
+		0, 
+		EProcessVariables.Pnl_Door_Reset);
+	
+	// instantiate machine behavior model
+	m_container: HardwareContainer(
+		m_services.PtrStateTracker, 
+		m_services.PtrProcessManager, 
+		ADR(m_errorManager));
+	
+	m_modes: MachineModes(ADR(m_services), ADR(m_panelMgr), 'C:\TwinCAT\TestCrane.csv');
+	
+	m_appObservation: ARRAY[EProcessVariables.OpMode_Crane..EProcessVariables.OpMode_Crane] OF SValue;
+		testLog:	FB_TimeLoG;
+	// TESTING
+// 	m_testCopyFromStack: BOOL;
+// 	m_testCopyToStamp: BOOL;
+// 	m_testCopyFromStamp: BOOL;
+// 	m_rtFromStack: R_TRIG;
+// 	m_rtToStamp: R_TRIG;
+// 	m_rtFromStamp: R_TRIG;
+// 	m_fromStackBusy: BOOL;
+// 	m_toStampBusy: BOOL;
+// 	m_fromStampBusy: BOOL;
+// 	m_cycCount: UINT;
+// 	
+// 	m_lscConnected: BOOL;
+// 	m_craneConnected: BOOL;
+// 	m_stackConnected: BOOL;
+// 	m_stampConnected: BOOL;
+	i: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// process state observation
+m_appObservation[EProcessVariables.OpMode_Crane].DataType := EDataType.string_t;
+m_appObservation[EProcessVariables.OpMode_Crane].Value.String_t := m_modes.SFCCurrentStep;
+m_appObservation[EProcessVariables.OpMode_Crane].Defined := TRUE;
+
+// cylic service updates
+m_services.PtrStateTracker^.CyclicUpdateStatus(IGNORE_DEFINITION, m_appObservation);
+//START_MESSUNG2
+testLog(bEnable := TRUE,bMeasureCode := TRUE, sFileName := 'C:\TwinCAT\TestCrane.csv');
+m_services.PtrProcessManager^.CyclicManageBehavior();
+//ENDE_MESSUNG2
+testLog(bEnable := TRUE,bMeasureCode := FALSE, sFileName := 'C:\TwinCAT\TestCrane.csv',);
+				
+
+
+// main state machine
+m_modes();
+
+// TESTING (shift register)
+// m_rtFromStack(CLK := m_testCopyFromStack);
+// m_rtToStamp(CLK := m_testCopyToStamp);
+// m_rtFromStamp(CLK := m_testCopyFromStamp);
+// IF m_rtFromStack.Q OR m_fromStackBusy THEN	
+// 	m_fromStackBusy := NOT m_services.PtrStateTracker^.ShiftProduct(EProducts.stack_product, EProducts.crane_product);
+// 	m_cycCount := m_cycCount + 1;
+// END_IF
+// IF m_rtToStamp.Q OR m_toStampBusy THEN
+// 	m_toStampBusy := NOT m_services.PtrStateTracker^.ShiftProduct(EProducts.crane_product, EProducts.stamp_product);
+// 	m_cycCount := m_cycCount + 1;
+// END_IF
+// IF m_rtFromStamp.Q OR m_fromStampBusy THEN
+// 	m_fromStampBusy := NOT m_services.PtrStateTracker^.ShiftProduct(EProducts.stamp_product, EProducts.crane_product);
+// 	m_cycCount := m_cycCount + 1;
+// END_IF
+// IF NOT m_testCopyFromStack AND NOT m_testCopyFromStamp AND NOT m_testCopyToStamp THEN
+// 	m_cycCount := 0;
+// END_IF
+
+	
+// TESTING
+// IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_LSC) <> '' THEN
+// 	m_lscConnected := TRUE;
+// END_IF
+// IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_Stack) <> '' THEN
+// 	m_stackConnected := TRUE;
+// END_IF
+// IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_Stamp) <> '' THEN
+// 	m_stampConnected := TRUE;
+// END_IF
+// IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_Crane) <> '' THEN
+// 	m_craneConnected := TRUE;
+// END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="103" Count="6" />
+      <LineId Id="190" Count="4" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="110" Count="3" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="117" Count="1" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="119" Count="1" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="136" Count="1" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="167" Count="2" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="123" Count="12" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

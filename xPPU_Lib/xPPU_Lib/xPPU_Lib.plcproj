@@ -34,6 +34,10 @@
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
@@ -74,8 +78,8 @@
     <Folder Include="05_HardwareControl\EquipmentModule\Stamps" />
     <Folder Include="05_HardwareControl\Interfaces" />
     <Folder Include="98_NamingEnums" />
-    <Folder Include="99_ExtrafunctionalImpl" />
     <Folder Include="GVLs" />
+    <Folder Include="GVLs\99_ExtrafunctionalImpl" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="03_ControlPrimitives\Carrier\Crane\Crane_MoveBase.TcPOU">
@@ -354,16 +358,19 @@
     <Compile Include="98_NamingEnums\EStampStates.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="99_ExtrafunctionalImpl\PanelManager.TcPOU">
+    <Compile Include="FB_TimeLog.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="99_ExtrafunctionalImpl\ErrorManager.TcPOU">
+    <Compile Include="GVLs\99_ExtrafunctionalImpl\ErrorManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="99_ExtrafunctionalImpl\FC_InitAlarmTexts.TcPOU">
+    <Compile Include="GVLs\99_ExtrafunctionalImpl\FC_InitAlarmTexts.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="99_ExtrafunctionalImpl\MachineModes.TcPOU">
+    <Compile Include="GVLs\99_ExtrafunctionalImpl\MachineModes.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\99_ExtrafunctionalImpl\PanelManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GVLs\HMI_Texts.TcGVL">
@@ -375,6 +382,17 @@
     <None Include="xPPU_Lib.tmc">
       <SubType>Content</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderResolution Include="Tc2_Standard">
+      <Resolution>Tc2_Standard, 3.4.5.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_System">
+      <Resolution>Tc2_System, 3.6.4.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_Module">
+      <Resolution>Tc3_Module, 3.4.5.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

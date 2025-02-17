@@ -5,10 +5,10 @@
 {attribute 'strict'}
 TYPE ESpecialAlarmIds :
 (
-	none := 0,
 	recovery_request := 990,
 	definition_request := 991,
-	strategy_received := 992
+	strategy_received := 992,
+	interlock_violated := 993
 ) UINT;
 END_TYPE
 ]]></Declaration>

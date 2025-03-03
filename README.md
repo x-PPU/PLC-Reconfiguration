@@ -1,6 +1,31 @@
 # PLC Reconfiguration -- Reference Implementation
 
-This repository contains a reference implementation of the software concept outlined in the submitted T-ASE paper "Towards IEC 61131-3 Software for Automatic Fault Prevention, Fault Reaction, and Extra-functional Requirements in Discrete Manufacturing." It supports the use cases shown in the following videos and described in detail in the paper's evaluation section.
+This repository contains a reference implementation of the software concept outlined in IEEE Transactions on Automation Science and Engineering as "Enhancing the Resilience of IEC 61131-3 Software with Online Reconfigurations for Fault Handling." It supports the use cases shown in the following videos and described in detail in the paper's evaluation section. Please cite as:
+
+```
+@ARTICLE{Wilch.2025,
+  author={Wilch, Jan and Vogel-Heuser, Birgit and Sax, Florian and Rüth, Simon and Oeckl, Ulrich and Wohlschläger, Bernhard and Hsieh, Yu-Ming and Cheng, Fan-Tien},
+  journal={IEEE Transactions on Automation Science and Engineering}, 
+  title={Enhancing the Resilience of IEC 61131-3 Software with Online Reconfigurations for Fault Handling}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Software;IEC Standards;Unified modeling language;Codes;Monitoring;Switches;Resilience;Logic;Automation;Real-time systems;Fault handling;Reconfiguration;automated Production Systems;IEC 61131-3},
+  doi={10.1109/TASE.2025.3543626}}
+```
+
+A second branch ```ICPS-2025``` contains an implementation for distributed PLC control, currently submitted to the 8th IEEE Conference on Industrial Cyber-Physical Systems (ICPS) as "." Please cite as:
+
+```
+@inproceedings{Wilch.2025b,
+ author = {Wilch, Jan and Vogel-Heuser, Birgit},
+ title = {Field-level Reconfiguration of Real-time Distributed PLC Operating Strategies},
+ pages = {submitted},
+ booktitle = {8th IEEE International Conference on Industrial Cyber-Physical Systems (ICPS)},
+ year = {2025}
+}
+```
 
 |  |  |
 | -------- | -------- |

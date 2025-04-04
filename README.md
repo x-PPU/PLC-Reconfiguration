@@ -15,13 +15,13 @@ This repository contains a reference implementation of the software concept outl
   doi={10.1109/TASE.2025.3543626}}
 ```
 
-A second branch ```ICPS-2025``` contains an implementation for distributed PLC control, currently submitted to the 8th IEEE Conference on Industrial Cyber-Physical Systems (ICPS) as "." Please cite as:
+A second branch ```ICPS-2025``` contains an implementation for distributed PLC control, currently submitted to the 8th IEEE Conference on Industrial Cyber-Physical Systems (ICPS) as "Field-level Reconfiguration of Real-time Distributed PLC Operating Procedures." Please cite as:
 
 ```
 @inproceedings{Wilch.2025b,
  author = {Wilch, Jan and Vogel-Heuser, Birgit},
- title = {Field-level Reconfiguration of Real-time Distributed PLC Operating Strategies},
- pages = {submitted},
+ title = {Field-level Reconfiguration of Real-time Distributed PLC Operating Procedures},
+ pages = {accepted},
  booktitle = {8th IEEE International Conference on Industrial Cyber-Physical Systems (ICPS)},
  year = {2025}
 }

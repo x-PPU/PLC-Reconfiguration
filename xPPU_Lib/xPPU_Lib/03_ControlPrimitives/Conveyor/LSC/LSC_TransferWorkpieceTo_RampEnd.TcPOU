@@ -34,6 +34,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[EjectOperation := TRUE;
+m_st^.ShiftProduct(EProducts.LSC_product, 0);
 ]]></ST>
       </Implementation>
     </Method>
@@ -63,7 +64,9 @@ Postcondition := m_postcondition;]]></ST>
       <LineId Id="1" Count="1" />
     </LineIds>
     <LineIds Name="LSC_TransferWorkpieceTo_RampEnd.EjectOperation">
-      <LineId Id="1" Count="1" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="LSC_TransferWorkpieceTo_RampEnd.FB_init">
       <LineId Id="1" Count="6" />

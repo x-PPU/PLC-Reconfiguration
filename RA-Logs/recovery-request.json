@@ -1,0 +1,466 @@
+{
+    "State": {
+        "Stack": {
+            "McExtended": 0,
+            "McRetracted": 1,
+            "WpInductive": 0,
+            "WpAvailable": 0,
+            "WpColor": 0,
+            "Stamped": 0
+        },
+        "Crane": {
+            "Position": 3,
+            "Angle": 177,
+            "HoldingWp": 1,
+            "WpInductive": 0,
+            "WpColor": 1,
+            "McExtended": 0,
+            "McRetracted": 1,
+            "Stamped": 0
+        },
+        "Stamp": {
+            "WpAtPickup": 1,
+            "WpAtStamping": 0,
+            "HoldingWp": 1,
+            "WpInductive": 0,
+            "WpColor": 0,
+            "McExtended": 0,
+            "McRetracted": 1,
+            "BcExtended": 1,
+            "BcRetracted": 0,
+            "Stamped": 1
+        },
+        "Lsc": {
+            "WpInRampStart": 0,
+            "WpInRampMid": 0,
+            "WpInRampEnd": 0,
+            "WpInPac": 0,
+            "HoldingWp": 0,
+            "WpInductive": 0,
+            "WpColor": 0,
+            "Stamped": 0
+        }
+    },
+    "FailedStrategy": {
+        "steps": [
+            {
+                "step_id": 0,
+                "cp_id": null,
+                "name": "Start",
+                "params": {}
+            },
+            {
+                "step_id": 1,
+                "cp_id": null,
+                "name": "End",
+                "params": {}
+            },
+            {
+                "step_id": 2,
+                "cp_id": null,
+                "name": "dummy-stack",
+                "params": {}
+            },
+            {
+                "step_id": 3,
+                "cp_id": 1,
+                "name": "to-stack",
+                "params": {}
+            },
+            {
+                "step_id": 4,
+                "cp_id": null,
+                "name": "dummy-stamp",
+                "params": {}
+            },
+            {
+                "step_id": 5,
+                "cp_id": null,
+                "name": "dummy-lsc",
+                "params": {}
+            },
+            {
+                "step_id": 6,
+                "cp_id": 20,
+                "name": "provide-wp",
+                "params": {}
+            },
+            {
+                "step_id": 7,
+                "cp_id": 4,
+                "name": "pick-up",
+                "params": {}
+            },
+            {
+                "step_id": 8,
+                "cp_id": 10,
+                "name": "stamp",
+                "params": {
+                    "pressure_white": 2500.0,
+                    "pressure_black": 2500.0,
+                    "pressure_metal": 2500.0
+                }
+            },
+            {
+                "step_id": 9,
+                "cp_id": 32,
+                "name": "to-ramp-end",
+                "params": {}
+            },
+            {
+                "step_id": 10,
+                "cp_id": 3,
+                "name": "to-stamp",
+                "params": {}
+            },
+            {
+                "step_id": 11,
+                "cp_id": 5,
+                "name": "put-down",
+                "params": {}
+            },
+            {
+                "step_id": 12,
+                "cp_id": 4,
+                "name": "pick-up",
+                "params": {}
+            },
+            {
+                "step_id": 13,
+                "cp_id": 2,
+                "name": "to-lsc",
+                "params": {}
+            },
+            {
+                "step_id": 14,
+                "cp_id": 5,
+                "name": "put-down",
+                "params": {}
+            },
+            {
+                "step_id": 15,
+                "cp_id": null,
+                "name": "wait-crane",
+                "params": {}
+            }
+        ],
+        "trans": [
+            {
+                "prev_step_ids": [
+                    0
+                ],
+                "next_step_ids": [
+                    2,
+                    3,
+                    4,
+                    5
+                ],
+                "expression": "True"
+            },
+            {
+                "prev_step_ids": [
+                    6,
+                    14,
+                    8,
+                    9
+                ],
+                "next_step_ids": [
+                    1
+                ],
+                "expression": "False"
+            },
+            {
+                "prev_step_ids": [
+                    2
+                ],
+                "next_step_ids": [
+                    6
+                ],
+                "expression": "Stack_WorkpieceAvailable = False"
+            },
+            {
+                "prev_step_ids": [
+                    3
+                ],
+                "next_step_ids": [
+                    7
+                ],
+                "expression": "Stack_WorkpieceAvailable"
+            },
+            {
+                "prev_step_ids": [
+                    15
+                ],
+                "next_step_ids": [
+                    8
+                ],
+                "expression": "Crane_CylinderRetracted AND Stamp_WPAtStamp"
+            },
+            {
+                "prev_step_ids": [
+                    5
+                ],
+                "next_step_ids": [
+                    9
+                ],
+                "expression": "LSC_ProductType <> 0.0"
+            },
+            {
+                "prev_step_ids": [
+                    7
+                ],
+                "next_step_ids": [
+                    10
+                ],
+                "expression": "Stamp_WPAtStamp"
+            },
+            {
+                "prev_step_ids": [
+                    10
+                ],
+                "next_step_ids": [
+                    11
+                ],
+                "expression": "True"
+            },
+            {
+                "prev_step_ids": [
+                    11
+                ],
+                "next_step_ids": [
+                    12
+                ],
+                "expression": "Stamp_WorkpieceState = 2.0"
+            },
+            {
+                "prev_step_ids": [
+                    12
+                ],
+                "next_step_ids": [
+                    13
+                ],
+                "expression": "True"
+            },
+            {
+                "prev_step_ids": [
+                    13
+                ],
+                "next_step_ids": [
+                    14
+                ],
+                "expression": "True"
+            },
+            {
+                "prev_step_ids": [
+                    4
+                ],
+                "next_step_ids": [
+                    15
+                ],
+                "expression": "Crane_AtStamp AND Crane_CylinderExtended"
+            }
+        ]
+    },
+    "StepsHistory": [
+        {
+            "step_id": 0,
+            "status": "none"
+        },
+        {
+            "step_id": 1,
+            "status": "none"
+        },
+        {
+            "step_id": 2,
+            "status": "none"
+        },
+        {
+            "step_id": 0,
+            "status": "waiting"
+        },
+        {
+            "step_id": 0,
+            "status": "success"
+        },
+        {
+            "step_id": 0,
+            "status": "none"
+        },
+        {
+            "step_id": 2,
+            "status": "waiting"
+        },
+        {
+            "step_id": 3,
+            "status": "waiting"
+        },
+        {
+            "step_id": 4,
+            "status": "waiting"
+        },
+        {
+            "step_id": 5,
+            "status": "waiting"
+        },
+        {
+            "step_id": 2,
+            "status": "success"
+        },
+        {
+            "step_id": 3,
+            "status": "busy"
+        },
+        {
+            "step_id": 4,
+            "status": "success"
+        },
+        {
+            "step_id": 5,
+            "status": "success"
+        },
+        {
+            "step_id": 2,
+            "status": "none"
+        },
+        {
+            "step_id": 4,
+            "status": "synced_success"
+        },
+        {
+            "step_id": 5,
+            "status": "synced_success"
+        },
+        {
+            "step_id": 6,
+            "status": "waiting"
+        },
+        {
+            "step_id": 3,
+            "status": "success"
+        },
+        {
+            "step_id": 6,
+            "status": "busy"
+        },
+        {
+            "step_id": 6,
+            "status": "success"
+        },
+        {
+            "step_id": 6,
+            "status": "synced_success"
+        },
+        {
+            "step_id": 3,
+            "status": "none"
+        },
+        {
+            "step_id": 7,
+            "status": "waiting"
+        },
+        {
+            "step_id": 7,
+            "status": "busy"
+        },
+        {
+            "step_id": 7,
+            "status": "success"
+        },
+        {
+            "step_id": 7,
+            "status": "synced_success"
+        },
+        {
+            "step_id": 7,
+            "status": "none"
+        },
+        {
+            "step_id": 10,
+            "status": "waiting"
+        },
+        {
+            "step_id": 10,
+            "status": "busy"
+        },
+        {
+            "step_id": 10,
+            "status": "success"
+        },
+        {
+            "step_id": 10,
+            "status": "none"
+        },
+        {
+            "step_id": 11,
+            "status": "waiting"
+        },
+        {
+            "step_id": 11,
+            "status": "busy"
+        },
+        {
+            "step_id": 11,
+            "status": "success"
+        },
+        {
+            "step_id": 4,
+            "status": "none"
+        },
+        {
+            "step_id": 15,
+            "status": "waiting"
+        },
+        {
+            "step_id": 15,
+            "status": "success"
+        },
+        {
+            "step_id": 15,
+            "status": "synced_success"
+        },
+        {
+            "step_id": 8,
+            "status": "waiting"
+        },
+        {
+            "step_id": 15,
+            "status": "none"
+        },
+        {
+            "step_id": 8,
+            "status": "busy"
+        },
+        {
+            "step_id": 11,
+            "status": "synced_success"
+        },
+        {
+            "step_id": 8,
+            "status": "success"
+        },
+        {
+            "step_id": 11,
+            "status": "none"
+        },
+        {
+            "step_id": 12,
+            "status": "waiting"
+        },
+        {
+            "step_id": 8,
+            "status": "synced_success"
+        },
+        {
+            "step_id": 12,
+            "status": "busy"
+        },
+        {
+            "step_id": 12,
+            "status": "success"
+        },
+        {
+            "step_id": 12,
+            "status": "recovering"
+        }
+    ]
+}

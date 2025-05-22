@@ -10,7 +10,7 @@ VAR
 	// products
 	{attribute 'OPC.UA.DA' := '1'}
 	{attribute 'OPC.UA.DA.Access' := '1'}
-	m_stackWP: xPPUProduct(EProcessVariables.Stack_ProductType);
+	m_stackWP: xPPUProduct(EProcessVariables.Stack_ProductType, EProcessVariables.Stack_ProductStamped);
 	
 	// hardware observation (if not included in hardware control)
 	m_observeStack: ObserveStack(ADR(m_stack), ADR(m_stackWP));

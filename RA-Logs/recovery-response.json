@@ -1,0 +1,266 @@
+{
+  "steps": [
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationStep"
+      ],
+      "attributes": {
+        "step_id": 0,
+        "cp_id": null,
+        "name": "Start",
+        "params": []
+      }
+    },
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationStep"
+      ],
+      "attributes": {
+        "step_id": 1,
+        "cp_id": null,
+        "name": "End",
+        "params": []
+      }
+    },
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationStep"
+      ],
+      "attributes": {
+        "step_id": 2,
+        "cp_id": 5,
+        "name": "PutdownWp(Crane, Stamp)",
+        "params": []
+      }
+    },
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationStep"
+      ],
+      "attributes": {
+        "step_id": 3,
+        "cp_id": 10,
+        "name": "StampWp(10000, Stamp)",
+        "params": [
+          {
+            "__instance_type__": [
+              "data_exchange_types.dto_base",
+              "NamedValue"
+            ],
+            "attributes": {
+              "name": "pressure_white",
+              "binary_value": null,
+              "numeric_value": 10000,
+              "string_value": null,
+              "data_type": {
+                "__enum__": {
+                  "__enum_instance_type__": [
+                    "data_exchange_types.dto_base",
+                    "DataType"
+                  ],
+                  "name": "numeric"
+                }
+              }
+            }
+          },
+          {
+            "__instance_type__": [
+              "data_exchange_types.dto_base",
+              "NamedValue"
+            ],
+            "attributes": {
+              "name": "pressure_black",
+              "binary_value": null,
+              "numeric_value": 10000,
+              "string_value": null,
+              "data_type": {
+                "__enum__": {
+                  "__enum_instance_type__": [
+                    "data_exchange_types.dto_base",
+                    "DataType"
+                  ],
+                  "name": "numeric"
+                }
+              }
+            }
+          },
+          {
+            "__instance_type__": [
+              "data_exchange_types.dto_base",
+              "NamedValue"
+            ],
+            "attributes": {
+              "name": "pressure_metal",
+              "binary_value": null,
+              "numeric_value": 10000,
+              "string_value": null,
+              "data_type": {
+                "__enum__": {
+                  "__enum_instance_type__": [
+                    "data_exchange_types.dto_base",
+                    "DataType"
+                  ],
+                  "name": "numeric"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationStep"
+      ],
+      "attributes": {
+        "step_id": 4,
+        "cp_id": 4,
+        "name": "PickupWp(Crane, Stamp)",
+        "params": []
+      }
+    }
+  ],
+  "trans": [
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationTransition"
+      ],
+      "attributes": {
+        "prev_step_ids": [
+          0
+        ],
+        "next_step_ids": [
+          2
+        ],
+        "expression": {
+          "__instance_type__": [
+            "data_exchange_types.expressions.expression",
+            "ValueExpression"
+          ],
+          "slots": {},
+          "attributes": {
+            "m_name": "m_valExp266",
+            "m_data_type": {
+              "__enum__": {
+                "__enum_instance_type__": [
+                  "data_exchange_types.dto_base",
+                  "DataType"
+                ],
+                "name": "binary"
+              }
+            },
+            "m_value": true
+          }
+        }
+      }
+    },
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationTransition"
+      ],
+      "attributes": {
+        "prev_step_ids": [
+          4
+        ],
+        "next_step_ids": [
+          1
+        ],
+        "expression": {
+          "__instance_type__": [
+            "data_exchange_types.expressions.expression",
+            "ValueExpression"
+          ],
+          "slots": {},
+          "attributes": {
+            "m_name": "m_valExp267",
+            "m_data_type": {
+              "__enum__": {
+                "__enum_instance_type__": [
+                  "data_exchange_types.dto_base",
+                  "DataType"
+                ],
+                "name": "binary"
+              }
+            },
+            "m_value": true
+          }
+        }
+      }
+    },
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationTransition"
+      ],
+      "attributes": {
+        "prev_step_ids": [
+          2
+        ],
+        "next_step_ids": [
+          3
+        ],
+        "expression": {
+          "__instance_type__": [
+            "data_exchange_types.expressions.expression",
+            "ValueExpression"
+          ],
+          "slots": {},
+          "attributes": {
+            "m_name": "m_valExp268",
+            "m_data_type": {
+              "__enum__": {
+                "__enum_instance_type__": [
+                  "data_exchange_types.dto_base",
+                  "DataType"
+                ],
+                "name": "binary"
+              }
+            },
+            "m_value": true
+          }
+        }
+      }
+    },
+    {
+      "__instance_type__": [
+        "data_exchange_types.strategy",
+        "SerializationTransition"
+      ],
+      "attributes": {
+        "prev_step_ids": [
+          3
+        ],
+        "next_step_ids": [
+          4
+        ],
+        "expression": {
+          "__instance_type__": [
+            "data_exchange_types.expressions.expression",
+            "ValueExpression"
+          ],
+          "slots": {},
+          "attributes": {
+            "m_name": "m_valExp269",
+            "m_data_type": {
+              "__enum__": {
+                "__enum_instance_type__": [
+                  "data_exchange_types.dto_base",
+                  "DataType"
+                ],
+                "name": "binary"
+              }
+            },
+            "m_value": true
+          }
+        }
+      }
+    }
+  ]
+}

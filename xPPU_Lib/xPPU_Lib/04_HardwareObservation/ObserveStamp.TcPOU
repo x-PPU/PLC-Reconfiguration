@@ -46,36 +46,43 @@ METHOD UpdateProcessObservation : BOOL
 VAR_IN_OUT
 	io_processState: ProcessState;
 END_VAR
+
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[// NOTE: this only works if this method is executed every cycle (or at least very frequently...)
+        <ST><![CDATA[io_processState.UpdateState_Binary(EProcessVariables.Stamp_StamperExtended, m_ptrStamp^.m_stampingCylinder.Extended, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Stamp_StamperRetracted, m_ptrStamp^.m_stampingCylinder.Retracted, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Stamp_SliderExtended, m_ptrStamp^.m_slidingCylinder.Extended, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Stamp_SliderRetracted, m_ptrStamp^.m_slidingCylinder.Retracted, i_force := TRUE);
+
 io_processState.UpdateState_Binary(EProcessVariables.Stamp_WPAtStamp, m_ptrStamp^.WPAtStart, i_force := TRUE);
 m_ptrStampWP^.IsPresent := m_ptrStamp^.WPAtStart;
 
 CASE m_detectionStep OF
 	0: // initial, empty state
 	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.none, i_force := TRUE);
+	m_ptrStampWP^.IsStamped := FALSE;
 	IF m_ptrStamp^.WPAtStart THEN
 		m_detectionStep := 1;
 	END_IF
 	
 	1: // WP received
 	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.unpressed, i_force := TRUE);
-	IF m_ptrStamp^.m_slidingCylinder.Retracted THEN
+	IF NOT m_ptrStamp^.m_slidingCylinder.Extended THEN
 		m_detectionStep := 2;
 	ELSIF NOT m_ptrStamp^.WPAtStart THEN
 		// WP removed without stamping
 		m_detectionStep := 0;
 	END_IF
 	
-	2: // still received ...
-	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.unpressed, i_force := TRUE);
+	2: // busy
+	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.busy, i_force := TRUE);
 	IF m_ptrStamp^.m_slidingCylinder.Extended THEN
 		m_detectionStep := 3;
 	END_IF
 	
 	3: // finished processing
 	io_processState.UpdateState_Numeric(EProcessVariables.Stamp_WorkpieceState, EStampStates.pressed, i_force := TRUE);
+	m_ptrStampWP^.IsStamped := TRUE;
 	IF NOT m_ptrStamp^.WPAtStart THEN
 		m_detectionStep := 0;
 	END_IF
@@ -84,6 +91,10 @@ END_CASE
 
 io_processState.UpdateState_Defined(EProcessVariables.Stamp_WPAtStamp, TRUE);
 io_processState.UpdateState_Defined(EProcessVariables.Stamp_WorkpieceState, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Stamp_StamperExtended, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Stamp_StamperRetracted, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Stamp_SliderExtended, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Stamp_SliderRetracted, TRUE);
 ]]></ST>
       </Implementation>
     </Method>
@@ -98,14 +109,21 @@ io_processState.UpdateState_Defined(EProcessVariables.Stamp_WorkpieceState, TRUE
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="ObserveStamp.UpdateProcessObservation">
-      <LineId Id="1" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="52" Count="2" />
+      <LineId Id="51" Count="0" />
       <LineId Id="49" Count="0" />
       <LineId Id="44" Count="0" />
       <LineId Id="3" Count="3" />
+      <LineId Id="60" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="9" Count="8" />
-      <LineId Id="19" Count="17" />
-      <LineId Id="40" Count="1" />
+      <LineId Id="19" Count="10" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="30" Count="6" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="55" Count="3" />
+      <LineId Id="41" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

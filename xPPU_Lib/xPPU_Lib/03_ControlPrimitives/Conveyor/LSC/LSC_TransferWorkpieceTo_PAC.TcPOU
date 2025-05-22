@@ -65,6 +65,7 @@ m_timer(IN := TRUE, PT := T#2S);
 IF m_timer.Q THEN
 	m_ptrLSC^.METH_Switch_Retract();
 	m_ptrLSC^.METH_ConveyorStop();
+	m_st^.ShiftProduct(EProducts.LSC_product, EProducts.PAC_product1);
 	EjectOperation := TRUE;
 END_IF
 ]]></ST>
@@ -96,7 +97,9 @@ Postcondition := m_postcondition;]]></ST>
       <LineId Id="1" Count="15" />
     </LineIds>
     <LineIds Name="LSC_TransferWorkpieceTo_PAC.EjectOperation">
-      <LineId Id="1" Count="11" />
+      <LineId Id="1" Count="8" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="10" Count="2" />
     </LineIds>
     <LineIds Name="LSC_TransferWorkpieceTo_PAC.FB_init">
       <LineId Id="1" Count="6" />

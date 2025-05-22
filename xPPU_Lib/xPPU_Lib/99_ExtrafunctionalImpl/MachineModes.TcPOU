@@ -3,16 +3,12 @@
   <POU Name="MachineModes" Id="{699dc84f-9b7c-4a66-84a1-3d4ea0291fad}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK MachineModes
 VAR
-	
 	m_ptrServices: POINTER TO ServiceContainer;
 	m_ptrPanelMgr: POINTER TO PanelManager;	
-	m_path_File:STRING;
+
 	m_stratState: EOperationResult;
 	m_allFinished: BOOL;
 	m_ton: TON;
-	
-	//testLog: FB_TimeLog;
-	i: ULINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -348,7 +344,7 @@ END_VAR
                         <o>
                           <v n="AttributeId">{700a583f-b4d4-43e4-8c14-629c7cd3bec8}</v>
                           <o n="Value" t="StringValue">
-                            <v n="Value">"AwaitingStrategy_active"</v>
+                            <v n="Value">""</v>
                             <v n="DefaultValue">""</v>
                           </o>
                           <v n="Id">222L</v>
@@ -2361,12 +2357,8 @@ m_ptrPanelMgr^.SetWhite(FALSE);
     </Action>
     <Action Name="AExecute" Id="{21ef47d2-ac09-4936-91f0-e5b8a59695b2}">
       <Implementation>
-        <ST><![CDATA[//START_MESSUNG1
-//testLog(bEnable := TRUE,bMeasureCode := TRUE, sFileName := m_path_File,);
-m_stratState := m_ptrServices^.PtrProcessManager^.ExecuteCustomStrategy();
-//ENDE_MESSUNG1
-//testLog(bEnable := TRUE,bMeasureCode := FALSE, sFileName := m_path_File,);
-				]]></ST>
+        <ST><![CDATA[m_stratState := m_ptrServices^.PtrProcessManager^.ExecuteCustomStrategy();
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="AReady" Id="{438ee1e7-7c7d-4cde-bbd5-8778170b23ae}">
@@ -2402,11 +2394,6 @@ m_ptrPanelMgr^.SetWhite(TRUE, T#500MS);
 ]]></ST>
       </Implementation>
     </Action>
-    <Action Name="AwaitingStrategy_active" Id="{84e601d7-b828-421d-8a57-28876b3f8872}">
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Action>
     <Action Name="ExecLights" Id="{aa49f023-0d6b-4ff3-92cf-44df32f2f5a5}" FolderPath="PanelLights\">
       <Implementation>
         <ST><![CDATA[m_ptrPanelMgr^.SetGreen(TRUE);
@@ -2427,7 +2414,6 @@ VAR_INPUT
 	
 	i_ptrServices: POINTER TO ServiceContainer;
 	i_ptrPanelMgr: POINTER TO PanelManager;	
-	i_path_File:String;
 END_VAR
 VAR
 	i: UINT;
@@ -2449,8 +2435,7 @@ FOR i := ResiConst.ARR_MIN TO ResiConst.STATE_ARR_MAX DO
 	m_statesEnum := i;
 	i_ptrServices^.PtrStateTracker^.SetProcessVariableName(i, TO_STRING(m_statesEnum));
 END_FOR
-
-m_path_File:=i_path_File;
+	
 FC_InitAlarmTexts();
 ]]></ST>
       </Implementation>
@@ -2770,11 +2755,7 @@ m_ptrPanelMgr^.SetWhite(FALSE);
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MachineModes.AExecute">
-      <LineId Id="7" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="8" Count="0" />
+      <LineId Id="2" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MachineModes.AReady">
@@ -2796,15 +2777,12 @@ m_ptrPanelMgr^.SetWhite(FALSE);
       <LineId Id="2" Count="2" />
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="MachineModes.AwaitingStrategy_active">
-      <LineId Id="1" Count="0" />
-    </LineIds>
     <LineIds Name="MachineModes.ExecLights">
       <LineId Id="2" Count="2" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MachineModes.FB_init">
-      <LineId Id="3" Count="16" />
+      <LineId Id="3" Count="15" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MachineModes.ReadyLights">

@@ -4,7 +4,6 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR CONSTANT
 	IGNORE_DEFINITION: BOOL := TRUE;
-	
 END_VAR
 VAR
 	m_errorManager: ErrorManager;
@@ -25,10 +24,10 @@ VAR
 		m_services.PtrProcessManager, 
 		ADR(m_errorManager));
 	
-	m_modes: MachineModes(ADR(m_services), ADR(m_panelMgr), 'C:\TwinCAT\TestCrane.csv');
+	m_modes: MachineModes(ADR(m_services), ADR(m_panelMgr));
 	
 	m_appObservation: ARRAY[EProcessVariables.OpMode_Crane..EProcessVariables.OpMode_Crane] OF SValue;
-		testLog:	FB_TimeLoG;
+
 	// TESTING
 // 	m_testCopyFromStack: BOOL;
 // 	m_testCopyToStamp: BOOL;
@@ -45,7 +44,6 @@ VAR
 // 	m_craneConnected: BOOL;
 // 	m_stackConnected: BOOL;
 // 	m_stampConnected: BOOL;
-	i: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -56,13 +54,7 @@ m_appObservation[EProcessVariables.OpMode_Crane].Defined := TRUE;
 
 // cylic service updates
 m_services.PtrStateTracker^.CyclicUpdateStatus(IGNORE_DEFINITION, m_appObservation);
-//START_MESSUNG2
-testLog(bEnable := TRUE,bMeasureCode := TRUE, sFileName := 'C:\TwinCAT\TestCrane.csv');
 m_services.PtrProcessManager^.CyclicManageBehavior();
-//ENDE_MESSUNG2
-testLog(bEnable := TRUE,bMeasureCode := FALSE, sFileName := 'C:\TwinCAT\TestCrane.csv',);
-				
-
 
 // main state machine
 m_modes();
@@ -87,7 +79,6 @@ m_modes();
 // 	m_cycCount := 0;
 // END_IF
 
-	
 // TESTING
 // IF m_services.PtrStateTracker^.GetString(EProcessVariables.OpMode_LSC) <> '' THEN
 // 	m_lscConnected := TRUE;
@@ -104,12 +95,7 @@ m_modes();
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="103" Count="6" />
-      <LineId Id="190" Count="4" />
-      <LineId Id="189" Count="0" />
-      <LineId Id="110" Count="3" />
-      <LineId Id="176" Count="0" />
-      <LineId Id="115" Count="0" />
+      <LineId Id="103" Count="12" />
       <LineId Id="143" Count="0" />
       <LineId Id="147" Count="0" />
       <LineId Id="145" Count="0" />
@@ -123,9 +109,7 @@ m_modes();
       <LineId Id="150" Count="0" />
       <LineId Id="140" Count="0" />
       <LineId Id="167" Count="2" />
-      <LineId Id="188" Count="0" />
-      <LineId Id="170" Count="0" />
-      <LineId Id="123" Count="12" />
+      <LineId Id="122" Count="13" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>

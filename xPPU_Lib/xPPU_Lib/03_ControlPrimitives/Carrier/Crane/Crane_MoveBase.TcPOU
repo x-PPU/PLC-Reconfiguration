@@ -23,26 +23,31 @@ END_VAR
 Abort := TRUE;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ExecuteInternal" Id="{bfdf9edb-03a9-4ef3-8996-8c703a876873}">
+    <Property Name="AtTarget" Id="{7d293d69-b76c-46b2-a173-ca6dfc2465b7}">
+      <Declaration><![CDATA[PROPERTY ABSTRACT AtTarget : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ebf3003d-70ed-464d-964b-52a16a3efc17}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ExecuteInternal" Id="{717bfc26-f876-4ff8-abc2-bfb1b933bc98}">
       <Declaration><![CDATA[(* Execution logic of this Control Primitive. *)
-METHOD PROTECTED  ExecuteInternal : BOOL
-VAR CONSTANT
-	// only needed once we can actually measure the angle
-	tolerance: LREAL := 1.0;
-END_VAR
+METHOD PROTECTED ExecuteInternal : BOOL
 VAR_INPUT
-	i_params: ParameterSet;
+	i_params	: Resi4MPM.ParameterSet;
 END_VAR
 VAR
-	angle: LREAL;
-	diff: LREAL;
+	angle: REAL;
+	diff: REAL;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[angle := m_st^.GetNumeric(EProcessVariables.Crane_Angle);
 diff := TargetAngle - angle;
 
-IF ABS(diff) < tolerance THEN
+IF AtTarget THEN
 	m_ptrCrane^.METH_CarrierStop();
 	ExecuteInternal := TRUE;
 ELSIF diff < 0 THEN
@@ -54,7 +59,7 @@ END_IF
       </Implementation>
     </Method>
     <Property Name="TargetAngle" Id="{c39d77f4-a728-45f6-bf29-f72c6181dc14}">
-      <Declaration><![CDATA[PROPERTY TargetAngle : UINT]]></Declaration>
+      <Declaration><![CDATA[PROPERTY ABSTRACT TargetAngle : UINT]]></Declaration>
       <Get Name="Get" Id="{16fd91db-7002-4ae9-85a7-017d501b8296}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -69,6 +74,9 @@ END_VAR
     </LineIds>
     <LineIds Name="Crane_MoveBase.Abort">
       <LineId Id="1" Count="1" />
+    </LineIds>
+    <LineIds Name="Crane_MoveBase.AtTarget.Get">
+      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="Crane_MoveBase.ExecuteInternal">
       <LineId Id="1" Count="11" />

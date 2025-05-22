@@ -23,10 +23,10 @@ VAR
 		m_services.PtrProcessManager, 
 		ADR(m_errorManager));
 	
-	m_modes: MachineModes(ADR(m_services), ADR(m_panelMgr),'C:\TwinCAT\TestLSC.csv');
+	m_modes: MachineModes(ADR(m_services), ADR(m_panelMgr));
 	
 	m_appObservation: ARRAY[EProcessVariables.OpMode_LSC..EProcessVariables.OpMode_LSC] OF SValue;
-	testLog:	FB_TimeLoG;
+	
 	// TESTING
 // 	m_lscConnected: BOOL;
 // 	m_craneConnected: BOOL;
@@ -42,10 +42,7 @@ m_appObservation[EProcessVariables.OpMode_LSC].Defined := TRUE;
 
 // cylic service updates
 m_services.PtrStateTracker^.CyclicUpdateStatus(IGNORE_DEFINITION, m_appObservation);
-testLog(bEnable := TRUE,bMeasureCode := TRUE, sFileName := 'C:\TwinCAT\TestLSC.csv');
 m_services.PtrProcessManager^.CyclicManageBehavior();
-//ENDE_MESSUNG2
-testLog(bEnable := TRUE,bMeasureCode := FALSE, sFileName := 'C:\TwinCAT\TestLSC.csv',);
 
 // main state machine
 m_modes();
@@ -69,7 +66,6 @@ m_modes();
       <LineId Id="4" Count="2" />
       <LineId Id="26" Count="0" />
       <LineId Id="7" Count="2" />
-      <LineId Id="28" Count="2" />
       <LineId Id="3" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="10" Count="0" />

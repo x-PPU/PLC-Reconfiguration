@@ -6,6 +6,15 @@ VAR CONSTANT
 	LIGHT_IDX: USINT := 1;
 	METAL_IDX: USINT := 2;
 	PRESENT_IDX: USINT := 3;
+	STAMPED_IDX: USINT := 4;
+
+	LIGHT_MASK: BYTE := 2#0000_0001;
+	METAL_MASK: BYTE := 2#0000_0010;
+	PRESENT_MASK: BYTE := 2#0000_0100;
+	STAMPED_MASK: BYTE := 2#0000_1000;
+END_VAR
+VAR
+	m_productStampedIdx: UINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -22,11 +31,14 @@ VAR_INPUT
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 	
 	i_productTypeVarId: UINT;
+	i_productStampedVarId: UINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// set the variable indices (on remote, the RA does this)
 raIn_processStateIdx := i_productTypeVarId;
+
+m_productStampedIdx := i_productStampedVarId;
 
 // set the variables' data types
 m_vals[RES_IDX].DataType := EDataType.numeric;
@@ -111,68 +123,106 @@ UpdateMaterial();
         </Implementation>
       </Set>
     </Property>
+    <Property Name="IsStamped" Id="{f780d6d3-4a39-4dc8-8ceb-8e8769c7bad4}">
+      <Declaration><![CDATA[PROPERTY IsStamped : BOOL]]></Declaration>
+      <Get Name="Get" Id="{de895966-9a30-4aca-b520-4389a9008766}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsStamped := m_vals[STAMPED_IDX].Defined AND m_vals[STAMPED_IDX].Value.Binary;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c09c6ea6-c61f-421b-be37-561da3a18f2c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[m_vals[STAMPED_IDX].DataType := EDataType.binary;
+m_vals[STAMPED_IDX].Defined := TRUE;
+m_vals[STAMPED_IDX].Value.Binary := IsStamped;
+
+UpdateMaterial();
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="ReverseSetInputs" Id="{130f39d1-691e-477b-83fb-5d865e0242b0}">
       <Declaration><![CDATA[(* Based on the aggregated product type value, set the separete input values for a consistent shift register. *)
 METHOD ReverseSetInputs : BOOL
 VAR
-	prodType: EProductTypes;
+	res: BYTE;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[prodType := LREAL_TO_UINT(m_vals[RES_IDX].Value.Numeric);
+        <ST><![CDATA[res := LREAL_TO_BYTE(m_vals[RES_IDX].Value.Numeric);
+
+m_vals[LIGHT_IDX].Value.Binary := (res AND LIGHT_MASK) <> 0;
+m_vals[METAL_IDX].Value.Binary := (res AND METAL_MASK) <> 0;
+m_vals[PRESENT_IDX].Value.Binary := (res AND PRESENT_MASK) <> 0;
+m_vals[STAMPED_IDX].Value.Binary := (res AND STAMPED_MASK) <> 0;
 
 m_vals[LIGHT_IDX].Defined := TRUE;
 m_vals[METAL_IDX].Defined := TRUE;
 m_vals[PRESENT_IDX].Defined := TRUE;
-
-CASE prodType OF
-	EProductTypes.none:
-		m_vals[LIGHT_IDX].Value.Binary := FALSE;
-		m_vals[METAL_IDX].Value.Binary := FALSE;
-		m_vals[PRESENT_IDX].Value.Binary := FALSE;
-
-// TODO - this needs a better solution...
-// 	EProductTypes.unknown:
-// 		m_vals[m_isLightIdx].Value.Binary := FALSE;
-// 		m_vals[m_isMetalIdx].Value.Binary := FALSE;
-// 		m_vals[m_isPresentIdx].Value.Binary := TRUE;
-	
-	EProductTypes.white:
-		m_vals[LIGHT_IDX].Value.Binary := TRUE;
-		m_vals[METAL_IDX].Value.Binary := FALSE;
-		m_vals[PRESENT_IDX].Value.Binary := TRUE;
-	EProductTypes.black:
-		m_vals[LIGHT_IDX].Value.Binary := FALSE;
-		m_vals[METAL_IDX].Value.Binary := FALSE;
-		m_vals[PRESENT_IDX].Value.Binary := TRUE;
-	EProductTypes.metal:
-		m_vals[LIGHT_IDX].Value.Binary := TRUE;
-		m_vals[METAL_IDX].Value.Binary := TRUE;
-		m_vals[PRESENT_IDX].Value.Binary := TRUE;
-END_CASE
+m_vals[STAMPED_IDX].Defined := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="UpdateMaterial" Id="{563eb13b-2a05-4413-9e40-e81d1a6a42b4}">
       <Declaration><![CDATA[METHOD PRIVATE UpdateMaterial : BOOL
-VAR_INPUT
+VAR
+	res: BYTE;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[m_vals[RES_IDX].DataType := EDataType.numeric;
-m_vals[RES_IDX].Defined := TRUE;
+        <ST><![CDATA[// use separate bits to encode the product info
+res := 2#0000_0000;
 
-IF IsPresent AND IsLight AND NOT IsMetal THEN
-	m_vals[RES_IDX].Value.Numeric := EProductTypes.white;
-ELSIF IsPresent AND NOT IsLight AND NOT IsMetal THEN
-	m_vals[RES_IDX].Value.Numeric := EProductTypes.black;
-ELSIF IsPresent AND IsLight AND IsMetal THEN
-	m_vals[RES_IDX].Value.Numeric := EProductTypes.metal;
-ELSIF IsPresent THEN
-	m_vals[RES_IDX].Value.Numeric := EProductTypes.unknown;
-ELSE
-	m_vals[RES_IDX].Value.Numeric := EProductTypes.none;
+IF IsLight THEN
+	res := res OR LIGHT_MASK;
 END_IF
+IF IsMetal THEN
+	res := res OR METAL_MASK;
+END_IF
+IF IsPresent THEN
+	res := res OR PRESENT_MASK;
+END_IF
+IF IsStamped THEN
+	res := res OR STAMPED_MASK;
+END_IF
+
+m_vals[RES_IDX].DataType := EDataType.numeric;
+m_vals[RES_IDX].Defined := TRUE;
+m_vals[RES_IDX].Value.Numeric := BYTE_TO_LREAL(res);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateProcessObsInternal" Id="{3795ab25-0f4f-4bef-9181-859b06779b22}">
+      <Declaration><![CDATA[METHOD PROTECTED UpdateProcessObsInternal : BOOL
+VAR_IN_OUT
+	io_processState: ProcessState;
+END_VAR
+VAR
+	prodType: EProductTypes;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT IsLight AND NOT IsMetal AND NOT IsPresent THEN
+	prodType := EProductTypes.none;
+ELSIF IsLight AND NOT IsMetal AND IsPresent THEN
+	prodType := EProductTypes.white;
+ELSIF NOT IsLight AND NOT IsMetal AND IsPresent THEN
+	prodType := EProductTypes.black;
+ELSIF IsMetal AND IsPresent THEN
+	prodType := EProductTypes.metal;
+END_IF
+
+io_processState.UpdateState_Numeric(raIn_processStateIdx, UINT_TO_LREAL(prodType), i_force := TRUE);
+io_processState.UpdateState_Binary(m_productStampedIdx, IsStamped, i_force := TRUE);
+
+io_processState.UpdateState_Defined(raIn_processStateIdx, TRUE);
+io_processState.UpdateState_Defined(m_productStampedIdx, TRUE);
 ]]></ST>
       </Implementation>
     </Method>
@@ -182,6 +232,8 @@ END_IF
     <LineIds Name="xPPUProduct.FB_init">
       <LineId Id="15" Count="0" />
       <LineId Id="20" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="23" Count="0" />
@@ -217,11 +269,39 @@ END_IF
       <LineId Id="4" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
+    <LineIds Name="xPPUProduct.IsStamped.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="xPPUProduct.IsStamped.Set">
+      <LineId Id="1" Count="5" />
+    </LineIds>
     <LineIds Name="xPPUProduct.ReverseSetInputs">
-      <LineId Id="1" Count="31" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="33" Count="2" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="2" Count="2" />
+      <LineId Id="40" Count="1" />
+      <LineId Id="32" Count="0" />
     </LineIds>
     <LineIds Name="xPPUProduct.UpdateMaterial">
-      <LineId Id="1" Count="14" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="43" Count="2" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="xPPUProduct.UpdateProcessObsInternal">
+      <LineId Id="1" Count="15" />
     </LineIds>
   </POU>
 </TcPlcObject>

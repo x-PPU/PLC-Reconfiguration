@@ -3,7 +3,7 @@
   <POU Name="ProcessManager" Id="{88424745-934b-4596-b9b2-a80ce6e6de1c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ProcessManager IMPLEMENTS IService
 VAR CONSTANT
-	RECOV_TIMEOUT: TIME := T#10S;
+	RECOV_TIMEOUT: TIME := T#999S;
 END_VAR
 VAR
 	// ***** INPUT FROM RA *****

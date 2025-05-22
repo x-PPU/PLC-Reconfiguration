@@ -7,8 +7,6 @@ END_VAR
 VAR_OUTPUT
 	o_VacuumGripper: VacuumGripper;
 	o_MonostableCylinder: MonostableCylinder;
-	// the angle with limited knowledge, e.g., -1 before stack, +1 after stack, +89 before LSC, +91 after LSC etc.
-	o_Angle: INT := 45;
 END_VAR
 VAR
 	// Turning table
@@ -69,14 +67,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[Motor.ACT_TurnClockwise();
-
-IF AtStack THEN
-	o_angle := 0;
-ELSIF AtConveyor THEN
-	o_angle := 90;
-ELSIF AtStamp THEN
-	o_angle := 180;
-END_IF]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="METH_CarrierTurnCounterclockwise" Id="{68209966-43a8-409a-a01d-a2236b832132}">
@@ -86,14 +77,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[Motor.ACT_TurnCounterclockwise();
-
-IF AtStack THEN
-	o_angle := 0;
-ELSIF AtConveyor THEN
-	o_angle := 90;
-ELSIF AtStamp THEN
-	o_angle := 180;
-END_IF]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Crane">
@@ -112,10 +96,12 @@ END_IF]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="Crane.METH_CarrierTurnClockwise">
-      <LineId Id="1" Count="8" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="10" Count="0" />
     </LineIds>
     <LineIds Name="Crane.METH_CarrierTurnCounterclockwise">
-      <LineId Id="1" Count="8" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="10" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

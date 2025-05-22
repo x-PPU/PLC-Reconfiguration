@@ -16,6 +16,18 @@ END_VAR
     <Implementation>
       <ST><![CDATA[SUPER^();]]></ST>
     </Implementation>
+    <Property Name="AtTarget" Id="{9298988e-8013-4356-96a0-a81cbf89c627}">
+      <Declaration><![CDATA[PROPERTY AtTarget : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9082eeee-cdc1-4e3e-bd1a-e9e7d6542603}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AtTarget := m_ptrCrane^.AtStack;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="FB_init" Id="{4bee316d-c943-4419-919f-e1ed72d8e24c}">
       <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
@@ -48,6 +60,9 @@ END_VAR
     </Property>
     <LineIds Name="Crane_MoveToStack">
       <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Crane_MoveToStack.AtTarget.Get">
+      <LineId Id="1" Count="1" />
     </LineIds>
     <LineIds Name="Crane_MoveToStack.FB_init">
       <LineId Id="1" Count="6" />

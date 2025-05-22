@@ -14,6 +14,9 @@ TYPE EProcessVariables :
 	
 	Stack_WorkpieceAvailable := 10,
 	Stack_ProductType := 11,
+	Stack_ProductStamped := 12,
+	Stack_CylinderExtended := 13,
+	Stack_CylinderRetracted := 14,
 	
 	Crane_AtStack := 20,
 	Crane_AtStamp := 21,
@@ -21,14 +24,19 @@ TYPE EProcessVariables :
 	Crane_HoldingWorkpiece := 23,
 	Crane_CylinderExtended := 24,
 	Crane_CylinderRetracted := 25,
-	// the angle with limited knowledge, e.g., -1 before stack, +1 after stack, +89 before LSC, +91 after LSC etc.
 	Crane_Angle := 26,
 	Crane_ProductType := 27,
+	Crane_ProductStamped := 28,
 	
-	// the state of a workpiece at the stamp: 0=no workpiece, 1=workpiece received, 2=workpiece processed
+	// the state of a workpiece at the stamp: 0=no workpiece, 1=workpiece received, 2=workpiece processed, 3=busy
 	Stamp_WorkpieceState := 30,
 	Stamp_WPAtStamp := 31,
 	Stamp_ProductType := 32,
+	Stamp_ProductStamped := 33,
+	Stamp_StamperExtended := 34,
+	Stamp_StamperRetracted := 35,
+	Stamp_SliderExtended := 36,
+	Stamp_SliderRetracted := 37,
 	
 	LSC_WorkpieceAtEntry := 40,
 	LSC_SwitchExtended := 41,
@@ -38,9 +46,10 @@ TYPE EProcessVariables :
 	LSC_WPAtRampEnd := 45,
 	LSC_WPAtInductiveSensorEnd := 48,
 	LSC_ProductType := 49,
-	LSC_RampStartWPCount := 50,
-	LSC_RampMiddleWPCount := 51,
-	LSC_RampEndWPCount := 52,
+	LSC_ProductStamped := 50,
+	LSC_RampStartWPCount := 51,
+	LSC_RampMiddleWPCount := 52,
+	LSC_RampEndWPCount := 53,
 	
 	PAC_WPAtStart := 60,
 	PAC_WPAtEnd := 61,

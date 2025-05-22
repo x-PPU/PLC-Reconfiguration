@@ -15,6 +15,11 @@ VAR
 	m_rtAtStamp: R_TRIG;
 	
 	m_resetCranePos: BOOL;
+	
+	// needed for a regression for the analog AngleDeg
+	poti0: REAL;
+	poti90: REAL;
+	poti180: REAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -52,6 +57,13 @@ METHOD UpdateProcessObservation : BOOL
 VAR_IN_OUT
 	io_processState: ProcessState;
 END_VAR
+VAR
+	potiVal: REAL;
+	x_bar: REAL;
+	y_bar: REAL;
+	a: REAL := -88.16748;		// initial value (calibrated 30 April 2025)
+	b: REAL := 0.0129453959;	// initial value (calibrated 30 April 2025)
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[io_processState.UpdateState_Binary(EProcessVariables.Crane_AtStack, m_ptrCrane^.AtStack, i_force := TRUE);
@@ -60,7 +72,38 @@ io_processState.UpdateState_Binary(EProcessVariables.Crane_AtLSC, m_ptrCrane^.At
 io_processState.UpdateState_Binary(EProcessVariables.Crane_HoldingWorkpiece, m_ptrCrane^.o_VacuumGripper.WPTaken, i_force := TRUE);
 io_processState.UpdateState_Binary(EProcessVariables.Crane_CylinderExtended, m_ptrCrane^.o_MonostableCylinder.Extended, i_force := TRUE);
 io_processState.UpdateState_Binary(EProcessVariables.Crane_CylinderRetracted, m_ptrCrane^.o_MonostableCylinder.Retracted, i_force := TRUE);
-io_processState.UpdateState_Numeric(EProcessVariables.Crane_Angle, INT_TO_LREAL(m_ptrCrane^.o_Angle), i_force := TRUE);
+
+// Angle [in degrees] regression
+potiVal := m_ptrCrane^.Motor.AI_Position;
+IF m_ptrCrane^.AtStack THEN
+	poti0 := potiVal;
+ELSIF m_ptrCrane^.AtConveyor THEN
+	poti90 := potiVal;
+ELSIF m_ptrCrane^.AtStamp THEN
+	poti180 := potiVal;
+END_IF
+
+IF poti0 <> 0 AND poti90 <> 0 AND poti180 <> 0 THEN
+	x_bar := (poti0 + poti90 + poti180) / 3;
+	y_bar := (90+180)/3;
+	b := ((poti0 - x_bar)*-y_bar + (poti90 - x_bar)*(90 - y_bar) + (poti180 - x_bar)*(180 - y_bar))/
+		(EXPT(poti0 - x_bar, 2) + EXPT(poti90 - x_bar, 2) + EXPT(poti180 - x_bar, 2));
+	a := y_bar - b*x_bar;
+ELSIF poti0 <> 0 AND poti90 <> 0 THEN
+	x_bar := (poti0 + poti90) / 2;
+	y_bar := 90/2;
+	b := ((poti0 - x_bar)*-y_bar + (poti90 - x_bar)*(90 - y_bar))/
+		(EXPT(poti0 - x_bar, 2) + EXPT(poti90 - x_bar, 2));
+	a := y_bar - b*x_bar;
+ELSIF poti90 <> 0 AND poti180 <> 0 THEN
+	x_bar := (poti90 + poti180) / 2;
+	y_bar := (90+180)/2;
+	b := ((poti90 - x_bar)*(90 - y_bar) + (poti180 - x_bar)*(180 - y_bar))/
+		(EXPT(poti90 - x_bar, 2) + EXPT(poti180 - x_bar, 2));
+	a := y_bar - b*x_bar;
+END_IF
+
+io_processState.UpdateState_Numeric(EProcessVariables.Crane_Angle, a + b*potiVal, i_force := TRUE);
 
 m_rtAtStack(CLK := m_ptrCrane^.AtStack);
 m_rtAtStamp(CLK := m_ptrCrane^.AtStamp);
@@ -70,20 +113,18 @@ IF m_rtAtStack.Q OR m_rtAtStamp.Q OR m_rtAtLSC.Q THEN
 	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtStack, TRUE);
 	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtStamp, TRUE);
 	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtLSC, TRUE);
-	io_processState.UpdateState_Defined(EProcessVariables.Crane_Angle, TRUE);	
 END_IF
 IF m_resetCranePos THEN
 	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtStack, FALSE);
 	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtStamp, FALSE);
 	io_processState.UpdateState_Defined(EProcessVariables.Crane_AtLSC, FALSE);
-	io_processState.UpdateState_Defined(EProcessVariables.Crane_Angle, FALSE);
-	
 	m_resetCranePos := FALSE;
 END_IF
 
 io_processState.UpdateState_Defined(EProcessVariables.Crane_HoldingWorkpiece, TRUE);
 io_processState.UpdateState_Defined(EProcessVariables.Crane_CylinderExtended, TRUE);
 io_processState.UpdateState_Defined(EProcessVariables.Crane_CylinderRetracted, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Crane_Angle, TRUE);
 ]]></ST>
       </Implementation>
     </Method>
@@ -98,8 +139,35 @@ io_processState.UpdateState_Defined(EProcessVariables.Crane_CylinderRetracted, T
       <LineId Id="1" Count="1" />
     </LineIds>
     <LineIds Name="ObserveCrane.UpdateProcessObservation">
-      <LineId Id="1" Count="28" />
-      <LineId Id="36" Count="1" />
+      <LineId Id="1" Count="5" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="78" Count="4" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="56" Count="1" />
+      <LineId Id="63" Count="1" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="69" Count="3" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="8" Count="8" />
+      <LineId Id="18" Count="4" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="37" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -7,7 +7,8 @@ TYPE EStampStates :
 (
 	none := 0,
 	unpressed := 1,
-	pressed := 2
+	pressed := 2,
+	busy := 3
 ) UINT;
 END_TYPE
 ]]></Declaration>

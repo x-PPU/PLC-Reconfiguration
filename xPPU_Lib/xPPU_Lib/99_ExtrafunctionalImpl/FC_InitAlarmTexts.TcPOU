@@ -22,7 +22,11 @@ HMI_Texts.AlarmTexts[ESpecialAlarmIds.interlock_violated] := 'interlock violated
 ]]></ST>
     </Implementation>
     <LineIds Name="FC_InitAlarmTexts">
-      <LineId Id="1" Count="11" />
+      <LineId Id="1" Count="3" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="5" Count="2" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

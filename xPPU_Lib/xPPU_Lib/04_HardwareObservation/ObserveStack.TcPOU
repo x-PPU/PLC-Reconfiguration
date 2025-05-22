@@ -48,8 +48,12 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[io_processState.UpdateState_Binary(EProcessVariables.Stack_WorkpieceAvailable, m_ptrStack^.WPOnTray, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Stack_CylinderExtended, m_ptrStack^.o_slidingCylinder.Extended, i_force := TRUE);
+io_processState.UpdateState_Binary(EProcessVariables.Stack_CylinderRetracted, m_ptrStack^.o_slidingCylinder.Retracted, i_force := TRUE);
 
 io_processState.UpdateState_Defined(EProcessVariables.Stack_WorkpieceAvailable, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Stack_CylinderExtended, TRUE);
+io_processState.UpdateState_Defined(EProcessVariables.Stack_CylinderRetracted, TRUE);
 
 // update WP info (if there are sensors available), then update the process variables list
 m_ptrStackWP^.IsPresent := m_ptrStack^.WPOnTray;
@@ -69,7 +73,13 @@ m_ptrStackWP^.IsMetal := m_ptrStack^.MetalWPOnTray;
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="ObserveStack.UpdateProcessObservation">
-      <LineId Id="1" Count="7" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="4" Count="4" />
       <LineId Id="20" Count="0" />
     </LineIds>
   </POU>

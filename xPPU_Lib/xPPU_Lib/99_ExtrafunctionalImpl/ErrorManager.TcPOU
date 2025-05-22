@@ -60,7 +60,13 @@ alarms[0].InstanceName := i_instanceName;
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="ErrorManager.AddMessage">
-      <LineId Id="1" Count="21" />
+      <LineId Id="1" Count="12" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="15" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -51,6 +51,7 @@ END_VAR
         <ST><![CDATA[m_ptrLSC^.METH_Ramp1Pusher_Extend();
 IF m_ptrLSC^.WPAtRampStart THEN
 	m_ptrLSC^.METH_Ramp1Pusher_Retract();
+	m_st^.ShiftProduct(EProducts.LSC_product, 0);
 	EjectOperation := TRUE;
 END_IF]]></ST>
       </Implementation>
@@ -81,7 +82,9 @@ Postcondition := m_postcondition;]]></ST>
       <LineId Id="1" Count="13" />
     </LineIds>
     <LineIds Name="LSC_TransferWorkpieceTo_RampStart.EjectOperation">
-      <LineId Id="1" Count="4" />
+      <LineId Id="1" Count="2" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="4" Count="1" />
     </LineIds>
     <LineIds Name="LSC_TransferWorkpieceTo_RampStart.FB_init">
       <LineId Id="1" Count="6" />

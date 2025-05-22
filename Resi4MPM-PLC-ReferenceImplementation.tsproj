@@ -159,17 +159,11 @@
 				<Task Id="6" Priority="21" CycleTime="100000" AmsPort="353" AdtTasks="true">
 					<Name>PlcTask3</Name>
 				</Task>
-				<Task Id="7" Priority="24" CycleTime="100000" AmsPort="354" AdtTasks="true">
-					<Name>PlcTask4</Name>
-				</Task>
-				<Task Id="8" Priority="25" CycleTime="100000" AmsPort="355" AdtTasks="true">
-					<Name>PlcTask5</Name>
-				</Task>
 			</Tasks>
 		</System>
 		<Plc>
 			<Project GUID="{C5FE09A7-F2E9-4DF9-870D-9968F8A131E4}" Name="Crane" PrjFilePath="Crane\Crane.plcproj" TmcFilePath="Crane\Crane.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{10618593-999B-CA80-2F80-05537E34C977}" TmcPath="Crane\Crane.tmc">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{B2E865ED-7A33-8020-AB13-F5CB4BF2DAAA}" TmcPath="Crane\Crane.tmc">
 					<Name>Crane Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -311,7 +305,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{433F6099-BDD2-4B7A-9313-2E294907F996}" Name="Stack" PrjFilePath="Stack\Stack.plcproj" TmcFilePath="Stack\Stack.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{DC196C34-CB03-C095-C124-A3B11DE700AB}" TmcPath="Stack\Stack.tmc">
+				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{812D3E91-9A3A-8C5A-B52C-BA5FE0C7296A}" TmcPath="Stack\Stack.tmc">
 					<Name>Stack Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -428,7 +422,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{DBA317EE-435B-4809-8F8D-FAC58C624A08}" Name="Stamp" PrjFilePath="Stamp\Stamp.plcproj" TmcFilePath="Stamp\Stamp.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{0D5767D8-642C-8B11-3867-7ABCF4639166}" TmcPath="Stamp\Stamp.tmc">
+				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{73F62E24-17BE-A80C-D044-52946BE45A23}" TmcPath="Stamp\Stamp.tmc">
 					<Name>Stamp Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -580,7 +574,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{8E7F2D85-A95E-4754-A852-B31FD4DFD90F}" Name="LargeSortingConveyor" PrjFilePath="LargeSortingConveyor\LargeSortingConveyor.plcproj" TmcFilePath="LargeSortingConveyor\LargeSortingConveyor.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{95C9D889-9FFA-995A-994D-3C59CCA54AE1}" TmcPath="LargeSortingConveyor\LargeSortingConveyor.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{5A505652-1824-FEB5-2398-79D8E997AC2C}" TmcPath="LargeSortingConveyor\LargeSortingConveyor.tmc">
 					<Name>LargeSortingConveyor Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">

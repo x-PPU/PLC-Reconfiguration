@@ -128,8 +128,8 @@ IF m_copiedProdType <> 0 THEN
 	m_copiedProdType := 0;
 END_IF
 
-// only the aggregated product type (if defined) is copied to the process state, not individual input values
-io_processState.SetValue(raIn_processStateIdx, m_vals[RES_IDX]);
+// synchronize with the StateTracker's state
+UpdateProcessObsInternal(io_processState);
 
 // deal with reset requests
 m_resetWriter();	// read takes multiple cycles
@@ -147,6 +147,7 @@ IF m_resetPending THEN
 			WRITE := TRUE);
 	ELSE
 		m_vals[RES_IDX].Value.Numeric := 0;
+		ReverseSetInputs();
 	END_IF
 	
 	m_resetPending := FALSE;
@@ -170,6 +171,16 @@ IF raIn_isRemote THEN
 		READ := TRUE);
 END_IF
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateProcessObsInternal" Id="{4a63e994-68a0-432c-a803-4f1f9a1f4f29}">
+      <Declaration><![CDATA[METHOD PROTECTED UpdateProcessObsInternal : BOOL
+VAR_IN_OUT
+	io_processState: ProcessState;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// not required for the ProductBase]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="ProductBase">
@@ -212,8 +223,8 @@ END_IF
       <LineId Id="150" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="140" Count="0" />
+      <LineId Id="153" Count="0" />
       <LineId Id="138" Count="0" />
-      <LineId Id="117" Count="0" />
       <LineId Id="123" Count="0" />
       <LineId Id="130" Count="0" />
       <LineId Id="82" Count="0" />
@@ -221,7 +232,9 @@ END_IF
       <LineId Id="83" Count="1" />
       <LineId Id="116" Count="0" />
       <LineId Id="85" Count="9" />
-      <LineId Id="96" Count="2" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="97" Count="1" />
       <LineId Id="128" Count="0" />
       <LineId Id="99" Count="1" />
       <LineId Id="132" Count="0" />
@@ -231,6 +244,9 @@ END_IF
       <LineId Id="125" Count="0" />
       <LineId Id="103" Count="9" />
       <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="ProductBase.UpdateProcessObsInternal">
+      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
